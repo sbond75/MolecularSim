@@ -9,11 +9,13 @@
 with pkgs;
 
 let
-  pDynamo = (callPackage ./pDynamo2.nix {});
-  my-python-packages = python27.withPackages(ps: with ps; [
+  pDynamo = (callPackage ./nix/pDynamo2.nix {});
+  my-python-packages = (python27.withPackages(ps: with ps; [
     pDynamo
     pyyaml
-  ]);
+
+    (callPackage ./nix/ptpython.nix {})
+  ])).override (args: { ignoreCollisions = true; }); # https://stackoverflow.com/questions/52941074/in-nixos-how-can-i-resolve-a-collision
 in
 mkShell {
   buildInputs = [

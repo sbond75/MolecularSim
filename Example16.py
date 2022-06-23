@@ -49,3 +49,9 @@ VelocityVerletDynamics_SystemGeometry ( molecule             ,
                                         steps        = 10000 ,
                                         timeStep     = 0.001 ,
                                         trajectories = [ ( trajectory, 100 ) ] )
+
+# import pdb
+# pdb.set_trace()
+
+from ptpython.repl import embed
+embed(globals(), locals())
