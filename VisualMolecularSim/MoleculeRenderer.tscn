@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Molecule.gdshader" type="Shader" id=1]
+[ext_resource path="res://MoleculeRenderer.gd" type="Script" id=2]
+[ext_resource path="res://assets/maujoe.camera_control/scripts/camera_control_gui.gd" type="Script" id=3]
+[ext_resource path="res://assets/maujoe.camera_control/scripts/camera_control.gd" type="Script" id=4]
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 1 )
+shader_param/time_scale = null
+shader_param/side_to_side = null
+
+[sub_resource type="SphereMesh" id=3]
+material = SubResource( 2 )
+radial_segments = 12
+rings = 6
+
+[sub_resource type="MultiMesh" id=1]
+color_format = 1
+transform_format = 1
+instance_count = 10
+mesh = SubResource( 3 )
+transform_array = PoolVector3Array( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+color_array = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="MultiMeshInstance" type="MultiMeshInstance" parent="."]
+multimesh = SubResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16 )
+far = 8192.0
+script = ExtResource( 4 )
+
+[node name="Control" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 3 )
