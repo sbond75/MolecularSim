@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Molecule.gdshader" type="Shader" id=1]
 [ext_resource path="res://MoleculeRenderer.gd" type="Script" id=2]
 [ext_resource path="res://assets/maujoe.camera_control/scripts/camera_control_gui.gd" type="Script" id=3]
 [ext_resource path="res://assets/maujoe.camera_control/scripts/camera_control.gd" type="Script" id=4]
+[ext_resource path="res://gdnative_cpp_example/demo/bin/gdexample.gdns" type="Script" id=5]
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 1 )
@@ -39,3 +40,6 @@ speed_up_action = "ui_speedup"
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 3 )
+
+[node name="RenderController" type="Spatial" parent="."]
+script = ExtResource( 5 )

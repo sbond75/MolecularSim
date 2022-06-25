@@ -1,6 +1,7 @@
 """Example 16."""
 
 from Definitions import *
+from Util import *
 
 # . Define the energy models.
 mmModel = MMModelOPLS ( "bookSmallExamples" )
@@ -50,12 +51,6 @@ VelocityVerletDynamics_SystemGeometry ( molecule             ,
                                         timeStep     = 0.001 ,
                                         trajectories = [ ( trajectory, 100 ) ] )
 
-# import pdb
-# pdb.set_trace()
+#startREPL(globals=globals(), locals=locals())
 
-def startREPL():
-    from ptpython.repl import embed
-    embed(globals(), locals())
-
-# renderer on trajectory[0][0][0] etc.
-startREPL()
+# tip: renderer on trajectory[0][0][0] etc.

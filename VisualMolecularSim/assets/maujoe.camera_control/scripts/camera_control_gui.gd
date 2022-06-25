@@ -24,12 +24,12 @@ var panel
 var mouse_over = false
 var mouse_pressed = false
 
-func _init(camera, shortcut):
+func _init(camera=null, shortcut=null):
 	self.camera = camera
 	self.shortcut = shortcut
 
 func _ready():
-	if camera.enabled:
+	if camera != null and camera.enabled:
 		set_process_input(true)
 		
 		# Create Gui
@@ -195,7 +195,7 @@ func _ready():
 		set_process_input(false)
 
 func _input(event):
-	if event.is_action_pressed(shortcut):
+	if shortcut != null and event.is_action_pressed(shortcut):
 		if camera.enabled:
 			camera.enabled = false
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

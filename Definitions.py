@@ -22,7 +22,7 @@ xyzPath = os.path.join ( dataPath, "xyz" )
 #pDynamoScratch = os.getenv ( "PDYNAMO_SCRATCH" )
 #if pDynamoScratch is None: pDynamoScratch = os.path.join ( rootDirectory, "scratch" )
 pDynamoScratch=None
-if pDynamoScratch is None: pDynamoScratch = "scratch"
+if pDynamoScratch is None: pDynamoScratch = os.path.join(os.path.dirname(__file__), "scratch")
 if not os.path.exists ( pDynamoScratch ): os.mkdir ( pDynamoScratch )
 
 # . The directory for files and logs.
