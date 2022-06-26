@@ -6,14 +6,14 @@
 //#include <Viewport.hpp>
 //#include <ViewportTexture.hpp>
 //#include <Image.hpp>
+#include <MultiMeshInstance.hpp>
+#include <MultiMesh.hpp>
 
 #include <cstdlib>
 
 #include <algorithm> // std::min
 
 #include <pybind11/embed.h>
-#include <pybind11/pybind11.h>
-namespace py = pybind11;
 #include <pybind11/stl.h>
 
 using namespace godot;
@@ -51,6 +51,9 @@ void GDExample::_register_methods() {
 GDExample::GDExample()
 {
     initPython_do_once();
+
+    rt = py::module_::import("ReadTrajectory");
+    trajectory = rt.attr("trajectory");
 }
 
 GDExample::~GDExample() {
@@ -64,7 +67,7 @@ void GDExample::initSim(double timeSkip_) {
     timePassed = 0.0;
     timeSkip = 0.0;
     running = true;
-    updateNumber = SIZE_MAX;
+    updateNumber = 0;
     
     // Configurable //
     timeScale = 0.80; //1;//15; //90; //5; //0.5; //0.1;
@@ -102,16 +105,35 @@ void GDExample::_process(float delta) {
     //     running = false;
     //     return;
     // }
-    
-    py::module_ rt = py::module_::import("ReadTrajectory");
 
-    py::object x = rt.attr("trajectory");
-    x = x[py::int_(0)]; // This works only once for some weird reason, if you try grabbing `x[py::int_(0)]` again, it will give an error: `TypeError: Expecting an integer, a slice or a two-tuple of integers and slices as indices.` which appears to be a message generated deep within some pyrex-generated C code: in `pDynamo-1.9.0/pCore-1.9.0/extensions/psource/pCore.Coordinates3.c` (from https://www.pdynamo.org/downloads under `pDynamo-1.9.0`). Possibly related: `pDynamo-1.9.0/pCore-1.9.0/extensions/csource/Coordinates3.c`. So to fix the error, we evaluate the code below:
+    // Get list of coords for each atom
+    py::object coordsList = trajectory[py::int_(updateNumber)]; // This works only once for some weird reason, if you try grabbing `x[py::int_(0)]` again, it will give an error: `TypeError: Expecting an integer, a slice or a two-tuple of integers and slices as indices.` which appears to be a message generated deep within some pyrex-generated C code: in `pDynamo-1.9.0/pCore-1.9.0/extensions/psource/pCore.Coordinates3.c` (from https://www.pdynamo.org/downloads under `pDynamo-1.9.0`). Possibly related: `pDynamo-1.9.0/pCore-1.9.0/extensions/csource/Coordinates3.c`. So to fix the error, we evaluate the code below:
     using namespace pybind11::literals;
-    auto locals = py::dict("x"_a=x);
-    x = py::eval(R"(x[0][0])", py::globals(), locals);
-    // `x` is now the vector for the atom's position!
 
-    std::string x_ = py::str(x);
-    Godot::print(x_.c_str());
+    // Grab MultiMeshInstance
+    // Based on https://www.youtube.com/watch?v=XPcSfXsoArQ
+    MultiMeshInstance* mmi = (MultiMeshInstance*)get_node("MultiMeshInstance");
+    Ref<MultiMesh> mm = mmi->get_multimesh();
+
+    // Loop over all atoms' positions in the coords list
+    size_t numAtoms = (py::int_)coordsList.attr("rows");
+    mm->set_instance_count(numAtoms);
+    auto locals = py::dict("x"_a=coordsList);
+    py::int_ _0 = py::int_(0); py::int_ _1 = py::int_(1); py::int_ _2 = py::int_(2);
+    py::object vec;
+    for (int i = 0; i < numAtoms; i++) {
+        locals["i"] = i;
+        vec = py::eval(R"(x[i])", py::globals(), locals);
+        // `vec` is now the vector for the atom's position!
+        locals["vec"] = vec;
+        
+        // std::string x_ = py::str(x);
+        // Godot::print(x_.c_str());
+
+        // Gives `TypeError: Expecting integer not <type 'long'>.`: mm->set_instance_transform(i, Transform(Basis(), Vector3((real_t)(py::float_)vec[_0], (real_t)(py::float_)vec[_1], (real_t)(py::float_)vec[_2])));
+
+        mm->set_instance_transform(i, Transform(Basis(), Vector3((real_t)(py::float_)py::eval("vec[0]", locals), (real_t)(py::float_)py::eval("vec[1]", locals), (real_t)(py::float_)py::eval("vec[2]", locals))));
+    }
+
+    updateNumber++;
 }

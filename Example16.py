@@ -51,6 +51,6 @@ VelocityVerletDynamics_SystemGeometry ( molecule             ,
                                         timeStep     = 0.001 ,
                                         trajectories = [ ( trajectory, 100 ) ] )
 
-#startREPL(globals=globals(), locals=locals())
+startREPL(globals=globals(), locals=locals())
 
 # tip: renderer on trajectory[0][0][0] etc.

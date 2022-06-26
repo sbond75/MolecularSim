@@ -147,7 +147,7 @@ def finish( target, source, env ):
         
         # Hack to prevent re-running
         for line in lines:
-            if 'RocketCVSim"' in line:
+            if 'gdnative_cpp_example/' in line:
                 return
         
         f.seek(0) # https://stackoverflow.com/questions/8945370/garbage-in-file-after-truncate0-in-python#:~:text=As%20far%20as%20I%20can,may%20appear%20from%20that%20buffer.

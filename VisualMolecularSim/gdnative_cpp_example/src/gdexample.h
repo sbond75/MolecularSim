@@ -5,6 +5,9 @@
 #include <Sprite3D.hpp>
 #include <RigidBody.hpp>
 
+#include <pybind11/pybind11.h>
+namespace py = pybind11;
+
 namespace godot {
 
 // class GDExample : public Sprite3D {
@@ -24,6 +27,9 @@ private:
     Vector3 adjustmentForPosition;
 
     Transform originalTransform;
+    
+    py::module_ rt; // ReadTrajectory.py
+    py::object trajectory;
     
     double currentTime() const;
     

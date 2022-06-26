@@ -26,10 +26,6 @@ color_array = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 
 [node name="Spatial" type="Spatial"]
 
-[node name="MultiMeshInstance" type="MultiMeshInstance" parent="."]
-multimesh = SubResource( 1 )
-script = ExtResource( 2 )
-
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16 )
 far = 8192.0
@@ -43,3 +39,7 @@ script = ExtResource( 3 )
 
 [node name="RenderController" type="Spatial" parent="."]
 script = ExtResource( 5 )
+
+[node name="MultiMeshInstance" type="MultiMeshInstance" parent="RenderController"]
+multimesh = SubResource( 1 )
+script = ExtResource( 2 )
