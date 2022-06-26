@@ -105,6 +105,13 @@ void GDExample::_process(float delta) {
     //     running = false;
     //     return;
     // }
+    
+    size_t numFrames = (py::int_)trajectory.attr("__len__")();
+    if (updateNumber >= numFrames) {
+        Godot::print("Simulation finished");
+        running = false;
+        return;
+    }
 
     // Get list of coords for each atom
     py::object coordsList = trajectory[py::int_(updateNumber)]; // This works only once for some weird reason, if you try grabbing `x[py::int_(0)]` again, it will give an error: `TypeError: Expecting an integer, a slice or a two-tuple of integers and slices as indices.` which appears to be a message generated deep within some pyrex-generated C code: in `pDynamo-1.9.0/pCore-1.9.0/extensions/psource/pCore.Coordinates3.c` (from https://www.pdynamo.org/downloads under `pDynamo-1.9.0`). Possibly related: `pDynamo-1.9.0/pCore-1.9.0/extensions/csource/Coordinates3.c`. So to fix the error, we evaluate the code below:
