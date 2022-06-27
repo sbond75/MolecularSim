@@ -1,28 +1,47 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Molecule.gdshader" type="Shader" id=1]
-[ext_resource path="res://MoleculeRenderer.gd" type="Script" id=2]
 [ext_resource path="res://assets/maujoe.camera_control/scripts/camera_control_gui.gd" type="Script" id=3]
 [ext_resource path="res://assets/maujoe.camera_control/scripts/camera_control.gd" type="Script" id=4]
 [ext_resource path="res://gdnative_cpp_example/demo/bin/gdexample.gdns" type="Script" id=5]
+[ext_resource path="res://Bond.gdshader" type="Shader" id=6]
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 1 )
-shader_param/time_scale = null
-shader_param/side_to_side = null
 
 [sub_resource type="SphereMesh" id=3]
 material = SubResource( 2 )
+radius = 0.5
+height = 1.0
 radial_segments = 12
 rings = 6
 
 [sub_resource type="MultiMesh" id=1]
 color_format = 1
 transform_format = 1
-instance_count = 10
+instance_count = 1
 mesh = SubResource( 3 )
-transform_array = PoolVector3Array( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-color_array = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 )
+transform_array = PoolVector3Array( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+color_array = PoolColorArray( 1, 1, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = ExtResource( 6 )
+
+[sub_resource type="CylinderMesh" id=5]
+material = SubResource( 4 )
+top_radius = 0.05
+bottom_radius = 0.05
+height = 1.0
+radial_segments = 5
+rings = 2
+
+[sub_resource type="MultiMesh" id=6]
+transform_format = 1
+custom_data_format = 2
+instance_count = 1
+mesh = SubResource( 5 )
+transform_array = PoolVector3Array( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+custom_data_array = PoolColorArray( 0, 0, 0, 0 )
 
 [node name="Spatial" type="Spatial"]
 
@@ -40,6 +59,11 @@ script = ExtResource( 3 )
 [node name="RenderController" type="Spatial" parent="."]
 script = ExtResource( 5 )
 
-[node name="MultiMeshInstance" type="MultiMeshInstance" parent="RenderController"]
+[node name="Molecules" type="MultiMeshInstance" parent="RenderController"]
 multimesh = SubResource( 1 )
-script = ExtResource( 2 )
+
+[node name="Bonds" type="MultiMeshInstance" parent="RenderController"]
+multimesh = SubResource( 6 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -1, 6.18172e-08, -6.18172e-08, 0, 0.707107, 0.707107, 8.74228e-08, 0.707107, -0.707107, 0, 0, 0 )

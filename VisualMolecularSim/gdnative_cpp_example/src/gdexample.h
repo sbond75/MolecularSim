@@ -30,6 +30,7 @@ private:
     
     py::module_ rt; // ReadTrajectory.py
     py::object trajectory;
+    py::object molecule;
     
     double currentTime() const;
     

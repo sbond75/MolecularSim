@@ -54,6 +54,7 @@ GDExample::GDExample()
 
     rt = py::module_::import("ReadTrajectory");
     trajectory = rt.attr("trajectory");
+    molecule = rt.attr("molecule");
 }
 
 GDExample::~GDExample() {
@@ -97,6 +98,10 @@ double GDExample::currentTime() const {
 //     }
 // }
 
+inline Vector3 midpoint(Vector3 a, Vector3 b) {
+    return {(a.x + b.x) * (real_t)0.5, (a.y + b.y) * (real_t)0.5, (a.z + b.z) * (real_t)0.5};
+}
+
 void GDExample::_process(float delta) {
     if (!running) return;
     // if (timePassedTotal + timePassed > flightDuration) {
@@ -119,16 +124,17 @@ void GDExample::_process(float delta) {
 
     // Grab MultiMeshInstance
     // Based on https://www.youtube.com/watch?v=XPcSfXsoArQ
-    MultiMeshInstance* mmi = (MultiMeshInstance*)get_node("MultiMeshInstance");
+    MultiMeshInstance* mmi = (MultiMeshInstance*)get_node("Molecules");
     Ref<MultiMesh> mm = mmi->get_multimesh();
 
     // Loop over all atoms' positions in the coords list
     size_t numAtoms = (py::int_)coordsList.attr("rows");
+    assert((ssize_t)numAtoms >= 0); // Assert ">= 0"
     mm->set_instance_count(numAtoms);
     auto locals = py::dict("x"_a=coordsList);
     py::int_ _0 = py::int_(0); py::int_ _1 = py::int_(1); py::int_ _2 = py::int_(2);
     py::object vec;
-    for (int i = 0; i < numAtoms; i++) {
+    for (size_t i = 0; i < numAtoms; i++) {
         locals["i"] = i;
         vec = py::eval(R"(x[i])", py::globals(), locals);
         // `vec` is now the vector for the atom's position!
@@ -141,6 +147,56 @@ void GDExample::_process(float delta) {
 
         mm->set_instance_transform(i, Transform(Basis(), Vector3((real_t)(py::float_)py::eval("vec[0]", locals), (real_t)(py::float_)py::eval("vec[1]", locals), (real_t)(py::float_)py::eval("vec[2]", locals))));
     }
+
+    // Grab bonds //
+    
+    // Grab MultiMeshInstance
+    mmi = (MultiMeshInstance*)get_node("Bonds");
+    mm = mmi->get_multimesh();
+
+    py::object bonds = molecule.attr("connectivity").attr("bonds");
+    size_t numBonds = (py::int_)bonds.attr("__len__")();
+    assert((ssize_t)numBonds >= 0); // Assert ">= 0"
+    mm->set_instance_count(numBonds);
+    locals["bonds"] = bonds;
+    py::object bond;
+    std::pair<size_t, size_t> bondAtomIndices;
+    for (size_t i = 0; i < numBonds; i++) {
+        locals["i"] = i;
+        bond = py::eval(R"(bonds[i])", py::globals(), locals);
+        bondAtomIndices = {(size_t)(py::int_)bond.attr("i"), (size_t)(py::int_)bond.attr("j")};
+        assert((ssize_t)bondAtomIndices.first >= 0 && (ssize_t)bondAtomIndices.second >= 0); // Assert ">= 0"
+        assert(bondAtomIndices.first < numAtoms && bondAtomIndices.second < numAtoms); // Assert in bounds of the atom coords list
+
+        // Grab the atom coords for this bond's ends
+        locals["i"] = bondAtomIndices.first;
+        locals["j"] = bondAtomIndices.second;
+        py::tuple atomCoords__ = (py::tuple)py::eval(R"((x[i], x[j]))", py::globals(), locals);
+        std::pair<py::object, py::object> atomCoords_ = {atomCoords__[0], atomCoords__[1]};
+        
+        locals["vec1"] = atomCoords_.first;
+        locals["vec2"] = atomCoords_.second;
+        std::pair<Vector3, Vector3> atomCoords = {
+            Vector3((real_t)(py::float_)py::eval("vec1[0]", locals), (real_t)(py::float_)py::eval("vec1[1]", locals), (real_t)(py::float_)py::eval("vec1[2]", locals)), Vector3((real_t)(py::float_)py::eval("vec2[0]", locals), (real_t)(py::float_)py::eval("vec2[1]", locals), (real_t)(py::float_)py::eval("vec2[2]", locals))
+        };
+
+        Vector3 atomsVec = atomCoords.second - atomCoords.first; // The vector between the atoms
+        auto x = atomsVec.x, y = atomsVec.y, z = atomsVec.z;
+        // https://community.khronos.org/t/converting-a-3d-vector-into-three-euler-angles/49889/3
+        // "Let r = radius, t = angle on x-y plane, & p = angle off of z-axis."
+        auto r = sqrt(x*x + y*y + z*z); // radius
+        auto t = atan(y/x); // yaw (our convention here is chosen for this to be: about z axis)
+        auto p = acos(z/r); // pitch (convention chosen: about x axis)
+        real_t roll = 0; // roll (convention chosen: about y axis)
+        auto transform = Transform(Basis().rotated(Vector3::UP, p).rotated(Vector3::BACK, t).rotated(Vector3::RIGHT, roll)
+                                   , Vector3()); // Following tip on https://godotengine.org/qa/77346/moving-and-rotating-trees-in-multimesh : "first rotate then reposition"
+        transform.origin = midpoint(atomCoords.first, atomCoords.second);
+        mm->set_instance_transform(i, transform);
+        
+        mm->set_instance_custom_data(i, Color(r, 0, 0, 0)); // Says Color() but really isn't -- it becomes a per-instance `INSTANCE_CUSTOM` variable within the shader. This is a silly function in Godot, should be improved on their side to support variable amounts of data instead of only 4 or nothing.
+    } 
+    // //
+    
 
     updateNumber++;
 }
