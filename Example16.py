@@ -47,7 +47,7 @@ VelocityVerletDynamics_SystemGeometry ( molecule                               ,
 trajectory = SystemGeometryTrajectory ( os.path.join ( scratchPath, "bala_c7eq.trj" ), molecule, mode = "w" )
 VelocityVerletDynamics_SystemGeometry ( molecule             ,
                                         logFrequency =   500 ,
-                                        steps        = 10000 ,
+                                        steps        = 100000 ,
                                         timeStep     = 0.001 ,
                                         trajectories = [ ( trajectory, 100 ) ] )
 
