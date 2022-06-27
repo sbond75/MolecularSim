@@ -248,8 +248,8 @@ void GDExample::_process(float delta) {
         real_t roll = 0; // roll (convention chosen: about y axis)
         Vector3 bondDirection = atomsVec.normalized();
         
-        auto transform = Transform(Basis(get_rotation_between(atomCoords.first, atomCoords.second))
-                                   , Vector3()); // Following tip on https://godotengine.org/qa/77346/moving-and-rotating-trees-in-multimesh : "first rotate then reposition"
+        auto transform = Transform().looking_at(bondDirection, Vector3::UP); // Following tip on https://godotengine.org/qa/77346/moving-and-rotating-trees-in-multimesh : "first rotate then reposition"
+        transform.rotate(transform.basis.x, M_PI/2);
         transform.origin = midpoint(atomCoords.first, atomCoords.second);
         mm->set_instance_transform(i, transform);
         
