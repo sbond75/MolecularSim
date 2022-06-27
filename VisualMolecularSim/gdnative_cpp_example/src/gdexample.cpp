@@ -128,6 +128,38 @@ Basis makeRotationDir(const Vector3& direction, const Vector3& up = Vector3::UP)
     return Basis(column1, column2, column3);
 }
 
+static const Vector3 X_AXIS = Vector3::RIGHT;
+static const Vector3 Y_AXIS = Vector3::UP;
+static const Vector3 Z_AXIS = Vector3::BACK;
+// https://stackoverflow.com/questions/1171849/finding-quaternion-representing-the-rotation-from-one-vector-to-another/1171995#1171995
+Vector3 orthogonal(Vector3 v)
+{
+    float x = abs(v.x);
+    float y = abs(v.y);
+    float z = abs(v.z);
+
+    Vector3 other = x < y ? (x < z ? X_AXIS : Z_AXIS) : (y < z ? Y_AXIS : Z_AXIS);
+    return v.cross(other);
+}
+Quat get_rotation_between(Vector3 u, Vector3 v)
+{
+  // It is important that the inputs are of equal length when
+  // calculating the half-way vector.
+  u.normalize();
+  v.normalize();
+
+  // Unfortunately, we have to check for when u == -v, as u + v
+  // in this case will be (0, 0, 0), which cannot be normalized.
+  if (u == -v)
+  {
+    // 180 degree rotation around any orthogonal vector
+      return Quat(orthogonal(u).normalized(), 0);
+  }
+
+  Vector3 half = (u + v).normalized();
+  return Quat(u.cross(half), u.dot(half));
+}
+
 void GDExample::_process(float delta) {
     if (!running) return;
     // if (timePassedTotal + timePassed > flightDuration) {
@@ -215,16 +247,8 @@ void GDExample::_process(float delta) {
         auto p = acos(z/r); // pitch (convention chosen: about x axis)
         real_t roll = 0; // roll (convention chosen: about y axis)
         Vector3 bondDirection = atomsVec.normalized();
-
-        Quat q;
-        Vector3 a = atomCoords.second.cross(atomCoords.first);
-        q.x = a.x;
-        q.y = a.y;
-        q.z = a.z;
-        q.w = sqrt((atomCoords.first.length_squared()) * (atomCoords.second.length_squared())) + atomCoords.second.dot(atomCoords.first);
-        q.normalize();
         
-        auto transform = Transform(Basis(q)
+        auto transform = Transform(Basis(get_rotation_between(atomCoords.first, atomCoords.second))
                                    , Vector3()); // Following tip on https://godotengine.org/qa/77346/moving-and-rotating-trees-in-multimesh : "first rotate then reposition"
         transform.origin = midpoint(atomCoords.first, atomCoords.second);
         mm->set_instance_transform(i, transform);
