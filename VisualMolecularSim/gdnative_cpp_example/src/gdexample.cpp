@@ -1,5 +1,6 @@
 #include "gdexample.h"
 
+#include "Basis.hpp"
 #include "GodotGlobal.hpp"
 #include "Math.hpp"
 
@@ -8,6 +9,7 @@
 //#include <Image.hpp>
 #include <MultiMeshInstance.hpp>
 #include <MultiMesh.hpp>
+#include <RandomNumberGenerator.hpp>
 
 #include <cstdlib>
 
@@ -102,6 +104,30 @@ inline Vector3 midpoint(Vector3 a, Vector3 b) {
     return {(a.x + b.x) * (real_t)0.5, (a.y + b.y) * (real_t)0.5, (a.z + b.z) * (real_t)0.5};
 }
 
+// https://stackoverflow.com/questions/18558910/direction-vector-to-rotation-matrix
+Basis makeRotationDir(const Vector3& direction, const Vector3& up = Vector3::UP) {
+    Vector3 xaxis = up.cross(direction);
+    xaxis.normalize();
+
+    Vector3 yaxis = direction.cross(xaxis);
+    yaxis.normalize();
+
+    Vector3 column1, column2, column3;
+    column1.x = xaxis.x;
+    column1.y = yaxis.x;
+    column1.z = direction.x;
+
+    column2.x = xaxis.y;
+    column2.y = yaxis.y;
+    column2.z = direction.y;
+
+    column3.x = xaxis.z;
+    column3.y = yaxis.z;
+    column3.z = direction.z;
+
+    return Basis(column1, column2, column3);
+}
+
 void GDExample::_process(float delta) {
     if (!running) return;
     // if (timePassedTotal + timePassed > flightDuration) {
@@ -188,7 +214,10 @@ void GDExample::_process(float delta) {
         auto t = atan(y/x); // yaw (our convention here is chosen for this to be: about z axis)
         auto p = acos(z/r); // pitch (convention chosen: about x axis)
         real_t roll = 0; // roll (convention chosen: about y axis)
-        auto transform = Transform(Basis().rotated(Vector3::UP, p).rotated(Vector3::BACK, t).rotated(Vector3::RIGHT, roll)
+        Vector3 bondDirection = atomsVec.normalized();
+        srand( (unsigned)time( NULL ) );
+        Godot::print(Vector3((real_t)rand()/RAND_MAX,(real_t)rand()/RAND_MAX,(real_t)rand()/RAND_MAX));
+        auto transform = Transform(makeRotationDir(bondDirection, Vector3((real_t)rand()/RAND_MAX,(real_t)rand()/RAND_MAX,(real_t)rand()/RAND_MAX))
                                    , Vector3()); // Following tip on https://godotengine.org/qa/77346/moving-and-rotating-trees-in-multimesh : "first rotate then reposition"
         transform.origin = midpoint(atomCoords.first, atomCoords.second);
         mm->set_instance_transform(i, transform);
