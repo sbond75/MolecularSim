@@ -215,9 +215,16 @@ void GDExample::_process(float delta) {
         auto p = acos(z/r); // pitch (convention chosen: about x axis)
         real_t roll = 0; // roll (convention chosen: about y axis)
         Vector3 bondDirection = atomsVec.normalized();
-        srand( (unsigned)time( NULL ) );
-        Godot::print(Vector3((real_t)rand()/RAND_MAX,(real_t)rand()/RAND_MAX,(real_t)rand()/RAND_MAX));
-        auto transform = Transform(makeRotationDir(bondDirection, Vector3((real_t)rand()/RAND_MAX,(real_t)rand()/RAND_MAX,(real_t)rand()/RAND_MAX))
+
+        Quat q;
+        Vector3 a = atomCoords.second.cross(atomCoords.first);
+        q.x = a.x;
+        q.y = a.y;
+        q.z = a.z;
+        q.w = sqrt((atomCoords.first.length_squared()) * (atomCoords.second.length_squared())) + atomCoords.second.dot(atomCoords.first);
+        q.normalize();
+        
+        auto transform = Transform(Basis(q)
                                    , Vector3()); // Following tip on https://godotengine.org/qa/77346/moving-and-rotating-trees-in-multimesh : "first rotate then reposition"
         transform.origin = midpoint(atomCoords.first, atomCoords.second);
         mm->set_instance_transform(i, transform);
