@@ -5,13 +5,12 @@
 }:
 
 stdenv.mkDerivation rec {
-  # LAMMPS has weird versioning converted to ISO 8601 format
   version = "2.3.0";
-  pname = "lammps";
+  pname = "kim-api";
 
   src = fetchFromGitHub {
     owner = "openkim";
-    repo = "kim-api";
+    repo = pname;
     rev = "v${version}";
     sha256 = "1al1sb9zabb7pdiylky1linm2d61a1pkwmdaylcp9rr08ssgr3ak";
   };
