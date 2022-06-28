@@ -54,7 +54,8 @@ stdenv.mkDerivation rec {
     ++ (lib.optionals withMPI [ mpi ]);
 
   cmakeFlags =
-    (builtins.map (pkg: "-D PKG_${lib.toUpper pkg}=yes") packages); # Based on https://docs.lammps.org/Build_package.html and https://docs.lammps.org/Build_cmake.html
+    (builtins.map (pkg: "-DPKG_${lib.toUpper pkg}=yes") packages) # Based on https://docs.lammps.org/Build_package.html and https://docs.lammps.org/Build_cmake.html
+      ++ "cmake" # Sets the location of CMakeLists.txt to be in the folder https://github.com/lammps/lammps/tree/develop/cmake
   
   
   # configurePhase = ''
