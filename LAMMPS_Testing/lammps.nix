@@ -4,7 +4,8 @@
 , libpng, gzip, fftw, blas, lapack
 , withMPI ? false
 , mpi
-, gcc, pkg-config
+, gcc
+, pkg-config, openmp
 }:
 let packages = [
       # All packages (from https://github.com/lammps/lammps/blob/7d5fc356fefa1dd31d64b1cc856134b165febb8a/src/Makefile ) :
@@ -48,11 +49,11 @@ stdenv.mkDerivation rec {
     inherit packages;
   };
 
-  buildInputs = [ fftw libpng blas lapack gzip gcc pkg-config ]
+  buildInputs = [ fftw libpng blas lapack gzip gcc
+                  pkg-config openmp (callPackage ./kim-api.nix {}) ]
     ++ (lib.optionals withMPI [ mpi ]);
 
   configurePhase = ''
-    alias g++=cc
     cd src
     for pack in ${lib.concatStringsSep " " packages}; do make "yes-$pack" SHELL=$SHELL; done
   '';
@@ -60,7 +61,6 @@ stdenv.mkDerivation rec {
   # Must do manual build due to LAMMPS requiring a seperate build for
   # the libraries and executable. Also non-typical make script
   buildPhase = ''
-    alias g++=cc
     make mode=exe ${if withMPI then "mpi" else "serial"} SHELL=$SHELL LMP_INC="${lammps_includes}" FFT_PATH=-DFFT_FFTW3 FFT_LIB=-lfftw3 JPG_LIB=-lpng
     make mode=shlib ${if withMPI then "mpi" else "serial"} SHELL=$SHELL LMP_INC="${lammps_includes}" FFT_PATH=-DFFT_FFTW3 FFT_LIB=-lfftw3 JPG_LIB=-lpng
   '';
