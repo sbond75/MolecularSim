@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
     ++ (lib.optionals withMPI [ mpi ]);
 
   cmakeFlags =
-    (lib.foldl (acc: pkg: acc + " -D PKG_${lib.toUpper pkg}=value") "" packages);
+    (lib.foldl (acc: pkg: acc + " -D PKG_${lib.toUpper pkg}=YES") "" packages); # Based on https://docs.lammps.org/Build_package.html and https://docs.lammps.org/Build_cmake.html
   
   
   # configurePhase = ''
