@@ -6,25 +6,29 @@
 , mpi, gcc
 }:
 let packages = [
-     "asphere" "body" "class2" "colloid" "compress" "coreshell"
-     "dipole" "granular" "kspace" "manybody" "mc" "misc" "molecule"
-     "opt" "peri" "qeq" "replica" "rigid" "shock" "snap" "srd" "user-reaxc"
-     
-     # Optional stuff:
-     "molfile" "adios"
+      # All packages (from https://github.com/lammps/lammps/blob/7d5fc356fefa1dd31d64b1cc856134b165febb8a/src/Makefile ) :
+      "adios" "asphere" "awpmd" "bocs" "body" "bpm" "brownian" "cg-dna" "cg-sdk" "class2" "colloid"
+      "colvars" "compress" "coreshell" "diffraction" "dipole" "dpd-basic" "dpd-meso" "dpd-react"
+      "dpd-smooth" "drude" "eff" "extra-compute" "extra-dump" "extra-fix" "extra-molecule"
+      "extra-pair" "fep" "gpu" "granular" "h5md" "intel" "interlayer" "kim" "kokkos" "kspace"
+      "latboltz" "latte" "machdyn" "manifold" "manybody" "mc" "mdi" "meam" "mesont" "mgpt" "misc"
+      "ml-hdnnp" "ml-pace" "ml-quip" "ml-rann" "ml-snap" "mofff" "molecule" "molfile" "mpiio" "mscg"
+      "netcdf" "openmp" "opt" "orient" "peri" "plugin" "plumed" "poems" "ptm" "python" "qeq" "qmmm"
+      "qtb" "reaction" "reaxff" "replica" "rigid" "scafacos" "shock" "smtbq" "sph" "spin" "srd"
+      "tally" "uef" "voronoi" "vtk" "yaff" "atc" "dielectric" "electrode" "ml-iap" "phonon"
     ];
     lammps_includes = "-DLAMMPS_EXCEPTIONS -DLAMMPS_GZIP -DLAMMPS_MEMALIGN=64";
 in
 stdenv.mkDerivation rec {
   # LAMMPS has weird versioning converted to ISO 8601 format
-  version = "stable_29Oct2020";
+  version = "stable_23Jun2022";
   pname = "lammps";
 
   src = fetchFromGitHub {
     owner = "lammps";
     repo = "lammps";
     rev = version;
-    sha256 = "1rmi9r5wj2z49wg43xyhqn9sm37n95cyli3g7vrqk3ww35mmh21q";
+    sha256 = "1rmi9r5wj2z49wg43xyhqn9sm37n95cyli3g7vrqk3ww35mmh21p";
   };
 
   passthru = {
