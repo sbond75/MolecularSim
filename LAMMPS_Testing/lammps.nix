@@ -5,7 +5,7 @@
 , withMPI ? false
 , mpi
 , gcc
-, pkg-config, callPackage, llvmPackages, bc
+, pkg-config, callPackage, llvmPackages, bc, cmake
 }:
 let packages = [
       # All packages (from https://github.com/lammps/lammps/blob/7d5fc356fefa1dd31d64b1cc856134b165febb8a/src/Makefile ) :
@@ -20,10 +20,10 @@ let packages = [
       # "tally" "uef" "voronoi" "vtk" "yaff" "atc" "dielectric" "electrode" "ml-iap" "phonon"
 
       # Packages except some with additional library dependencies:
-      "adios" "asphere" /* seems broken: "awpmd"*/ "bocs" "body" "bpm" "brownian" "cg-dna" "cg-sdk" "class2" "colloid"
-      /* seems broken: "colvars"*/ "compress" "coreshell" "diffraction" "dipole" "dpd-basic" "dpd-meso" "dpd-react"
+      "adios" "asphere" "awpmd" "bocs" "body" "bpm" "brownian" "cg-dna" "cg-sdk" "class2" "colloid"
+      "colvars" "compress" "coreshell" "diffraction" "dipole" "dpd-basic" "dpd-meso" "dpd-react"
       "dpd-smooth" "drude" "eff" "extra-compute" "extra-dump" "extra-fix" "extra-molecule"
-      "extra-pair" "fep" /* seems broken: "gpu"*/ "granular" /* seems broken: "h5md"*/ "intel" "interlayer" "kim" "kokkos" "kspace"
+      "extra-pair" "fep" "gpu" "granular" "h5md" "intel" "interlayer" "kim" "kokkos" "kspace"
       "latboltz" "latte" "machdyn" "manifold" "manybody" "mc" "mdi" "meam" "mesont" "mgpt" "misc"
       "ml-hdnnp" "ml-pace" /*requires QUIP library from https://github.com/libAtoms/QUIP : "ml-quip"*/ "ml-rann" "ml-snap" "mofff" "molecule" "molfile" "mpiio" "mscg"
       "netcdf" "openmp" "opt" "orient" "peri" "plugin" "plumed" "poems" "ptm" "python" "qeq" "qmmm"
@@ -50,27 +50,31 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ fftw libpng blas lapack gzip gcc
-                  pkg-config llvmPackages.openmp (callPackage ./kim-api.nix {}) bc ]
+                  pkg-config llvmPackages.openmp (callPackage ./kim-api.nix {}) bc cmake ]
     ++ (lib.optionals withMPI [ mpi ]);
 
-  configurePhase = ''
-    cd src
-    for pack in ${lib.concatStringsSep " " packages}; do make "yes-$pack" SHELL=$SHELL; done
-  '';
+  cmakeFlags =
+    (foldl (acc: pkg: acc + " -D PKG_${toUpper pkg}=value") "" packages);
+  
+  
+  # configurePhase = ''
+  #   cd src
+  #   for pack in ${lib.concatStringsSep " " packages}; do make "yes-$pack" SHELL=$SHELL; done
+  # '';
 
-  # Must do manual build due to LAMMPS requiring a seperate build for
-  # the libraries and executable. Also non-typical make script
-  buildPhase = ''
-    make mode=exe ${if withMPI then "mpi" else "serial"} SHELL=$SHELL LMP_INC="${lammps_includes}" FFT_PATH=-DFFT_FFTW3 FFT_LIB=-lfftw3 JPG_LIB=-lpng
-    make mode=shlib ${if withMPI then "mpi" else "serial"} SHELL=$SHELL LMP_INC="${lammps_includes}" FFT_PATH=-DFFT_FFTW3 FFT_LIB=-lfftw3 JPG_LIB=-lpng
-  '';
+  # # Must do manual build due to LAMMPS requiring a seperate build for
+  # # the libraries and executable. Also non-typical make script
+  # buildPhase = ''
+  #   make mode=exe ${if withMPI then "mpi" else "serial"} SHELL=$SHELL LMP_INC="${lammps_includes}" FFT_PATH=-DFFT_FFTW3 FFT_LIB=-lfftw3 JPG_LIB=-lpng
+  #   make mode=shlib ${if withMPI then "mpi" else "serial"} SHELL=$SHELL LMP_INC="${lammps_includes}" FFT_PATH=-DFFT_FFTW3 FFT_LIB=-lfftw3 JPG_LIB=-lpng
+  # '';
 
-  installPhase = ''
-    mkdir -p $out/bin $out/include $out/lib
-    cp -v lmp_* $out/bin/
-    cp -v *.h $out/include/
-    cp -v liblammps* $out/lib/
-  '';
+  # installPhase = ''
+  #   mkdir -p $out/bin $out/include $out/lib
+  #   cp -v lmp_* $out/bin/
+  #   cp -v *.h $out/include/
+  #   cp -v liblammps* $out/lib/
+  # '';
 
   meta = with lib; {
     description = "Classical Molecular Dynamics simulation code";
