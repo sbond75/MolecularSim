@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
     owner = "lammps";
     repo = "lammps";
     rev = version;
-    sha256 = "1rmi9r5wj2z49wg43xyhqn9sm37n95cyli3g7vrqk3ww35mmh21p";
+    sha256 = "061mkvj5pp8p1na5qk9x7wcgpx8hjnclflzk1q0a8rvs1kilpkv2";
   };
 
   passthru = {
