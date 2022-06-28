@@ -3,7 +3,8 @@
 { lib, stdenv, fetchFromGitHub
 , libpng, gzip, fftw, blas, lapack
 , withMPI ? false
-, mpi, gcc
+, mpi
+, gcc, pkg-config
 }:
 let packages = [
       # All packages (from https://github.com/lammps/lammps/blob/7d5fc356fefa1dd31d64b1cc856134b165febb8a/src/Makefile ) :
@@ -47,7 +48,7 @@ stdenv.mkDerivation rec {
     inherit packages;
   };
 
-  buildInputs = [ fftw libpng blas lapack gzip gcc ]
+  buildInputs = [ fftw libpng blas lapack gzip gcc pkg-config ]
     ++ (lib.optionals withMPI [ mpi ]);
 
   configurePhase = ''
