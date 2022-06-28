@@ -1,5 +1,5 @@
 { lib, stdenv, fetchFromGitHub
-, make
+, gnumake
 }:
 
 stdenv.mkDerivation rec {
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
     sha256 = "0rxyb662w9y3xadyxz2x7gvc7mafbhl13szdc55fsk5sygpdlkv5";
   };
 
-  buildInputs = [ make ];
+  buildInputs = [ gnumake ];
 
   #preConfigure = ''ls -la'';
 }
