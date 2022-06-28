@@ -5,7 +5,7 @@
 , withMPI ? false
 , mpi
 , gcc
-, pkg-config, openmp
+, pkg-config, openmp, callPackage
 }:
 let packages = [
       # All packages (from https://github.com/lammps/lammps/blob/7d5fc356fefa1dd31d64b1cc856134b165febb8a/src/Makefile ) :
