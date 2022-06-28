@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
     owner = "openkim";
     repo = "kim-api";
     rev = "v${version}";
-    sha256 = "061mkpj5pp8p1na5qk9x7wcgpx8hjnclflzk1q0a8rvs1kilpkv2";
+    sha256 = "1al1sb9zabb7pdiylky1linm2d61a1pkwmdaylcp9rr08ssgr3ak";
   };
 
   buildInputs = [ cmake pkg-config doxygen graphviz bash-completion ];
