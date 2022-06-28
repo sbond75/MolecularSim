@@ -27,7 +27,7 @@ INSTALL=install
 IFLAGS_EXEC=-m 0755
 
 # Flags for install command for non-executable files
-IFLAGS=-m 0644"
+IFLAGS=-m 0644" \
       "# Installation directory
 PREFIX=$out
 
