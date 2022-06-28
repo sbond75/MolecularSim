@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
     ++ (lib.optionals withMPI [ mpi ]);
 
   cmakeFlags =
-    (foldl (acc: pkg: acc + " -D PKG_${toUpper pkg}=value") "" packages);
+    (builtins.foldl (acc: pkg: acc + " -D PKG_${toUpper pkg}=value") "" packages);
   
   
   # configurePhase = ''
