@@ -23,7 +23,7 @@ let packages = [
       "adios" "asphere" /* seems broken: "awpmd"*/ "bocs" "body" "bpm" "brownian" "cg-dna" "cg-sdk" "class2" "colloid"
       /* seems broken: "colvars"*/ "compress" "coreshell" "diffraction" "dipole" "dpd-basic" "dpd-meso" "dpd-react"
       "dpd-smooth" "drude" "eff" "extra-compute" "extra-dump" "extra-fix" "extra-molecule"
-      "extra-pair" "fep" "gpu" "granular" "h5md" "intel" "interlayer" "kim" "kokkos" "kspace"
+      "extra-pair" "fep" /* seems broken: "gpu"*/ "granular" "h5md" "intel" "interlayer" "kim" "kokkos" "kspace"
       "latboltz" "latte" "machdyn" "manifold" "manybody" "mc" "mdi" "meam" "mesont" "mgpt" "misc"
       "ml-hdnnp" "ml-pace" /*requires QUIP library from https://github.com/libAtoms/QUIP : "ml-quip"*/ "ml-rann" "ml-snap" "mofff" "molecule" "molfile" "mpiio" "mscg"
       "netcdf" "openmp" "opt" "orient" "peri" "plugin" "plumed" "poems" "ptm" "python" "qeq" "qmmm"
