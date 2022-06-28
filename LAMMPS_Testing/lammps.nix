@@ -20,7 +20,7 @@ let packages = [
       # "tally" "uef" "voronoi" "vtk" "yaff" "atc" "dielectric" "electrode" "ml-iap" "phonon"
 
       # Packages except some with additional library dependencies:
-      "adios" "asphere" "awpmd" "bocs" "body" "bpm" "brownian" "cg-dna" "cg-sdk" "class2" "colloid"
+      /*requires ADIOS library from https://github.com/ornladios/ADIOS2 : "adios"*/ "asphere" "awpmd" "bocs" "body" "bpm" "brownian" "cg-dna" "cg-sdk" "class2" "colloid"
       "colvars" "compress" "coreshell" "diffraction" "dipole" "dpd-basic" "dpd-meso" "dpd-react"
       "dpd-smooth" "drude" "eff" "extra-compute" "extra-dump" "extra-fix" "extra-molecule"
       "extra-pair" "fep" "gpu" "granular" "h5md" "intel" "interlayer" "kim" "kokkos" "kspace"
