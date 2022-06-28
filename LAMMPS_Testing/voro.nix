@@ -14,4 +14,6 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ cmake ];
+
+  preConfigure = ''ls -la'';
 }
