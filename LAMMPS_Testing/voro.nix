@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     owner = "chr1shr";
     repo = pname;
     rev = "v${version}";
-    sha256 = "1al1sb9zabb7pdiylky1linm2d61a1pkwmdaylcp9rr08ssgr3bk";
+    sha256 = "0rxyb662w9y3xadyxz2x7gvc7mafbhl13szdc55fsk5sygpdlkv5";
   };
 
   buildInputs = [ cmake ];
