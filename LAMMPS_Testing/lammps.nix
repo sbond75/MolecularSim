@@ -21,7 +21,7 @@ let packages = [
 
       # Packages except some with additional library dependencies:
       "adios" "asphere" /* seems broken: "awpmd"*/ "bocs" "body" "bpm" "brownian" "cg-dna" "cg-sdk" "class2" "colloid"
-      "colvars" "compress" "coreshell" "diffraction" "dipole" "dpd-basic" "dpd-meso" "dpd-react"
+      /* seems broken:*/ "colvars" "compress" "coreshell" "diffraction" "dipole" "dpd-basic" "dpd-meso" "dpd-react"
       "dpd-smooth" "drude" "eff" "extra-compute" "extra-dump" "extra-fix" "extra-molecule"
       "extra-pair" "fep" "gpu" "granular" "h5md" "intel" "interlayer" "kim" "kokkos" "kspace"
       "latboltz" "latte" "machdyn" "manifold" "manybody" "mc" "mdi" "meam" "mesont" "mgpt" "misc"

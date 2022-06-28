@@ -20,6 +20,6 @@ with pkgs;
 
 mkShell {
   buildInputs = [
-    (callPackage ./lammps.nix {}) #lammps
+    (callPackage ./lammps.nix {withMPI = true;}) #lammps
   ];
 }
