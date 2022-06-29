@@ -19,8 +19,6 @@ stdenv.mkDerivation rec {
     #"--with-pic" # Optional, use if `if(BUILD_SHARED_LIBS)` is true in the CMakeLists.txt in `https://github.com/lammps/lammps/tree/0bc6373386cdaccd7d675d994210b3aa0edfe639/cmake/CMakeLists.txt`
   ];
 
-  buildPhase = ''make''; # (`all` target doesn't exist)
-
   # wip trying to fix: {"
   # WARNING: No cycle counter found.  FFTW will use ESTIMATE mode
   #          for all plans.  See the manual for more information.
@@ -36,5 +34,6 @@ stdenv.mkDerivation rec {
     repo = name;
     rev = "v${version}";
     sha256 = "136k0albxs32ic9y3cl8c6nb0nq7aixayrlwllpbqv0zc0vpwa95";
+    fetchSubmodules = true;
   };
 }
