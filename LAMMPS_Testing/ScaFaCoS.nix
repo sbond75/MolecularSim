@@ -1,11 +1,13 @@
-{ stdenv, fetchFromGitHub, autoreconfHook }:
+{ stdenv, fetchFromGitHub, autoreconfHook, mpi }:
 
 stdenv.mkDerivation rec {
   name = "scafacos";
   version = "1.0.1";
 
-  buildInputs = [ autoreconfHook ];
+  nativeBuildInputs = [ autoreconfHook ];
 
+  buildInputs = [ mpi ];
+  
   patches = [ ./scafacos-1.0.1-fix.diff # https://download.lammps.org/thirdparty/scafacos-1.0.1-fix.diff
             ];
 
