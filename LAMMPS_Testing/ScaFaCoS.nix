@@ -10,6 +10,6 @@ stdenv.mkDerivation rec {
     owner = name;
     repo = name;
     rev = "v${version}";
-    sha256 = "0fv5vldmwd6qrdv2wkk946dk9rn9nrv3c84ldvvqqn1spxfzgiop";
+    sha256 = "0fv5vldmwd6qrdv2wkk946dk9rn9nrv3c84ldvvqqn1spxfzgirp";
   };
 }
