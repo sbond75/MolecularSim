@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     owner = name;
     repo = name;
     rev = "v${version}";
-    sha256 = "136k0albxs32ic9y3cl8c6nb0nq7aixayrlwllpbqv0zc0vpwa96";
-    fetchSubmodules = true;
+    sha256 = "152sxbhri74lc8ix5nndkyxfka9rc60cmsfalx67c2wlj99kvflf";
+    fetchSubmodules = true; # NOTE: when using this as `true`, you need to re-compute the sha256 hash or else it'll silently use the old sources... I guess this is a UX flaw in Nix.. (https://issuecloser.com/blog/submodules )
   };
 }
