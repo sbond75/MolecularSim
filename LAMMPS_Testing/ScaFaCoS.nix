@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     owner = name;
     repo = name;
     rev = "v${version}";
-    sha256 = "136k0albxs32ic9y3cl8c6nb0nq7aixayrlwllpbqv0zc0vpwa95";
+    sha256 = "136k0albxs32ic9y3cl8c6nb0nq7aixayrlwllpbqv0zc0vpwa96";
     fetchSubmodules = true;
   };
 }
