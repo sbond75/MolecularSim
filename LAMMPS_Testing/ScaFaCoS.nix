@@ -6,7 +6,8 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ autoreconfHook ];
 
-  patches = [ scafacos-1.0.1-fix.diff # https://download.lammps.org/thirdparty/scafacos-1.0.1-fix.diff ];
+  patches = [ scafacos-1.0.1-fix.diff # https://download.lammps.org/thirdparty/scafacos-1.0.1-fix.diff
+            ];
 
   src = fetchFromGitHub {
     owner = name;
