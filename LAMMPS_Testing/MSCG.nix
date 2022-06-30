@@ -13,6 +13,6 @@ stdenv.mkDerivation rec {
     owner = "uchicago-voth";
     repo = "MSCG-release";
     rev = "${version}";
-    sha256 = "2n7gd3p7cjawnlv9jzds6nrslbvx3lcmcqqqykmlnlpp79ig082w";
+    sha256 = "b659c4206934308fc4b57aa6e668da50444ce664e2e966dc7369349dff118fd5";
   };
 }
