@@ -59,7 +59,7 @@ stdenv.mkDerivation rec {
   # C_10_10.mesocnt 028de73ec828b7830d762702eda571c1
   # TABTP_10_10.mesont 744a739da49ad5e78492c1fc9fd9f8c1
   C_10_10 = fetchurl rec {
-    sha256 = "7c0170ac881721b2cce5a769daca516aa2460e971dcf6adf3d62265bbf9ab793";
+    sha256 = "1v2qljljmxmk3vnx31pc9zzqxmazg3s459fj647mxcd0kz1mdlx7";
     name = "C_10_10.mesocnt";
     url = "https://download.lammps.org/potentials/${name}.028de73ec828b7830d762702eda571c1";
   };
