@@ -5,7 +5,7 @@
 , withMPI ? false
 , mpi
 , gcc
-, pkg-config, callPackage, llvmPackages, bc, cmake, python, git, unixtools, netcdf, gsl, gfortran, eigen, vtk, curl, zstd, fetchurl, hdf5, withMKL ? false, mkl
+, pkg-config, callPackage, llvmPackages, bc, cmake, python, git, unixtools, netcdf, gsl, gfortran, eigen, vtk, curl, zstd, fetchurl, hdf5, withMKL ? false, mkl, opencl, tbb
 }:
 let packages = [
       # All packages (from https://github.com/lammps/lammps/blob/7d5fc356fefa1dd31d64b1cc856134b165febb8a/src/Makefile ) :
@@ -82,7 +82,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ fftw libpng blas lapack gzip gcc
-                  pkg-config llvmPackages.openmp (callPackage ./kim-api.nix {}) bc cmake python git (callPackage ./voro.nix {}) unixtools.xxd netcdf gsl gfortran (callPackage ./ScaFaCoS.nix {}) eigen vtk (callPackage ./LATTE.nix {}) curl zstd (callPackage ./MSCG.nix {}) hdf5 (lib.optional withMKL mkl)
+                  pkg-config llvmPackages.openmp (callPackage ./kim-api.nix {}) bc cmake python git (callPackage ./voro.nix {}) unixtools.xxd netcdf gsl gfortran (callPackage ./ScaFaCoS.nix {}) eigen vtk (callPackage ./LATTE.nix {}) curl zstd (callPackage ./MSCG.nix {}) hdf5 (lib.optional withMKL mkl) opencl tbb
                 ]
     ++ (lib.optionals withMPI [ mpi ]);
 
@@ -156,7 +156,7 @@ install(FILES ${C_10_10} ${TABTP_10_10} DESTINATION ''${LAMMPS_INSTALL_DATADIR}/
   file(RENAME ''${TARGET_SOURCE} ''${CMAKE_BINARY_DIR}/_deps/''${target}-src)' \
       "" \
       --replace \
-      "''${CMAKE_BINARY_DIR}/_deps/\''${target}-src" \
+      "''${CMAKE_BINARY_DIR}/_deps/''${target}-src" \
       "${src_openclLoader}"
   '';
   
