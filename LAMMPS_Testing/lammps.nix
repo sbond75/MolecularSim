@@ -31,6 +31,7 @@ let packages = [
       "tally" "uef" "voronoi" "vtk" "yaff" "atc" "dielectric" "electrode" "ml-iap" "phonon"
     ];
     lammps_includes = "-DLAMMPS_EXCEPTIONS -DLAMMPS_GZIP -DLAMMPS_MEMALIGN=64";
+    betterFetchurl = fetchurl.override { builder = ./betterFetchurlBuilder.sh };
 in
 stdenv.mkDerivation rec {
   # LAMMPS has weird versioning converted to ISO 8601 format
@@ -52,6 +53,23 @@ stdenv.mkDerivation rec {
     sha256 = "00ldmxakw2pba2d0fw96yf0q5v449d4kv0pbjkyv0975w8664qj6";
   };
 
+  # Try: `cat src/*/potentials.txt` in the lammps repo root to see which of these "potentials" should be added here:
+  # In the current case, this outputs (from `src/MESONT/potentials.txt`) :
+  # # list of potential files to be fetched when this package is installed
+  # # potential file  md5sum
+  # C_10_10.mesocnt 028de73ec828b7830d762702eda571c1
+  # TABTP_10_10.mesont 744a739da49ad5e78492c1fc9fd9f8c1
+  C_10_10 = betterFetchurl rec {
+    md5 = "28de73ec828b7830d762702eda571c1";
+    url = "https://download.lammps.org/potentials/C_10_10.mesocnt.${md5}";
+    downloadToDirectory = "lammps/potentials";
+  };
+  TABTP_10_10 = betterFetchurl rec {
+    md5 = "744a739da49ad5e78492c1fc9fd9f8c1";
+    url = "https://download.lammps.org/potentials/TABTP_10_10.mesocnt.${md5}";
+    downloadToDirectory = "lammps/potentials";
+  };
+  
   passthru = {
     inherit mpi;
     inherit packages;
@@ -84,6 +102,35 @@ execute_process(
 )
 get_newest_file(''${CMAKE_BINARY_DIR}/lammps-user-pace-* lib-pace)' \
       "set(lib-pace ${src_lammpsUserPACE})"
+
+    substituteInPlace cmake/Modules/LAMMPSUtils.cmake --replace \
+      '# fetch missing potential files
+function(FetchPotentials pkgfolder potfolder)
+  if(EXISTS "''${pkgfolder}/potentials.txt")
+    file(STRINGS "''${pkgfolder}/potentials.txt" linelist REGEX "^[^#].")
+    foreach(line ''${linelist})
+      string(FIND ''${line} " " blank)
+      math(EXPR plusone "''${blank}+1")
+      string(SUBSTRING ''${line} 0 ''${blank} pot)
+      string(SUBSTRING ''${line} ''${plusone} -1 sum)
+      if(EXISTS ''${LAMMPS_POTENTIALS_DIR}/''${pot})
+        file(MD5 "''${LAMMPS_POTENTIALS_DIR}/''${pot}" oldsum)
+      endif()
+      if(NOT sum STREQUAL oldsum)
+        message(STATUS "Checking external potential ''${pot} from ''${LAMMPS_POTENTIALS_URL}")
+        file(DOWNLOAD "''${LAMMPS_POTENTIALS_URL}/''${pot}.''${sum}" "''${CMAKE_BINARY_DIR}/''${pot}"
+          EXPECTED_HASH MD5=''${sum} SHOW_PROGRESS)
+        file(COPY "''${CMAKE_BINARY_DIR}/''${pot}" DESTINATION ''${LAMMPS_POTENTIALS_DIR})
+      endif()
+    endforeach()
+  endif()
+endfunction(FetchPotentials)' \
+      'function(FetchPotentials pkgfolder potfolder)
+endfunction(FetchPotentials)'
+
+    substituteInPlace cmake/CMakeLists.txt --replace \
+      'install(DIRECTORY ''${LAMMPS_POTENTIALS_DIR} DESTINATION ''${LAMMPS_INSTALL_DATADIR})' \
+      ""
   '';
   
   # configurePhase = ''
