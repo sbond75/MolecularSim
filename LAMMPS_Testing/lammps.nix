@@ -83,7 +83,7 @@ execute_process(
   WORKING_DIRECTORY ''${CMAKE_BINARY_DIR}
 )
 get_newest_file(''${CMAKE_BINARY_DIR}/lammps-user-pace-* lib-pace)' \
-      "(set lib-pace ${src_lammpsUserPACE})"
+      "set(lib-pace ${src_lammpsUserPACE})"
   '';
   
   # configurePhase = ''
