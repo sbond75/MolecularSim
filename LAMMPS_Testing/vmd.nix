@@ -58,6 +58,8 @@ $install_bin_dir="$out/bin";
 
 # Directory where VMD files and executables are installed
 $install_library_dir="$out/lib";'
+
+    patchShebangs vmd-${version}/configure
   '';
 
   configureScript = ''vmd-${version}/configure'';
