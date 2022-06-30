@@ -10,6 +10,6 @@ stdenv.mkDerivation rec {
     owner = "plumed";
     repo = "plumed2";
     rev = "v${version}";
-    sha256 = "267rqw7abxzj371xiy0x99dzb4m2s28mjk88i2yfyfnd7vrji9i6";
+    sha256 = "c5229146711a71bdb1f62f7c14982cc2f76a1b756d0269c67a9f23b396a1622f";
   };
 }
