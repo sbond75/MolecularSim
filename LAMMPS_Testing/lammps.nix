@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
       "if(TRUE)"
 
     substituteInPlace cmake/Modules/Packages/ML-PACE.cmake --replace \
-      "# download library sources to build folder
+      '# download library sources to build folder
 file(DOWNLOAD ''${PACELIB_URL} ''${CMAKE_BINARY_DIR}/libpace.tar.gz EXPECTED_HASH MD5=''${PACELIB_MD5}) #SHOW_PROGRESS
 
 # uncompress downloaded sources
@@ -82,7 +82,7 @@ execute_process(
   COMMAND ''${CMAKE_COMMAND} -E tar xzf libpace.tar.gz
   WORKING_DIRECTORY ''${CMAKE_BINARY_DIR}
 )
-get_newest_file(''${CMAKE_BINARY_DIR}/lammps-user-pace-* lib-pace)" \
+get_newest_file(''${CMAKE_BINARY_DIR}/lammps-user-pace-* lib-pace)' \
       "(set lib-pace ${src_lammpsUserPACE})"
   '';
   
