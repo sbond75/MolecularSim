@@ -59,11 +59,11 @@ stdenv.mkDerivation rec {
   # C_10_10.mesocnt 028de73ec828b7830d762702eda571c1
   # TABTP_10_10.mesont 744a739da49ad5e78492c1fc9fd9f8c1
   C_10_10 = fetchurl rec {
-    md5 = "28de73ec828b7830d762702eda571c1";
+    sha256 = "7c0170ac881721b2cce5a769daca516aa2460e971dcf6adf3d62265bbf9ab793";
     url = "https://download.lammps.org/potentials/C_10_10.mesocnt.${md5}";
   };
   TABTP_10_10 = fetchurl rec {
-    md5 = "744a739da49ad5e78492c1fc9fd9f8c1";
+    sha256 = "6a58120456c6f0e72c5c009e79e4a9f4b752622668c2f402d34462049088486e";
     url = "https://download.lammps.org/potentials/TABTP_10_10.mesocnt.${md5}";
   };
   
