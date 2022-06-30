@@ -5,7 +5,7 @@
 , withMPI ? false
 , mpi
 , gcc
-, pkg-config, callPackage, llvmPackages, bc, cmake, python, git, unixtools, netcdf, gsl, gfortran, eigen, vtk, curl, zstd, fetchurl, hdf5
+, pkg-config, callPackage, llvmPackages, bc, cmake, python, git, unixtools, netcdf, gsl, gfortran, eigen, vtk, curl, zstd, fetchurl, hdf5, mkl
 }:
 let packages = [
       # All packages (from https://github.com/lammps/lammps/blob/7d5fc356fefa1dd31d64b1cc856134b165febb8a/src/Makefile ) :
@@ -68,6 +68,13 @@ stdenv.mkDerivation rec {
     name = "TABTP_10_10.mesont";
     url = "https://download.lammps.org/potentials/${name}.744a739da49ad5e78492c1fc9fd9f8c1";
   };
+
+  # More "external projects"
+  src_openclLoader = fetchTarball {
+    url = "https://download.lammps.org/thirdparty/opencl-loader-2022.01.04.tar.gz";
+    sha256 = "166rqw7acxzj371xiy0x99dzb4m2s28mjk88i2yfyfnd7vrji9i6";
+  };
+
   
   passthru = {
     inherit mpi;
@@ -75,7 +82,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ fftw libpng blas lapack gzip gcc
-                  pkg-config llvmPackages.openmp (callPackage ./kim-api.nix {}) bc cmake python git (callPackage ./voro.nix {}) unixtools.xxd netcdf gsl gfortran (callPackage ./ScaFaCoS.nix {}) eigen vtk (callPackage ./LATTE.nix {}) curl zstd (callPackage ./MSCG.nix {}) hdf5
+                  pkg-config llvmPackages.openmp (callPackage ./kim-api.nix {}) bc cmake python git (callPackage ./voro.nix {}) unixtools.xxd netcdf gsl gfortran (callPackage ./ScaFaCoS.nix {}) eigen vtk (callPackage ./LATTE.nix {}) curl zstd (callPackage ./MSCG.nix {}) hdf5 mkl
                 ]
     ++ (lib.optionals withMPI [ mpi ]);
 
@@ -131,6 +138,26 @@ endfunction(FetchPotentials)'
       'install(DIRECTORY ''${LAMMPS_POTENTIALS_DIR} DESTINATION ''${LAMMPS_INSTALL_DATADIR})' \
       'file(MAKE_DIRECTORY ''${LAMMPS_INSTALL_DATADIR}/potentials)
 install(FILES ${C_10_10} ${TABTP_10_10} DESTINATION ''${LAMMPS_INSTALL_DATADIR}/potentials)'
+
+    substituteInPlace cmake/Modules/ExternalCMakeProject.cmake --replace \
+      'file(MAKE_DIRECTORY ''${CMAKE_BINARY_DIR}/_deps/src)
+  message(STATUS "Downloading ''${url}")
+  file(DOWNLOAD ''${url} ''${CMAKE_BINARY_DIR}/_deps/''${archive} EXPECTED_HASH MD5=''${hash} SHOW_PROGRESS)
+  message(STATUS "Unpacking and configuring ''${archive}")
+  execute_process(COMMAND ''${CMAKE_COMMAND} -E tar xzf ''${CMAKE_BINARY_DIR}/_deps/''${archive}
+    WORKING_DIRECTORY ''${CMAKE_BINARY_DIR}/_deps/src)
+  file(GLOB TARGET_SOURCE "''${CMAKE_BINARY_DIR}/_deps/src/''${basedir}*")
+  list(LENGTH TARGET_SOURCE _num)
+  if(_num GREATER 1)
+    message(FATAL_ERROR "Inconsistent ''${target} library sources. "
+      "Please delete ''${CMAKE_BINARY_DIR}/_deps/src and re-run cmake")
+  endif()
+  file(REMOVE_RECURSE ''${CMAKE_BINARY_DIR}/_deps/''${target}-src)
+  file(RENAME ''${TARGET_SOURCE} ''${CMAKE_BINARY_DIR}/_deps/''${target}-src)' \
+      "" \
+      --replace \
+      ''${CMAKE_BINARY_DIR}/_deps/\''${target}-src' \
+      "${src_openclLoader}"
   '';
   
   # configurePhase = ''
