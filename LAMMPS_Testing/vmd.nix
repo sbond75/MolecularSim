@@ -48,12 +48,12 @@ stdenv.mkDerivation rec {
 
   patchPhase = ''
     substituteInPlace vmd-${version}/configure --replace \
-      '# Directory where VMD startup script is installed, should be in users\' paths.
+      '# Directory where VMD startup script is installed, should be in users''' paths.
 $install_bin_dir="/usr/local/bin";
 
 # Directory where VMD files and executables are installed
 $install_library_dir="/usr/local/lib/$install_name";' \
-      '# Directory where VMD startup script is installed, should be in users\' paths.
+      '# Directory where VMD startup script is installed, should be in users''' paths.
 $install_bin_dir="$out/bin";
 
 # Directory where VMD files and executables are installed
