@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
 
   src = fetchTarball {
     url = "https://www.ks.uiuc.edu/Research/vmd/vmd-${version}/files/final/vmd-${version}.src.tar.gz";
-    sha256 = "3c54934214dd699b34786d0750134bc8e3a16a007ea9597134ef95b5b4ecab7d";
+    sha256 = "081arz6fbf52mng7xhly07mcagw9rjh9wjsarq8xv21v52w9zlvf";
   };
 
   patchPhase = ''
