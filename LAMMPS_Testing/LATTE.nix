@@ -1,10 +1,10 @@
-{ stdenv, fetchFromGitHub, cmake, gfortran }:
+{ stdenv, fetchFromGitHub, cmake, gfortran, blas }:
 
 stdenv.mkDerivation rec {
   name = "latte";
   version = "1.2.2";
 
-  buildInputs = [ cmake gfortran ];
+  buildInputs = [ cmake gfortran blas ];
 
   cmakeFlags = ["../cmake"];
 
