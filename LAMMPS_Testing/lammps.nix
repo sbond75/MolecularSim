@@ -64,7 +64,7 @@ stdenv.mkDerivation rec {
     url = "https://download.lammps.org/potentials/${name}.028de73ec828b7830d762702eda571c1";
   };
   TABTP_10_10 = fetchurl rec {
-    sha256 = "6a58120456c6f0e72c5c009e79e4a9f4b752622668c2f402d34462049088486e";
+    sha256 = "1ba33fsy6qlp11hhpgha92p704rl4schk7hx73n43yi559pv69zr";
     name = "TABTP_10_10.mesont";
     url = "https://download.lammps.org/potentials/${name}.744a739da49ad5e78492c1fc9fd9f8c1";
   };
