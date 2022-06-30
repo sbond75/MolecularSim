@@ -72,7 +72,7 @@ stdenv.mkDerivation rec {
   # More "external projects"
   src_openclLoader = fetchTarball {
     url = "https://download.lammps.org/thirdparty/opencl-loader-2022.01.04.tar.gz";
-    sha256 = "166rqw7acxzj371xiy0x99dzb4m2s28mjk88i2yfyfnd7vrji9i6";
+    sha256 = "19cb3vghf0vrbph6jyirz295hz67x3by0fb8h9qfxi07x9fxbman";
   };
 
   
