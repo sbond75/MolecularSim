@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ cmake gfortran blas lapack ];
 
-  cmakeFlags = ["../cmake"];
+  cmakeFlags = [ "../cmake" ];
 
   src = fetchFromGitHub {
     owner = "lanl";
