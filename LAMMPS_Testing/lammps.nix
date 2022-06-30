@@ -43,6 +43,14 @@ stdenv.mkDerivation rec {
     rev = version;
     sha256 = "061mkvj5pp8p1na5qk9x7wcgpx8hjnclflzk1q0a8rvs1kilpkv2";
   };
+  
+  # "PACE evaluator library"
+  src_lammpsUserPACE = fetchFromGitHub {
+    owner = "ICAMS";
+    repo = "lammps-user-pace";
+    rev = "v.2021.10.25.fix2";
+    sha256 = "00ldmxakw2pba2d0fw96yf0q5v449d4kv0pbjkyv0975w8664qj6";
+  };
 
   passthru = {
     inherit mpi;
@@ -50,7 +58,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ fftw libpng blas lapack gzip gcc
-                  pkg-config llvmPackages.openmp (callPackage ./kim-api.nix {}) bc cmake python git (callPackage ./voro.nix {}) unixtools.xxd netcdf gsl gfortran (callPackage ./ScaFaCoS.nix {}) eigen vtk (callPackage ./LATTE.nix {}) curl zstd (callPackage ./MSCG.nix {}) (callPackage ./lammps-user-pace.nix {})
+                  pkg-config llvmPackages.openmp (callPackage ./kim-api.nix {}) bc cmake python git (callPackage ./voro.nix {}) unixtools.xxd netcdf gsl gfortran (callPackage ./ScaFaCoS.nix {}) eigen vtk (callPackage ./LATTE.nix {}) curl zstd (callPackage ./MSCG.nix {})
                 ]
     ++ (lib.optionals withMPI [ mpi ]);
 
@@ -63,6 +71,19 @@ stdenv.mkDerivation rec {
     substituteInPlace cmake/Modules/Packages/MSCG.cmake --replace \
       "if(MSGC_FOUND)" \
       "if(TRUE)"
+
+    substituteInPlace cmake/Modules/Packages/ML-PACE.cmake --replace \
+      "# download library sources to build folder
+file(DOWNLOAD ''${PACELIB_URL} ''${CMAKE_BINARY_DIR}/libpace.tar.gz EXPECTED_HASH MD5=''${PACELIB_MD5}) #SHOW_PROGRESS
+
+# uncompress downloaded sources
+execute_process(
+  COMMAND ''${CMAKE_COMMAND} -E remove_directory lammps-user-pace*
+  COMMAND ''${CMAKE_COMMAND} -E tar xzf libpace.tar.gz
+  WORKING_DIRECTORY ''${CMAKE_BINARY_DIR}
+)
+get_newest_file(''${CMAKE_BINARY_DIR}/lammps-user-pace-* lib-pace)" \
+      "(set lib-pace ${src_lammpsUserPACE})"
   '';
   
   # configurePhase = ''
