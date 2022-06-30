@@ -64,5 +64,7 @@ $install_library_dir="$out/lib";'
 
   configureScript = ''vmd-${version}/configure'';
 
+  dontAddPrefix = true;
+  
   makeFlags = ''-C vmd-${version}'';
 }
