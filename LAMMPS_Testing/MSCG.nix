@@ -1,11 +1,11 @@
-{ stdenv, fetchFromGitHub, cmake, lapack, gsl, gromacs }:
+{ stdenv, fetchFromGitHub, cmake, lapack, gsl, gromacs, blas }:
 
 stdenv.mkDerivation rec {
   name = "mscg";
   version = "1.7.3.1";
 
   # Based on https://github.com/uchicago-voth/MSCG-release/blob/master/Install
-  buildInputs = [ cmake lapack gsl gromacs ];
+  buildInputs = [ cmake lapack gsl gromacs blas ];
 
   cmakeFlags = [ "../src/CMake" ];
 
