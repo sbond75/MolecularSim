@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ cmake ];
 
-  cmakeFlags= ["../cmake"]
+  cmakeFlags = ["../cmake"];
 
   src = fetchFromGitHub {
     owner = "lanl";
