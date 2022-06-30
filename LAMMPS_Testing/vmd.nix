@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
                   xorg.libXinerama xorg.xinput ];
 
   configureFlags = []
-                   ++ (splitString " " "LINUXAMD64 OPENGL OPENGLPBUFFER FLTK TK ACTC "
+                   ++ (lib.splitString " " "LINUXAMD64 OPENGL OPENGLPBUFFER FLTK TK ACTC "
                        #+ "CUDA "
                        + "IMD LIBSBALL XINERAMA XINPUT LIBOPTIX LIBOSPRAY LIBTACHYON VRPN NETCDF COLVARS TCL PYTHON PTHREADS NUMPY SILENT ICC") ++ [
 
