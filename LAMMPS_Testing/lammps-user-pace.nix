@@ -13,6 +13,6 @@ stdenv.mkDerivation rec {
     owner = "ICAMS";
     repo = "lammps-user-pace";
     rev = "v.${version}";
-    sha256 = "166rqw7abxzj371xiy0x99dzb4m2s28mjk88i2yfyfnd7vrji9i7";
+    sha256 = "00ldmxakw2pba2d0fw96yf0q5v449d4kv0pbjkyv0975w8664qj6";
   };
 }
