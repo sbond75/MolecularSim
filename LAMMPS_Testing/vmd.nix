@@ -62,5 +62,5 @@ $install_library_dir="$out/lib";'
 
   configureScript = ''vmd-${version}/configure'';
 
-  makeFlags = ''-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES} -C vmd-${version}'';
+  makeFlags = ''-C vmd-${version}'';
 }
