@@ -43,6 +43,7 @@ stdenv.mkDerivation rec {
   src = fetchurl {
     url = "https://www.ks.uiuc.edu/Research/vmd/vmd-${version}/files/final/vmd-${version}.src.tar.gz";
     sha256 = "0a7ijps3qmp2qkz0ys31bd96dkz3vg1vdm0fa7z21minr16k3p2v";
+    sourceRoot = "."; # To fix "unpacker produced multiple directories" ( https://nix-dev.science.uu.narkive.com/E0kF0Rh2/fetchurl-and-unpacker-produced-multiple-directories )
   };
 
   patchPhase = ''
