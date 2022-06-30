@@ -62,11 +62,23 @@ $install_library_dir="$out/lib";'
     patchShebangs vmd-${version}/configure
   '';
 
-  preConfigure = ''cd vmd-${version}'';
+  preConfigure = ''
+    # Build plugins
+    cd plugins
+    export PLUGINDIR="$out/plugins"
+    make -j $NIX_BUILD_CORES distrib
+
+    # Prepare for actual build
+    cd ../vmd-${version}
+  '';
   
   #configureScript = ''vmd-${version}/configure'';
 
   dontAddPrefix = true; # `--prefix` in the configure script isn't supported
   
-  makeFlags = ''-C vmd-${version}'';
+  #makeFlags = ''-C vmd-${version}'';
+
+  # preBuild = ''
+  #   cd 
+  # '';
 }
