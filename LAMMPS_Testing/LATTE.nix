@@ -10,6 +10,6 @@ stdenv.mkDerivation rec {
     owner = "lanl";
     repo = "LATTE";
     rev = "v${version}";
-    sha256 = "153sxbhri74lc8ix5nndkyxfka9rc60cmsfalx67c2wlj99kvflf";
+    sha256 = "1n7gd3p7cjawnlv9jzds6nrslbvx3lcmcqqqykmlnlpp79ig081j";
   };
 }
