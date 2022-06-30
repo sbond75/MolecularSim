@@ -156,7 +156,7 @@ install(FILES ${C_10_10} ${TABTP_10_10} DESTINATION ''${LAMMPS_INSTALL_DATADIR}/
   file(RENAME ''${TARGET_SOURCE} ''${CMAKE_BINARY_DIR}/_deps/''${target}-src)' \
       "" \
       --replace \
-      '''''${CMAKE_BINARY_DIR}/_deps/\''${target}-src' \
+      "''${CMAKE_BINARY_DIR}/_deps/\''${target}-src" \
       "${src_openclLoader}"
   '';
   
