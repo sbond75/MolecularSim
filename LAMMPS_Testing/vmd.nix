@@ -57,7 +57,10 @@ $install_library_dir="/usr/local/lib/$install_name";' \
 $install_bin_dir="$out/bin";
 
 # Directory where VMD files and executables are installed
-$install_library_dir="$out/lib";'
+$install_library_dir="$out/lib";' \
+      --replace \
+      '"plugins' \
+      '"${out}/plugins'
 
     patchShebangs vmd-${version}/configure
   '';
