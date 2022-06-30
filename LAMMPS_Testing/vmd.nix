@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, autoreconfHook, perl, libGL, fltk, tk, tcl, xorg }:
+{ lib, stdenv, fetchFromGitHub, autoreconfHook, perl, libGL, fltk, tk, tcl, xorg }:
 
 stdenv.mkDerivation rec {
   name = "vmd";
