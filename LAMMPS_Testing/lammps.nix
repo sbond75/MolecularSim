@@ -31,7 +31,6 @@ let packages = [
       "tally" "uef" "voronoi" "vtk" "yaff" "atc" "dielectric" "electrode" "ml-iap" "phonon"
     ];
     lammps_includes = "-DLAMMPS_EXCEPTIONS -DLAMMPS_GZIP -DLAMMPS_MEMALIGN=64";
-    betterFetchurl = fetchurl.override { builder = ./betterFetchurlBuilder.sh };
 in
 stdenv.mkDerivation rec {
   # LAMMPS has weird versioning converted to ISO 8601 format
@@ -59,15 +58,13 @@ stdenv.mkDerivation rec {
   # # potential file  md5sum
   # C_10_10.mesocnt 028de73ec828b7830d762702eda571c1
   # TABTP_10_10.mesont 744a739da49ad5e78492c1fc9fd9f8c1
-  C_10_10 = betterFetchurl rec {
+  C_10_10 = fetchurl rec {
     md5 = "28de73ec828b7830d762702eda571c1";
     url = "https://download.lammps.org/potentials/C_10_10.mesocnt.${md5}";
-    downloadToDirectory = "lammps/potentials";
   };
-  TABTP_10_10 = betterFetchurl rec {
+  TABTP_10_10 = fetchurl rec {
     md5 = "744a739da49ad5e78492c1fc9fd9f8c1";
     url = "https://download.lammps.org/potentials/TABTP_10_10.mesocnt.${md5}";
-    downloadToDirectory = "lammps/potentials";
   };
   
   passthru = {
@@ -130,7 +127,8 @@ endfunction(FetchPotentials)'
 
     substituteInPlace cmake/CMakeLists.txt --replace \
       'install(DIRECTORY ''${LAMMPS_POTENTIALS_DIR} DESTINATION ''${LAMMPS_INSTALL_DATADIR})' \
-      ""
+      'file(MAKE_DIRECTORY ''${LAMMPS_INSTALL_DATADIR}/potentials)
+install(FILES ${C_10_10} ${TABTP_10_10} DESTINATION ''${LAMMPS_INSTALL_DATADIR}/potentials)'
   '';
   
   # configurePhase = ''
