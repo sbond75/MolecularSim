@@ -46,8 +46,6 @@ stdenv.mkDerivation rec {
   };
   sourceRoot = "."; # To fix "unpacker produced multiple directories" ( https://nix-dev.science.uu.narkive.com/E0kF0Rh2/fetchurl-and-unpacker-produced-multiple-directories )
 
-  makeFlags = ''-C vmd-${version}'';
-
   patchPhase = ''
     substituteInPlace vmd-${version}/configure --replace \
       '# Directory where VMD startup script is installed, should be in users'"'"' paths.
@@ -61,4 +59,8 @@ $install_bin_dir="$out/bin";
 # Directory where VMD files and executables are installed
 $install_library_dir="$out/lib";'
   '';
+
+  configureScript = ''vmd-${version}/configure'';
+
+  makeFlags = ''-j${NIX_BUILD_CORES} -l${NIX_BUILD_CORES} -C vmd-${version}'';
 }
