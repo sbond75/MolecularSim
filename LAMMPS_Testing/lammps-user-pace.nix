@@ -7,8 +7,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ cmake ];
 
-  cmakeFlags = [ "../src/CMake" ];
-
   src = fetchFromGitHub {
     owner = "ICAMS";
     repo = "lammps-user-pace";
