@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ fftw libpng blas lapack gzip gcc
-                  pkg-config llvmPackages.openmp (callPackage ./kim-api.nix {}) bc cmake python git (callPackage ./voro.nix {}) unixtools.xxd netcdf gsl gfortran (callPackage ./ScaFaCoS.nix {}) eigen vtk (callPackage ./LATTE.nix {}) curl zstd
+                  pkg-config llvmPackages.openmp (callPackage ./kim-api.nix {}) bc cmake python git (callPackage ./voro.nix {}) unixtools.xxd netcdf gsl gfortran (callPackage ./ScaFaCoS.nix {}) eigen vtk (callPackage ./LATTE.nix {}) curl zstd (callPackage ./MSCG.nix {})
                 ]
     ++ (lib.optionals withMPI [ mpi ]);
 
