@@ -50,7 +50,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ fftw libpng blas lapack gzip gcc
-                  pkg-config llvmPackages.openmp (callPackage ./kim-api.nix {}) bc cmake python git (callPackage ./voro.nix {}) unixtools.xxd netcdf gsl gfortran (callPackage ./ScaFaCoS.nix {}) eigen vtk (callPackage ./LATTE.nix {}) curl zstd (callPackage ./MSCG.nix {})
+                  pkg-config llvmPackages.openmp (callPackage ./kim-api.nix {}) bc cmake python git (callPackage ./voro.nix {}) unixtools.xxd netcdf gsl gfortran (callPackage ./ScaFaCoS.nix {}) eigen vtk (callPackage ./LATTE.nix {}) curl zstd (callPackage ./MSCG.nix {}) (callPackage ./lammps-user-pace.nix {})
                 ]
     ++ (lib.optionals withMPI [ mpi ]);
 
@@ -58,6 +58,12 @@ stdenv.mkDerivation rec {
     (builtins.map (pkg: "-DPKG_${lib.toUpper pkg}=yes") packages) # Based on https://docs.lammps.org/Build_package.html and https://docs.lammps.org/Build_cmake.html
     ++ [ "../cmake" ] # Sets the location of CMakeLists.txt to be in the folder https://github.com/lammps/lammps/tree/develop/cmake
   ;
+
+  patchPhase = ''
+    substituteInPlace cmake/Modules/Packages/MSCG.cmake --replace \
+      "if(MSGC_FOUND)" \
+      "if(TRUE)"
+  '';
   
   # configurePhase = ''
   #   cd src
