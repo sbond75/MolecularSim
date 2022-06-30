@@ -60,7 +60,7 @@ $install_bin_dir="$out/bin";
 $install_library_dir="$out/lib";' \
       --replace \
       '"plugins' \
-      '"${out}/plugins'
+      '"$out/plugins'
 
     patchShebangs vmd-${version}/configure
   '';
