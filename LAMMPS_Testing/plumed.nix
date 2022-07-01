@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, cmake, gnupatch, python, mpi, blas, lapack, callPackage, doxygen, graphviz, zlib }:
+{ stdenv, fetchFromGitHub, cmake, gnupatch, python, mpi, blas, lapack, callPackage, doxygen, graphviz, zlib, fetchPypi }:
 
 stdenv.mkDerivation rec {
   name = "plumed2";
