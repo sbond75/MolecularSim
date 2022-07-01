@@ -10,6 +10,6 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    pythonPackages.numpy (callPackage ./biopython.nix {buildPythonPackage=buildPythonPackage;}) pythonPackages.pyparsing pythonPackages.scipy
+    pythonPackages.numpy (callPackage ./biopython.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;}) pythonPackages.pyparsing pythonPackages.scipy
   ];
 }
