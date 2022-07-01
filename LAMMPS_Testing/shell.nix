@@ -20,6 +20,6 @@ with pkgs;
 
 mkShell {
   buildInputs = [
-    (callPackage ./lammps.nix {withMPI = true; fetchPypi=python.fetchPypi; buildPythonPackage=pythonPackages.buildPythonPackage;}) #lammps
+    (callPackage ./lammps.nix {withMPI = true; fetchPypi=pythonPackages.fetchPypi; buildPythonPackage=pythonPackages.buildPythonPackage;}) #lammps
   ];
 }
