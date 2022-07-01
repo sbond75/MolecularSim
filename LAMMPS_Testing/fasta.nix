@@ -11,7 +11,7 @@ stdenv.mkDerivation rec {
     # For fasta 36 only:
     url = "https://fasta.bioch.virginia.edu/wrpearson/fasta/fasta36/fasta-${version}.tar.gz";
     
-    sha256 = "08iaji77azw9lz468cbg5456qnwdg84jb3gyg0jr099xhq0gpp35";
+    sha256 = "04ckih4dwkwxlrz9c3h532wzd2lpic0la4l50fyrd215g4j7m8gm";
   };
   
   preConfigure = ''
