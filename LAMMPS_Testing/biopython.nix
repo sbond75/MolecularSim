@@ -3,7 +3,7 @@
 { lib
 , buildPythonPackage
 , fetchPypi
-, numpy
+, pythonPackages
 }:
 
 buildPythonPackage rec {
@@ -15,7 +15,7 @@ buildPythonPackage rec {
     sha256 = "bdb07eac99d3b8abd7ba56ff4bedec9263f76dfc3c3f450e7d2e2bcdecf8559b";
   };
 
-  propagatedBuildInputs = [ numpy ];
+  propagatedBuildInputs = [ pythonPackages.numpy ];
   # Checks try to write to $HOME, which does not work with nix
   doCheck = false;
   meta = {
