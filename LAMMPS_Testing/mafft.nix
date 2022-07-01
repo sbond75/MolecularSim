@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, gnumake }:
+{ stdenv, fetchFromGitHub, fetchurl, gnumake }:
 
 stdenv.mkDerivation rec {
   name = "mafft";
