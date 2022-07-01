@@ -7,7 +7,7 @@ let
   fasta = (callPackage ./fasta.nix {});
   my-python-packages = (python.withPackages(ps: with ps; [
     numpy
-    (callPackage ./ProDy.nix {fetchPypi=fetchPypi;})
+    (callPackage ./ProDy.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;})
   ]));
 in
 stdenv.mkDerivation rec {
