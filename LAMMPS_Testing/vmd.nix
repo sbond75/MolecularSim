@@ -28,9 +28,9 @@ stdenv.mkDerivation rec {
                 ];
 
   configureFlags = []
-                   ++ (lib.splitString " " ("LINUXAMD64 OPENGL OPENGLPBUFFER FLTK TK ACTC "
-                                            + (if withCuda then "CUDA " else "") +
-                                            + "IMD LIBSBALL XINERAMA XINPUT " +
+                   ++ (lib.splitString " " ("LINUXAMD64 OPENGL OPENGLPBUFFER FLTK TK ACTC " +
+                                            (if withCuda then "CUDA " else "") +
+                                            "IMD LIBSBALL XINERAMA XINPUT " +
                                             #+ "LIBOPTIX " +   # <-- not supported for now -- it's NVIDIA Optix and there doesn't appear to be a Nix package for it yet.
                                             "LIBOSPRAY LIBTACHYON VRPN NETCDF COLVARS TCL PYTHON PTHREADS NUMPY SILENT ICC")) ++ [
 
