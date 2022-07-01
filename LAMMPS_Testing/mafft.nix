@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
   # Based on https://mafft.cbrc.jp/alignment/software/source.html
   src = fetchurl {
     url = "https://mafft.cbrc.jp/alignment/software/mafft-${version}-with-extensions-src.tgz";
-    sha256 = "07iaji77azw9lz468cbg5456qnwdg84jb3gyg0jr099xhq0gpp35";
+    sha256 = "1zz61jaikbpy3jzafigd1hfag5gkb79ksfyc7cin16fd1xkphjpm";
   };
   sourceRoot = "mafft-${version}-with-extensions";
 
