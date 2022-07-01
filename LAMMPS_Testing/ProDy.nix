@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchPypi, buildPythonPackage, numpy, pyparsing, scipy }:
+{ lib, stdenv, fetchPypi, buildPythonPackage, callPackage, numpy, pyparsing, scipy }:
 
 buildPythonPackage rec {
   pname = "ProDy";
