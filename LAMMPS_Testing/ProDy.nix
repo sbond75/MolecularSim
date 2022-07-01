@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchPypi, buildPythonPackage, callPackage, python }:
+{ lib, stdenv, fetchPypi, buildPythonPackage, callPackage, pythonPackages }:
 
 buildPythonPackage rec {
   pname = "ProDy";
@@ -10,6 +10,6 @@ buildPythonPackage rec {
   };
 
   propagatedBuildInputs = [
-    python.numpy (callPackage ./biopython.nix {}) python.pyparsing python.scipy
+    pythonPackages.numpy (callPackage ./biopython.nix {}) pythonPackages.pyparsing pythonPackages.scipy
   ];
 }
