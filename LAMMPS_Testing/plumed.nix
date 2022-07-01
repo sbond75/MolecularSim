@@ -4,7 +4,7 @@ stdenv.mkDerivation rec {
   name = "plumed2";
   version = "2.7.4";
 
-  buildInputs = [ cmake python mpi blas lapack (callPackage ./vmd.nix {fetchPypi=fetchPypi;}) doxygen graphviz zlib ];
+  buildInputs = [ cmake python mpi blas lapack (callPackage ./vmd.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;}) doxygen graphviz zlib ];
 
   src = fetchFromGitHub {
     owner = "plumed";
