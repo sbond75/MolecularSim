@@ -1,6 +1,6 @@
 # Based on https://github.com/NixOS/nixpkgs/blob/nixos-22.05/pkgs/development/tools/documentation/doxygen/default.nix#L37
 
-{ lib, stdenv, cmake, fetchFromGitHub, python3, flex, bison, qt5, CoreServices, libiconv, buildDoxysearch ? true }:
+{ lib, stdenv, cmake, fetchFromGitHub, python3, flex, bison, qt5, CoreServices, libiconv, buildDoxysearch ? true, xapian }:
 
 stdenv.mkDerivation rec {
   pname = "doxygen";
@@ -23,7 +23,8 @@ stdenv.mkDerivation rec {
   buildInputs =
        lib.optionals (qt5 != null) (with qt5; [ qtbase wrapQtAppsHook ])
     ++ lib.optional stdenv.isSunOS libiconv
-    ++ lib.optionals stdenv.isDarwin [ CoreServices libiconv ];
+    ++ lib.optionals stdenv.isDarwin [ CoreServices libiconv ]
+    ++ lib.optional buildDoxysearch xapian;
 
   cmakeFlags =
     [ "-DICONV_INCLUDE_DIR=${libiconv}/include" ] ++

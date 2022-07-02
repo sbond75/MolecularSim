@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd
 
                   # Linux stuff (TODO: macOS support etc.)
-                  xorg.libXinerama xorg.xinput (lib.optional withCuda cudatoolkit) tcsh
+                  xorg.libXinerama xorg.xinput ] ++ (lib.optional withCuda cudatoolkit) ++ [ tcsh
                   
                   # Linux stuff for misc things mostly within the TCL code of vmd:
                   bison xterm binutils gnuplot latex2html mafft fasta python27
