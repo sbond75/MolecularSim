@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, withCuda ? true, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz
+{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, withCuda ? true, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin
 }:
 
 let
@@ -8,7 +8,7 @@ let
     numpy
     (callPackage ./ProDy.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;})
   ]));
-  doxygen = (callPackage ./doxygen.nix {});
+  doxygen = (callPackage ./doxygen.nix {CoreServices=darwin.apple_sdk.frameworks.CoreServices;});
 in
 stdenv.mkDerivation rec {
   name = "vmd";
