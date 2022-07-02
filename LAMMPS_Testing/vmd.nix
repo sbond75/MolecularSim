@@ -76,7 +76,7 @@ stdenv.mkDerivation rec {
   CPATH = lib.makeSearchPathOutput "dev" "include" buildInputs; # https://github.com/NixOS/nix/issues/3276
   # https://gist.github.com/CMCDragonkai/8b5cc041cea4a7e45a9cb89f849eaaf8 #
   LIBRARY_PATH = lib.makeLibraryPath buildInputs;
-  LD_LIBRARY_PATH = lib.makeLibraryPath propagatedBuildInputs;
+  #LD_LIBRARY_PATH = lib.makeLibraryPath propagatedBuildInputs;
   # #
 
   patchPhase = ''
