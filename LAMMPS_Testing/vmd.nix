@@ -1,4 +1,6 @@
-{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, withCuda ? true, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin, xxd
+{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, withCuda ? true, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin, xxd,
+  
+  intelCompilers # TODO: should be optional, try gcc if not provided
 }:
 
 let
@@ -17,15 +19,18 @@ stdenv.mkDerivation rec {
   buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd
 
                   # Linux stuff (TODO: macOS support etc.)
-                  xorg.libXinerama xorg.xinput ] ++ (lib.optional withCuda cudatoolkit) ++ [ tcsh
-                  
-                  # Linux stuff for misc things mostly within the TCL code of vmd:
-                  bison xterm binutils gnuplot latex2html mafft fasta python27
-                  last # For `lastal` used in `plugins/mafft.new/mafft-data/core/pairlocalalign.c`
-                  imagemagick # For `display` command in `vmd-1.9.3/configure` where it says `$def_imageviewer="display %s";`
-                  
-                  doxygen graphviz # <-- Not sure if these two are needed
-                ];
+                  xorg.libXinerama xorg.xinput ] ++ (lib.optional withCuda cudatoolkit)
+  ++ [ tcsh
+       
+       # Linux stuff for misc things mostly within the TCL code of vmd:
+       bison xterm binutils gnuplot latex2html mafft fasta python27
+       last # For `lastal` used in `plugins/mafft.new/mafft-data/core/pairlocalalign.c`
+       imagemagick # For `display` command in `vmd-1.9.3/configure` where it says `$def_imageviewer="display %s";`
+       
+       doxygen graphviz # <-- Not sure if these two are needed
+
+       intelCompilers # TODO: make this optional
+     ];
 
   configureFlags = []
                    ++ (lib.splitString " " ("LINUXAMD64 OPENGL OPENGLPBUFFER FLTK TK ACTC " +
