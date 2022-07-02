@@ -225,7 +225,7 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     echo "Note: It's ok if some of these don't match (since they were replaced in the configure script and that seems to generate the Makefile) :"
     substituteInPlace src/Makefile --replace "/usr/local/lib/vmd" "$out/lib" --replace '	if [ ! -d "/usr/local/bin" ]; then \
 		$(MAKEDIR) "/usr/local/bin" ; \' "" --replace "/bin/csh" `which tcsh` --replace "/bin/sh" `which sh` --replace "/usr/local/bin" "$out/bin"
-    cat src/Makefile | less
+    cat src/Makefile
   '';
   
   #configureScript = ''vmd-${version}/configure'';
