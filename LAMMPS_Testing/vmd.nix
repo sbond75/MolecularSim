@@ -236,7 +236,7 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
   
   #configureScript = ''vmd-${version}/configure'';
 
-  dontAddPrefix = true; # `--prefix` in the configure script isn't supported
+  #dontAddPrefix = true; # `--prefix` in the configure script isn't supported
   
   #makeFlags = ''-C vmd-${version}'';
 
