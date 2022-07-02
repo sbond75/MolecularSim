@@ -29,7 +29,7 @@ in
 mkShell {
   buildInputs = [
     (callPackage ./lammps.nix {withMPI = true; fetchPypi=pythonPackages.fetchPypi; buildPythonPackage=pythonPackages.buildPythonPackage;
-                               intelCompilers=(nur.repos.dguibert.overlays.intel-compilers pkgs pkgs).intelPackages_2020.compilers; # More info: https://github.com/dguibert/nur-packages/blob/master/overlays/intel-compilers-overlay/default.nix
+                               intelCompilers=(nur.repos.dguibert.overlays.intel-compilers pkgs pkgs).intelPackages_2020_4_304.compilers; # More info: https://github.com/dguibert/nur-packages/blob/master/overlays/intel-compilers-overlay/default.nix
                               }) #lammps
   ];
 }
