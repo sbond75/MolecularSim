@@ -1,6 +1,6 @@
 { lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, withCuda ? true, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin, xxd,
   
-  intelCompilers # TODO: should be optional, try gcc if not provided
+  intelCompilers ? {} # optional, will try gcc if not provided
 }:
 
 let
@@ -29,7 +29,8 @@ stdenv.mkDerivation rec {
        
        doxygen graphviz # <-- Not sure if these two are needed
 
-       intelCompilers # TODO: make this optional
+     ] ++ (lib.optional (intelCompilers != {}) intelCompilers)
+  ++ [
      ];
 
   configureFlags = []
@@ -37,7 +38,7 @@ stdenv.mkDerivation rec {
                                             (if withCuda then "CUDA " else "") +
                                             "IMD LIBSBALL XINERAMA XINPUT " +
                                             #+ "LIBOPTIX " +   # <-- not supported for now -- it's NVIDIA Optix and there doesn't appear to be a Nix package for it yet.
-                                            "LIBOSPRAY LIBTACHYON VRPN NETCDF COLVARS TCL PYTHON PTHREADS NUMPY SILENT ICC")) ++ [
+                                            "LIBOSPRAY LIBTACHYON VRPN NETCDF COLVARS TCL PYTHON PTHREADS NUMPY SILENT ${if (intelCompilers != {}) "ICC" else "GCC"}")) ++ [
 
 # Misc other options:
 # "ACTC"

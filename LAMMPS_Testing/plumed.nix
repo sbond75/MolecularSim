@@ -1,6 +1,6 @@
 { stdenv, fetchFromGitHub, cmake, gnupatch, python, mpi, blas, lapack, callPackage, graphviz, zlib, fetchPypi, buildPythonPackage, darwin,
 
-  intelCompilers # TODO: make this optional
+  intelCompilers ? {}
 }:
 
 stdenv.mkDerivation rec {

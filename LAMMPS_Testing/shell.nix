@@ -18,18 +18,18 @@
 }) { }}:
 with pkgs;
 
-let
-  nur = import (builtins.fetchTarball {
-    # Get the revision by choosing a version from https://github.com/nix-community/NUR/commits/master
-    url = "https://github.com/nix-community/NUR/archive/9edfb0c8f3fb110ec46216b648be2cbbd3592346.tar.gz";
-    # Get the hash by running `nix-prefetch-url --unpack <url>` on the above url
-    sha256 = "0mhychkvgkxg1y6p3mvq4699prhr3zw3706xrydjw8bbf6cm5z3p";
-  }) {pkgs=pkgs;}; # https://discourse.nixos.org/t/problems-setting-up-nur/10690 , readme on https://github.com/nix-community/NUR
-in
+# let
+#   nur = import (builtins.fetchTarball {
+#     # Get the revision by choosing a version from https://github.com/nix-community/NUR/commits/master
+#     url = "https://github.com/nix-community/NUR/archive/9edfb0c8f3fb110ec46216b648be2cbbd3592346.tar.gz";
+#     # Get the hash by running `nix-prefetch-url --unpack <url>` on the above url
+#     sha256 = "0mhychkvgkxg1y6p3mvq4699prhr3zw3706xrydjw8bbf6cm5z3p";
+#   }) {pkgs=pkgs;}; # https://discourse.nixos.org/t/problems-setting-up-nur/10690 , readme on https://github.com/nix-community/NUR
+# in
 mkShell {
   buildInputs = [
     (callPackage ./lammps.nix {withMPI = true; fetchPypi=pythonPackages.fetchPypi; buildPythonPackage=pythonPackages.buildPythonPackage;
-                               intelCompilers=(nur.repos.dguibert.overlays.intel-compilers nur.repos.dguibert pkgs).intelPackages_2020_4_304.compilers; # More info: https://github.com/dguibert/nur-packages/blob/master/overlays/intel-compilers-overlay/default.nix
+                               # Not working: #intelCompilers=(nur.repos.dguibert.overlays.intel-compilers pkgs pkgs).intelPackages_2020_4_304.compilers; # More info: https://github.com/dguibert/nur-packages/blob/master/overlays/intel-compilers-overlay/default.nix
                               }) #lammps
   ];
 }
