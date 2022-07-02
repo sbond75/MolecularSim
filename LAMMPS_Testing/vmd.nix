@@ -74,7 +74,10 @@ stdenv.mkDerivation rec {
   sourceRoot = "."; # To fix "unpacker produced multiple directories" ( https://nix-dev.science.uu.narkive.com/E0kF0Rh2/fetchurl-and-unpacker-produced-multiple-directories )
 
   CPATH = lib.makeSearchPathOutput "dev" "include" buildInputs; # https://github.com/NixOS/nix/issues/3276
-  LIBRARY_PATH= lib.makeLibraryPath drv.buildInputs; # https://gist.github.com/CMCDragonkai/8b5cc041cea4a7e45a9cb89f849eaaf8
+  # https://gist.github.com/CMCDragonkai/8b5cc041cea4a7e45a9cb89f849eaaf8 #
+  LIBRARY_PATH = lib.makeLibraryPath buildInputs;
+  LD_LIBRARY_PATH = lib.makeLibraryPath propagatedBuildInputs;
+  # #
 
   patchPhase = ''
     substituteInPlace vmd-${version}/configure --replace \
