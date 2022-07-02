@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
                                             (if withCuda then "CUDA " else "") +
                                             "IMD LIBSBALL XINERAMA XINPUT " +
                                             #+ "LIBOPTIX " +   # <-- not supported for now -- it's NVIDIA Optix and there doesn't appear to be a Nix package for it yet.
-                                            "LIBOSPRAY LIBTACHYON VRPN NETCDF COLVARS TCL PYTHON PTHREADS NUMPY SILENT ${if (intelCompilers != {}) "ICC" else "GCC"}")) ++ [
+                                            "LIBOSPRAY LIBTACHYON VRPN NETCDF COLVARS TCL PYTHON PTHREADS NUMPY SILENT ${if (intelCompilers != {}) then "ICC" else "GCC"}")) ++ [
 
 # Misc other options:
 # "ACTC"
