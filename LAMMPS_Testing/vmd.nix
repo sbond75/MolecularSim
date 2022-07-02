@@ -254,6 +254,7 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
   preInstall = ''
     #make -j $NIX_BUILD_CORES linux.amd64.opengl # Optional, it reconfigures for using ICC instead of GCC though and we already have this set up in a `configureFlags` declaration within Nix code above.
 
+    echo "CPATH: $CPATH"
     cd src
     make veryclean
     make -j $NIX_BUILD_CORES
