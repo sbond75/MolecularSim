@@ -239,7 +239,10 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
   # '';
 
   preInstall = ''
-    cd src
     make -j $NIX_BUILD_CORES linux.amd64.opengl
+
+    cd src
+    make veryclean
+    make -j $NIX_BUILD_CORES
   '';
 }
