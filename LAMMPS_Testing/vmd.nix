@@ -90,8 +90,7 @@ $install_library_dir="$out/lib";' \
     substituteInPlace vmd-${version}/src/vmd.C --replace "/usr/local/lib/vmd" "$out/lib"
     substituteInPlace vmd-${version}/src/config.h --replace "/usr/local/lib/vmd" "$out/lib"
     substituteInPlace vmd-${version}/src/TclTextInterp.C --replace "/usr/local/lib/vmd" "$out/lib"
-    substituteInPlace vmd-${version}/src/AtomParser.C --replace "/usr/local/lib/vmd" "$out/lib" \
-      --replace "/usr/ccs/bin/yaccpar" `which yacc` # TODO: <-- untested
+    substituteInPlace vmd-${version}/src/AtomParser.C --replace "/usr/ccs/bin/yaccpar" `which yacc` # TODO: <-- untested
     patchShebangs vmd-${version}/bin/vmd.csh
     substituteInPlace vmd-${version}/bin/vmd.csh --replace "/usr/local/lib/vmd" "$out/lib" --replace "/usr/bin/X11/xterm" `which xterm`
     patchShebangs vmd-${version}/bin/vmd.sh
