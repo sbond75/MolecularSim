@@ -6,6 +6,8 @@
 , mpi
 , gcc
 , pkg-config, callPackage, llvmPackages, bc, cmake, python, git, unixtools, netcdf, gsl, gfortran, eigen, vtk, curl, zstd, fetchurl, hdf5, withMKL ? false, mkl, opencl-headers, tbb, ffmpeg, clang-tools, fetchPypi ? python.fetchPypi, buildPythonPackage ? python.buildPythonPackage
+  
+, intelCompilers # TODO: make this optional
 }:
 let packages = [
       # All packages (from https://github.com/lammps/lammps/blob/7d5fc356fefa1dd31d64b1cc856134b165febb8a/src/Makefile ) :
@@ -82,7 +84,7 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ fftw libpng blas lapack gzip gcc
-                  pkg-config llvmPackages.openmp (callPackage ./kim-api.nix {}) bc cmake python git (callPackage ./voro.nix {}) unixtools.xxd netcdf gsl gfortran (callPackage ./ScaFaCoS.nix {}) eigen vtk (callPackage ./LATTE.nix {}) curl zstd (callPackage ./MSCG.nix {}) hdf5 (lib.optional withMKL mkl) opencl-headers tbb ffmpeg clang-tools (callPackage ./plumed.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;})
+                  pkg-config llvmPackages.openmp (callPackage ./kim-api.nix {}) bc cmake python git (callPackage ./voro.nix {}) unixtools.xxd netcdf gsl gfortran (callPackage ./ScaFaCoS.nix {}) eigen vtk (callPackage ./LATTE.nix {}) curl zstd (callPackage ./MSCG.nix {}) hdf5 (lib.optional withMKL mkl) opencl-headers tbb ffmpeg clang-tools (callPackage ./plumed.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage; intelCompilers=intelCompilers;})
                 ]
     ++ (lib.optionals withMPI [ mpi ]);
 
