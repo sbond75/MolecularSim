@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     owner = "doxygen";
     repo = "doxygen";
     rev = "Release_${lib.replaceStrings [ "." ] [ "_" ] version}";
-    sha256 = "2xfsv31ffrv03qhxlscav0r5mdi3qz4654ib9cq35rvmxfj999bw";
+    sha256 = "1xfsv31ffrv03qhxlscav0r5mdi3qz4654ib9cq35rvmxfj999bp";
   };
 
   nativeBuildInputs = [
