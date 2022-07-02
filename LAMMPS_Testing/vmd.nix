@@ -16,11 +16,12 @@ stdenv.mkDerivation rec {
   name = "vmd";
   version = "1.9.3";
 
-  buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd xorg.libX11
+  buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd
 
-                  # Linux stuff (TODO: macOS support etc.)
-                  xorg.libXinerama xorg.xinput ] ++ (lib.optional withCuda cudatoolkit)
+                ] ++ (lib.optional withCuda cudatoolkit)
   ++ [ tcsh
+       # Linux stuff (TODO: macOS support etc.)
+       xorg.libXinerama xorg.xinput xorg.libX11 xorg.libXi
        
        # Linux stuff for misc things mostly within the TCL code of vmd:
        bison xterm binutils gnuplot latex2html mafft fasta python27
