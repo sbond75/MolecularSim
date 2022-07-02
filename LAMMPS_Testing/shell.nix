@@ -28,6 +28,8 @@ let
 in
 mkShell {
   buildInputs = [
-    (callPackage ./lammps.nix {withMPI = true; fetchPypi=pythonPackages.fetchPypi; buildPythonPackage=pythonPackages.buildPythonPackage; intelCompilers=nur.repos.dguibert.intel-compilers-overlay.intelPackages_2020;}) #lammps
+    (callPackage ./lammps.nix {withMPI = true; fetchPypi=pythonPackages.fetchPypi; buildPythonPackage=pythonPackages.buildPythonPackage;
+                               intelCompilers=nur.repos.intelPackages_2020.compilers; # More info: https://github.com/dguibert/nur-packages/blob/master/overlays/intel-compilers-overlay/default.nix
+                              }) #lammps
   ];
 }
