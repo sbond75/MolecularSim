@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
   name = "vmd";
   version = "1.9.3";
 
-  buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd
+  buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd xorg.libX11
 
                   # Linux stuff (TODO: macOS support etc.)
                   xorg.libXinerama xorg.xinput ] ++ (lib.optional withCuda cudatoolkit)
@@ -39,7 +39,8 @@ stdenv.mkDerivation rec {
                                             (if withCuda then "CUDA " else "") +
                                             "IMD LIBSBALL XINERAMA XINPUT " +
                                             #+ "LIBOPTIX " +   # <-- not supported for now -- it's NVIDIA Optix and there doesn't appear to be a Nix package for it yet.
-                                            "LIBOSPRAY LIBTACHYON VRPN NETCDF COLVARS TCL PYTHON PTHREADS NUMPY SILENT ${if (intelCompilers != {}) then "ICC" else "GCC"}")) ++ [
+                                            #+ "LIBOSPRAY " +  # <-- not supported for now -- https://github.com/ospray/ospray
+                                            "LIBTACHYON VRPN NETCDF COLVARS TCL PYTHON PTHREADS NUMPY SILENT ${if (intelCompilers != {}) then "ICC" else "GCC"}")) ++ [
 
 # Misc other options:
 # "ACTC"
