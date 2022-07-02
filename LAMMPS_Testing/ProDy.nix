@@ -15,4 +15,6 @@ buildPythonPackage rec {
       doInstallCheck = false;
     }))
   ];
+
+  doCheck = false; # Requires Internet
 }
