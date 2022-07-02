@@ -101,7 +101,7 @@ $install_library_dir="$out/lib";' \
     substituteInPlace vmd-${version}/lib/scripts/tcl8.5/clock.tcl --replace 'foreach path {' 'foreach path { /etc/zoneinfo' # https://github.com/NixOS/nixpkgs/issues/65415
     substituteInPlace vmd-1.9.3/lib/scripts/tcl8.5/ldAix --replace '/usr/ccs/bin/nm' "`which nm`"
     #substituteInPlace vmd-1.9.3/lib/scripts/tk8.5/demos/tcolor --replace 'foreach i {
-    /' "foreach i { ''${xorg.libX11 TODO this doesn't have it in nix repl}/lib/rgb.txt /"
+    #/' "foreach i { ''${xorg.libX11 TODO this doesn't have it in nix repl}/lib/rgb.txt /"
     patchShebangs vmd-1.9.3/lib/points/vmd_distribute.pl
     patchShebangs vmd-1.9.3/lib/points/vmd_data.pl
     substituteInPlace vmd-1.9.3/scripts/vmd/vmdinit.tcl --replace "/usr/local/lib/vmd" "$out/lib" --replace "/usr/tmp" "/tmp"
