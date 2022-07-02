@@ -1,5 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, withCuda ? true, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which,
-  doxygen, graphviz # <-- Not sure if these two are needed
+{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, withCuda ? true, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz
 }:
 
 let
@@ -9,6 +8,7 @@ let
     numpy
     (callPackage ./ProDy.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;})
   ]));
+  doxygen = (callPackage ./doxygen.nix {});
 in
 stdenv.mkDerivation rec {
   name = "vmd";
@@ -107,7 +107,7 @@ $install_library_dir="$out/lib";' \
     substituteInPlace vmd-1.9.3/scripts/vmd/vmdinit.tcl --replace "/usr/local/lib/vmd" "$out/lib" --replace "/usr/tmp" "/tmp"
     patchShebangs vmd-1.9.3/scripts/vmd/chemical2vmd
     substituteInPlace vmd-1.9.3/scripts/vmd/chemical2vmd --replace "/usr/tmp" "/tmp"
-    substituteInPlace vmd-1.9.3/scripts/vmd/save_state.tcl --replace "/usr/local/lib/vmd" "$out/lib"
+    substituteInPlace vmd-1.9.3/scripts/vmd/save_state.tcl --replace "/usr/local/bin/vmd" "$out/bin/vmd"
     patchShebangs plugins/tablelist/scripts/repair.tcl
     patchShebangs plugins/tablelist/demos/miscWidgets_tile.tcl
     patchShebangs plugins/tablelist/demos/styles_tile.tcl
