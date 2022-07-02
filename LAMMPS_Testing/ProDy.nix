@@ -12,7 +12,7 @@ buildPythonPackage rec {
   propagatedBuildInputs = [
     pythonPackages.numpy (callPackage ./biopython.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;}) pythonPackages.pyparsing
     (pythonPackages.scipy.overrideAttrs (oldAttrs: rec {
-      installCheck = "";
+      doInstallCheck = false;
     }))
   ];
 }
