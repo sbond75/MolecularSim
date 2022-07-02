@@ -1,6 +1,6 @@
 # Based on https://github.com/NixOS/nixpkgs/blob/nixos-22.05/pkgs/development/tools/documentation/doxygen/default.nix#L37
 
-{ lib, stdenv, cmake, fetchFromGitHub, python3, flex, bison, qt5, CoreServices, libiconv, buildDoxysearch ? false }:
+{ lib, stdenv, cmake, fetchFromGitHub, python3, flex, bison, qt5, CoreServices, libiconv, buildDoxysearch ? true }:
 
 stdenv.mkDerivation rec {
   pname = "doxygen";

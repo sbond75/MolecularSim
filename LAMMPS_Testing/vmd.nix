@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, withCuda ? true, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin
+{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, withCuda ? true, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin, xxd
 }:
 
 let
@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
   name = "vmd";
   version = "1.9.3";
 
-  buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which
+  buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd
 
                   # Linux stuff (TODO: macOS support etc.)
                   xorg.libXinerama xorg.xinput (lib.optional withCuda cudatoolkit) tcsh
