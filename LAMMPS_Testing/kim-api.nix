@@ -1,6 +1,6 @@
 # Based on instructions in https://github.com/openkim/kim-api/blob/master/INSTALL
 
-{ lib, stdenv, fetchFromGitHub
+{ lib, stdenv, fetchFromGitHub, callPackage
 , cmake, pkg-config, graphviz, bash-completion, gfortran
 }:
 
