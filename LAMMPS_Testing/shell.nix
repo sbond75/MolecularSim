@@ -24,7 +24,7 @@ let
     url = "https://github.com/nix-community/NUR/archive/9edfb0c8f3fb110ec46216b648be2cbbd3592346.tar.gz";
     # Get the hash by running `nix-prefetch-url --unpack <url>` on the above url
     sha256 = "0mhychkvgkxg1y6p3mvq4699prhr3zw3706xrydjw8bbf6cm5z3p";
-  }); # https://discourse.nixos.org/t/problems-setting-up-nur/10690 , readme on https://github.com/nix-community/NUR
+  }) {pkgs=pkgs;}; # https://discourse.nixos.org/t/problems-setting-up-nur/10690 , readme on https://github.com/nix-community/NUR
 in
 mkShell {
   buildInputs = [
