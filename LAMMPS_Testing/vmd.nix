@@ -83,8 +83,6 @@ stdenv.mkDerivation rec {
   # #
 
   patchPhase = ''
-    export CPATH="$CPATH:`pkg-config --cflags-only-I python | sed 's/ *-I *//' | sed -r 's/ +-I */:/g'`" # The first sed removes only up to the first `-I` (for an include passed to the compiler via cflags from pkg-config). The second sed replaces all remaining `-I`'s with colons so that they are separated as the CPATH requires.
-
     substituteInPlace vmd-${version}/configure --replace \
       '# Directory where VMD startup script is installed, should be in users'"'"' paths.
 $install_bin_dir="/usr/local/bin";
@@ -220,6 +218,8 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
   '';
 
   preConfigure = ''
+    export CPATH="$CPATH:`pkg-config --cflags-only-I python | sed 's/ *-I *//' | sed -r 's/ +-I */:/g'`" # The first sed removes only up to the first `-I` (for an include passed to the compiler via cflags from pkg-config). The second sed replaces all remaining `-I`'s with colons so that they are separated as the CPATH requires.
+
     # Based on https://nixos.wiki/wiki/CUDA
     export CUDA_PATH=${cudatoolkit}
     # export LD_LIBRARY_PATH=${linuxPackages.nvidia_x11}/lib
