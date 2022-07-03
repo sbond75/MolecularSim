@@ -16,7 +16,7 @@ stdenv.mkDerivation rec {
     patchShebangs ./configure
   
     echo "---------1"
-    autoheader
+    #autoheader
     echo "---------2"
     aclocal
     echo "---------3"
