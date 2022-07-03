@@ -8,6 +8,6 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "mirror://sourceforge/${name}-${version}.tar.gz";
-    sha256 = "266oqw7abxzj371xiy0x99dzb4m2s28mjk88i2yfyfnd7vrji9p6";
+    sha256 = "295f29c32ecf33c4704f48144bdff565acb3a013bc68516a6de3c2b71671bf20";
   };
 }
