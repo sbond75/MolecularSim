@@ -18,10 +18,10 @@ stdenv.mkDerivation rec {
     echo "---------1"
     aclocal
     echo "---------2"
-    libtoolize --ltdl --copy --force
-    # echo "---------3"
-    # aclocal
-    # echo "---------4"
+    libtoolize --force
+    echo "---------3"
+    autoheader
+    echo "---------4"
   '';
 
   #autoreconfFlags = ["-fmi"];
