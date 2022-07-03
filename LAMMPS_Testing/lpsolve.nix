@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     echo "---------2"
     libtoolize --force
     echo "---------3"
-    autoheader
+    #autoheader
     echo "---------4"
   '';
 
