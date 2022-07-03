@@ -16,7 +16,6 @@ stdenv.mkDerivation rec {
     patchShebangs ./configure
   
     echo "---------1"
-    aclocal
     echo "---------2"
     automake --add-missing
     echo "---------3"
