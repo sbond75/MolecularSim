@@ -17,6 +17,7 @@ stdenv.mkDerivation rec {
   version = "1.9.3";
 
   buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd
+                  tachyon
 
                 ] ++ (lib.optional withCuda cudatoolkit)
   ++ [ tcsh
@@ -82,6 +83,8 @@ stdenv.mkDerivation rec {
   # #
 
   patchPhase = ''
+    export CPATH="$CPATH:`pkg-config --cflags-only-I python | sed 's/ *-I *//' | sed -r 's/ +-I */:/g'` # The first sed removes only up to the first `-I` (for an include passed to the compiler via cflags from pkg-config). The second sed replaces all remaining `-I`'s with colons so that they are separated as the CPATH requires.
+
     substituteInPlace vmd-${version}/configure --replace \
       '# Directory where VMD startup script is installed, should be in users'"'"' paths.
 $install_bin_dir="/usr/local/bin";
