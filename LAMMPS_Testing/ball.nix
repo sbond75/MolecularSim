@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, callPackage, cmake, flex, bison, fftw, openbabel2, libsvm, useCUDA ? true, cudatoolkit, tbb, mpi, libsForQt5, eigen, glew, python3 }:
+{ lib, stdenv, fetchFromGitHub, callPackage, cmake, flex, bison, fftw, openbabel2, libsvm, useCUDA ? true, cudatoolkit, tbb, mpi, libsForQt5, eigen, glew, python3 }:
 
 stdenv.mkDerivation rec {
   name = "ball";
