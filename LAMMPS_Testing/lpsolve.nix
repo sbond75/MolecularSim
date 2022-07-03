@@ -1,10 +1,10 @@
-{ stdenv, fetchurl, gnumake, dos2unix, autoconf, automake, libtool }:
+{ stdenv, fetchurl, gnumake, dos2unix, autoreconfHook }:
 
 stdenv.mkDerivation rec {
   name = "lpsolve";
   version = "5.5.2.11";
 
-  buildInputs = [ gnumake dos2unix autoconf automake libtool ];
+  buildInputs = [ gnumake dos2unix autoreconfHook ];
 
   patchPhase = ''
     #ls -la
@@ -15,17 +15,17 @@ stdenv.mkDerivation rec {
 
     patchShebangs ./configure
   
-    echo "---------1"
-    #autoheader
-    echo "---------2"
-    aclocal
-    echo "---------3"
-    libtoolize --force
-    echo "---------4"
-    #automake --add-missing --copy
-    echo "---------5"
-    autoconf
-    echo "---------6"
+    # echo "---------1"
+    # #autoheader
+    # echo "---------2"
+    # aclocal
+    # echo "---------3"
+    # libtoolize --force
+    # echo "---------4"
+    # #automake --add-missing --copy
+    # echo "---------5"
+    # autoconf
+    # echo "---------6"
   '';
 
   #autoreconfFlags = ["-fmi"];
