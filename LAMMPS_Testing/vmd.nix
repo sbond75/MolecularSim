@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd
                   tachyon
                   pkg-config # Used within this nix file only
-                  numpy
+                  pythonPackages.numpy
                 ] ++ (lib.optional useVRPN vrpn) ++ [
                 ] ++ (lib.optional withCuda cudatoolkit)
   ++ [ tcsh
