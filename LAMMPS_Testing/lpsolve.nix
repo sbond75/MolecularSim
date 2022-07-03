@@ -9,9 +9,10 @@ stdenv.mkDerivation rec {
   patchPhase = ''
     #ls -la
     chmod u+x ./configure
-    patchShebangs ./configure
     # Remove carriage returns
     tr -d '\r' ./configure > ./configure
+
+    patchShebangs ./configure
   '';
   
   src = fetchurl {
