@@ -15,15 +15,16 @@ stdenv.mkDerivation rec {
 
     patchShebangs ./configure
   
-    # echo "---------1"
-    # echo "---------2"
+    echo "---------1"
+    autoheader
+    echo "---------2"
     # automake --add-missing
     # echo "---------3"
     # aclocal
     # echo "---------4"
   '';
 
-  autoreconfFlags = ["-fmi"];
+  #autoreconfFlags = ["-fmi"];
   
   src = fetchurl {
     url = "mirror://sourceforge/project/${name}/${name}/${version}/lp_solve_${version}_source.tar.gz"; # https://versaweb.dl.sourceforge.net/project/lpsolve/lpsolve/5.5.2.11/lp_solve_5.5.2.11_source.tar.gz
