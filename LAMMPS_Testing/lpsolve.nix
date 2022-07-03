@@ -17,8 +17,8 @@ stdenv.mkDerivation rec {
   '';
   
   preAutoreconf = ''
-    aclocal
     automake --add-missing
+    aclocal
   '';
   
   src = fetchurl {
