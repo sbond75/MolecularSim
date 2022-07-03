@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
     #ls -la
     chmod u+x ./configure
     # Remove carriage returns
-    tr -d '\r' ./configure > ./configure
+    cat ./configure | tr -d '\r' > ./configure
 
     patchShebangs ./configure
   '';
