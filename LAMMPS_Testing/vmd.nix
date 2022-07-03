@@ -40,7 +40,8 @@ stdenv.mkDerivation rec {
 
   configureFlags = []
     # These match up with `vmd-${version}/Makefile` under linux.amd64.opengl :
-                   ++ (lib.splitString " " ("LINUXAMD64 OPENGL OPENGLPBUFFER FLTK TK ACTC " +
+                   ++ (lib.splitString " " ("LINUXAMD64 OPENGL OPENGLPBUFFER FLTK TK " +
+                                            #+ "ACTC " +       # <-- not supported for now, and the only mention I found of it was: https://www.ks.uiuc.edu/Research/vmd/mailing_list/vmd-l/21321.html
                                             (if withCuda then "CUDA " else "") +
                                             "IMD LIBSBALL XINERAMA XINPUT " +
                                             #+ "LIBOPTIX " +   # <-- not supported for now -- it's NVIDIA Optix and there doesn't appear to be a Nix package for it yet.
