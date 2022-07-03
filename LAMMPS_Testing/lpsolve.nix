@@ -1,22 +1,22 @@
-{ stdenv, fetchurl, gnumake, dos2unix, autoconf, automake }:
+{ stdenv, fetchurl, gnumake, dos2unix, autoreconfHook }:
 
 stdenv.mkDerivation rec {
   name = "lpsolve";
   version = "5.5.2.11";
 
-  buildInputs = [ gnumake dos2unix autoconf automake ];
+  buildInputs = [ gnumake dos2unix autoreconfHook ];
 
   patchPhase = ''
     #ls -la
     chmod u+x ./configure
 
-    # Remove carriage returns
-    dos2unix ./configure ./configure
+    cat << EOF > ./Makefile.am
+bin_PROGRAMS = lpsolve
 
-    patchShebangs ./configure
-    
-    autoreconf -i
-  '';
+lpsolve:
+	cd lp_solve && sh ccc
+EOF
+ '';
 
   #autoreconfFlags = ["-fmi"];
   
