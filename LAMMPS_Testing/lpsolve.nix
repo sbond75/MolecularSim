@@ -16,9 +16,9 @@ stdenv.mkDerivation rec {
     patchShebangs ./configure
   
     echo "---------1"
-    autoheader
+    aclocal
     echo "---------2"
-    # automake --add-missing
+    libtoolize --ltdl --copy --force
     # echo "---------3"
     # aclocal
     # echo "---------4"
