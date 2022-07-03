@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, withCuda ? true, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin, xxd, tachyon, pkg-config, numpy,
+{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, withCuda ? true, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin, xxd, tachyon, pkg-config, pythonPackages,
   useVRPN ? true, vrpn, # a virtual reality thing? https://github.com/vrpn/vrpn , https://github.com/vrpn/vrpn/blob/master/vrpn_Tracker.h
   
   intelCompilers ? {} # optional, will try gcc if not provided
@@ -8,7 +8,7 @@ let
   mafft = (callPackage ./mafft.nix {});
   fasta = (callPackage ./fasta.nix {});
   my-python-packages = (python.withPackages(ps: with ps; [
-    numpy
+    #numpy
     (callPackage ./ProDy.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;})
   ]));
   doxygen = (callPackage ./doxygen.nix {CoreServices=darwin.apple_sdk.frameworks.CoreServices;});
@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd
                   tachyon
                   pkg-config # Used within this nix file only
-                  numpy
+                  pythonPackages.numpy
                 ] ++ (lib.optional useVRPN vrpn) ++ [
                 ] ++ (lib.optional withCuda cudatoolkit)
   ++ [ tcsh
