@@ -11,8 +11,9 @@ stdenv.mkDerivation rec {
     chmod u+x ./configure
     # Remove carriage returns
     cat ./configure | tr -d '\r' > ./configure
-
+    cat ./configure
     patchShebangs ./configure
+    cat ./configure 
   '';
   
   src = fetchurl {
