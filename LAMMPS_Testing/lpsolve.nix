@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
     echo "---------2"
     aclocal
     echo "---------3"
-    autoheader
+    #autoheader
     echo "---------4"
     #automake --add-missing --copy
     echo "---------5"
