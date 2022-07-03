@@ -26,6 +26,8 @@ stdenv.mkDerivation rec {
     echo "---------5"
     autoconf
     echo "---------6"
+    autoreconf -vif
+    echo "---------7"
   '';
 
   #autoreconfFlags = ["-fmi"];
