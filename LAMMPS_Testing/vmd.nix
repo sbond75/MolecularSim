@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   version = "1.9.3";
 
   buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd
-                  tachyon
+                  tachyon (callPackage ./ball.nix {})
                   pkg-config # Used within this nix file only
                   pythonPackages.numpy
                 ] ++ (lib.optional useVRPN vrpn) ++ [
