@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, withCuda ? true, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin, xxd, tachyon,
+{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, withCuda ? true, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin, xxd, tachyon, pkg-config
   
   intelCompilers ? {} # optional, will try gcc if not provided
 }:
@@ -18,6 +18,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd
                   tachyon
+                  pkg-config # Used within this nix file only
 
                 ] ++ (lib.optional withCuda cudatoolkit)
   ++ [ tcsh
