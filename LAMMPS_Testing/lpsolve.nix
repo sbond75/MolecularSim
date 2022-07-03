@@ -1,10 +1,10 @@
-{ stdenv, fetchurl, gnumake, dos2unix }:
+{ stdenv, fetchurl, gnumake, dos2unix, autoconf }:
 
 stdenv.mkDerivation rec {
   name = "lpsolve";
   version = "5.5.2.11";
 
-  buildInputs = [ gnumake dos2unix ];
+  buildInputs = [ gnumake dos2unix autoconf ];
 
   patchPhase = ''
     #ls -la
@@ -14,6 +14,8 @@ stdenv.mkDerivation rec {
     dos2unix ./configure ./configure
 
     patchShebangs ./configure
+    
+    autoreconf -i
   '';
 
   #autoreconfFlags = ["-fmi"];
