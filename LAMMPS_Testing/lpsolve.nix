@@ -14,11 +14,14 @@ stdenv.mkDerivation rec {
     dos2unix ./configure ./configure
 
     patchShebangs ./configure
-  '';
   
-  preAutoreconf = ''
-    automake --add-missing
+    echo "---------1"
     aclocal
+    echo "---------2"
+    automake --add-missing
+    echo "---------3"
+    aclocal
+    echo "---------4"
   '';
   
   src = fetchurl {
