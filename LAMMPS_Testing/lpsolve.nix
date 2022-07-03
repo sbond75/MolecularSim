@@ -7,7 +7,9 @@ stdenv.mkDerivation rec {
   buildInputs = [ gnumake ];
 
   patchPhase = ''
-    ls -la 
+    #ls -la
+    chmod u+x ./configure
+    patchShebangs ./configure
   '';
   
   src = fetchurl {
