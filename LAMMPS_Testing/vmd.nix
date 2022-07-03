@@ -219,7 +219,7 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
   '';
 
   computeCPATH = ''
-    export CPATH="$CPATH:`pkg-config --cflags-only-I python | sed 's/ *-I *//' | sed -r 's/ +-I */:/g'`" # The first sed removes only up to the first `-I` (for an include passed to the compiler via cflags from pkg-config). The second sed replaces all remaining `-I`'s with colons so that they are separated as the CPATH requires.
+    export CPATH="$CPATH:$out/plugins/include:`pkg-config --cflags-only-I python | sed 's/ *-I *//' | sed -r 's/ +-I */:/g'`" # The first sed removes only up to the first `-I` (for an include passed to the compiler via cflags from pkg-config). The second sed replaces all remaining `-I`'s with colons so that they are separated as the CPATH requires.
   '';
   
   preConfigure = ''
