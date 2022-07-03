@@ -14,6 +14,6 @@ stdenv.mkDerivation rec {
     owner = "BALL-Project";
     repo = name;
     rev = "V${builtins.replaceStrings ["."] ["_"] version}";
-    sha256 = "266oqw7abxzj371xiy0x99dzb4m2s28mjk88i2yfyfnd7vrji9i6";
+    sha256 = "ae39f425db8ecaa75d839063fb1fa2f65fbf7d3d395ab26f6a8648f8a2f5d880";
   };
 }
