@@ -217,8 +217,12 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     patchShebangs plugins/build.csh
   '';
 
-  preConfigure = ''
+  computeCPATH = ''
     export CPATH="$CPATH:`pkg-config --cflags-only-I python | sed 's/ *-I *//' | sed -r 's/ +-I */:/g'`" # The first sed removes only up to the first `-I` (for an include passed to the compiler via cflags from pkg-config). The second sed replaces all remaining `-I`'s with colons so that they are separated as the CPATH requires.
+  '';
+  
+  preConfigure = ''
+    ${computeCPATH}
 
     # Based on https://nixos.wiki/wiki/CUDA
     export CUDA_PATH=${cudatoolkit}
@@ -257,6 +261,8 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
   # '';
 
   preInstall = ''
+    ${computeCPATH}
+
     #make -j $NIX_BUILD_CORES linux.amd64.opengl # Optional, it reconfigures for using ICC instead of GCC though and we already have this set up in a `configureFlags` declaration within Nix code above.
 
     echo "CPATH: $CPATH"
