@@ -1,19 +1,19 @@
-{ stdenv, fetchurl, gnumake }:
+{ stdenv, fetchurl, gnumake, dos2unix }:
 
 stdenv.mkDerivation rec {
   name = "lpsolve";
   version = "5.5.2.11";
 
-  buildInputs = [ gnumake ];
+  buildInputs = [ gnumake dos2unix ];
 
   patchPhase = ''
     #ls -la
     chmod u+x ./configure
+
     # Remove carriage returns
-    cat ./configure | tr -d '\r' > ./configure
-    cat ./configure
+    dos2unix ./configure ./configure
+
     patchShebangs ./configure
-    cat ./configure 
   '';
   
   src = fetchurl {
