@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     echo "---------3"
     libtoolize --force
     echo "---------4"
-    automake --add-missing --copy
+    #automake --add-missing --copy
     echo "---------5"
     autoconf
     echo "---------6"
