@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   '';
 
   installPhase = ''
-    mkdir $out/bin
+    mkdir -p $out/bin
     install -Dm755 -d bin/*/* $out/bin
   '';
   
