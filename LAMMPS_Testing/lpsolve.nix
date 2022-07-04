@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out/bin
-    install -Dm755 -d bin/*/* $out/bin
+    install -Dm755 bin/*/* $out/bin
   '';
   
   src = fetchurl {
