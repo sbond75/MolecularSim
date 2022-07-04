@@ -12,6 +12,9 @@ stdenv.mkDerivation rec {
   '';
 
   installPhase = ''
+  ls -la lp_solve || true
+  ls -la lp_solve/bin || true
+  ls -la bin || true
     install -Dm755 -d lp_solve/bin/* $out/bin
   '';
   
