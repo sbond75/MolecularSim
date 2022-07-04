@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
   '';
 
   installPhase = ''
-    install -Dm755 -d bin/* $out/bin
+    install -Dm755 -d lp_solve/bin/* $out/bin
   '';
   
   src = fetchurl {
