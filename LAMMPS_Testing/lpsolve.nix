@@ -1,24 +1,39 @@
-{ stdenv, fetchurl, gnumake, dos2unix, autoreconfHook }:
+{ stdenv, fetchurl, gnumake, dos2unix, autoconf, automake, libtool }:
 
 stdenv.mkDerivation rec {
   name = "lpsolve";
   version = "5.5.2.11";
 
-  buildInputs = [ gnumake dos2unix autoreconfHook ];
+  buildInputs = [ gnumake dos2unix autoconf automake libtool ];
 
   patchPhase = ''
     #ls -la
     chmod u+x ./configure
 
-    cat << EOF > ./Makefile.am
-bin_PROGRAMS = lpsolve
+    # Remove carriage returns
+    dos2unix ./configure ./configure
 
-lpsolve:
-	cd lp_solve && sh ccc
-EOF
- '';
+    patchShebangs ./configure
+  
+    echo "---------1"
+    #autoheader
+    echo "---------2"
+    aclocal
+    echo "---------3"
+    #libtoolize --force
+    echo "---------4"
+    #automake --add-missing --copy
+    echo "---------5"
+    autoconf
+    echo "---------6"
+  '';
 
   #autoreconfFlags = ["-fmi"];
+
+  buildPhase = ''
+    cd lp_solve
+    sh ccc
+  '';
   
   src = fetchurl {
     url = "mirror://sourceforge/project/${name}/${name}/${version}/lp_solve_${version}_source.tar.gz"; # https://versaweb.dl.sourceforge.net/project/lpsolve/lpsolve/5.5.2.11/lp_solve_5.5.2.11_source.tar.gz
