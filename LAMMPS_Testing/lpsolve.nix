@@ -1,34 +1,10 @@
-{ stdenv, fetchurl, gnumake, dos2unix, autoconf, automake, libtool }:
+{ stdenv, fetchurl, gnumake }:
 
 stdenv.mkDerivation rec {
   name = "lpsolve";
   version = "5.5.2.11";
 
-  buildInputs = [ gnumake dos2unix autoconf automake libtool ];
-
-  patchPhase = ''
-    #ls -la
-    chmod u+x ./configure
-
-    # Remove carriage returns
-    dos2unix ./configure ./configure
-
-    patchShebangs ./configure
-  
-    echo "---------1"
-    #autoheader
-    echo "---------2"
-    aclocal
-    echo "---------3"
-    #libtoolize --force
-    echo "---------4"
-    #automake --add-missing --copy
-    echo "---------5"
-    autoconf
-    echo "---------6"
-  '';
-
-  #autoreconfFlags = ["-fmi"];
+  buildInputs = [ gnumake ];
 
   buildPhase = ''
     cd lp_solve
