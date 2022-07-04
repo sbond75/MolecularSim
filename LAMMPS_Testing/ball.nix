@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
                 ++ (lib.optional useCUDA cudatoolkit)
                 ++ [ tbb mpi libsForQt5.qt5.qtwebengine libsForQt5.qt5.qtbase libsForQt5.qt5.qtwebsockets libsForQt5.qt5.qt3d libsForQt5.qt5.qtnetworkauth libsForQt5.qt5.qtwebchannel eigen glew python3 libsForQt5.qt5.wrapQtAppsHook ];
 
-  cmakeFlags = (if useCUDA then [ "-DUSE_CUDA" ] else []) ++ [ "-DBALL_LICENSE=GPL" "-DUSE_MPI" ];
+  cmakeFlags = (if useCUDA then [ "-DUSE_CUDA=YES" ] else []) ++ [ "-DBALL_LICENSE=GPL" "-DUSE_MPI" ];
   
   src = fetchFromGitHub {
     owner = "BALL-Project";
