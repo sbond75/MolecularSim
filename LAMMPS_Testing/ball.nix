@@ -31,8 +31,7 @@ EOF
     # Prevent `error: friend declaration of` [...] `specifies default arguments and isn't a definition` (where `[...]` is something like `'std::istream& getline(std::istream&, BALL::String&, char)'`)
     substituteInPlace include/BALL/DATATYPE/string.h --replace "String& string,  char delimiter = '\n');" "String& string,  char delimiter);"
     # Fix `error: cannot bind non-const lvalue reference of type 'boost::shared_ptr<BALL::PersistentObject>&' to an rvalue of type 'boost::shared_ptr<BALL::PersistentObject>'`
-    substituteInPlace include/BALL/CONCEPT/property.iC
- --replace 'NamedProperty::NamedProperty(const std::string& name, boost::shared_ptr<PersistentObject>& po)' 'NamedProperty::NamedProperty(const std::string& name, const boost::shared_ptr<PersistentObject>& po)'
+    substituteInPlace include/BALL/CONCEPT/property.iC --replace 'NamedProperty::NamedProperty(const std::string& name, boost::shared_ptr<PersistentObject>& po)' 'NamedProperty::NamedProperty(const std::string& name, const boost::shared_ptr<PersistentObject>& po)'
   '';
 
   cmakeFlags = (if useCUDA then [ "-DUSE_CUDA=YES" ] else []) ++ [ "-DBALL_LICENSE=GPL" "-DUSE_MPI=YES" "-Wno-dev" ];
