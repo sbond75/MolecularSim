@@ -24,6 +24,7 @@ ELSE()
 ENDIF()
 EOF
 )
+    repl1="$(echo -e "$repl1")"
 
     substituteInPlace CMakeLists.txt --replace "$repl1" ""
   '';
