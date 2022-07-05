@@ -21,6 +21,8 @@ stdenv.mkDerivation rec {
 
     echo 'install "$@"' > install.sh
   '';
+
+  configureFlags = [ "--srcdir=$(realpath .)" ];
   
   buildPhase = ''
     cd lp_solve
