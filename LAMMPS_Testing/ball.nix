@@ -83,7 +83,7 @@ INCLUDE(BALLCTags)
 EOF
 )
 " + ''
-    echo "$repl1"
+    cat CMakeLists.txt
 
     substituteInPlace CMakeLists.txt --replace "''${Python3_LIBRARIES}" "" \
       --replace "$repl1" ""
