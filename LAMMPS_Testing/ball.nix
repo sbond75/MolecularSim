@@ -14,7 +14,8 @@ stdenv.mkDerivation rec {
 
   patchPhase = ''
     # Remove tabs from CMakeLists.txt since substituteInPlace doesn't appear to be able to handle them:
-    expand -i CMakeLists.txt > CMakeLists.txt
+    expand -i CMakeLists.txt > CMakeLists2.txt
+    mv CMakeLists2.txt CMakeLists.txt
 
     repl1=$(cat <<- "EOF"
   '' +
@@ -83,10 +84,10 @@ INCLUDE(BALLCTags)
 EOF
 )
 " + ''
-    cat CMakeLists.txt
+    
 
-    #substituteInPlace CMakeLists.txt --replace "''${Python3_LIBRARIES}" "" \
-    #  --replace "$repl1" ""
+    substituteInPlace CMakeLists.txt --replace "''${Python3_LIBRARIES}" "" \
+      --replace "$repl1" ""
   '';
 
   cmakeFlags = (if useCUDA then [ "-DUSE_CUDA=YES" ] else []) ++ [ "-DBALL_LICENSE=GPL" "-DUSE_MPI=YES" ];
