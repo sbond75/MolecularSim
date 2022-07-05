@@ -86,7 +86,7 @@ EOF
     cat CMakeLists.txt
 
     #substituteInPlace CMakeLists.txt --replace "''${Python3_LIBRARIES}" "" \
-      --replace "$repl1" ""
+    #  --replace "$repl1" ""
   '';
 
   cmakeFlags = (if useCUDA then [ "-DUSE_CUDA=YES" ] else []) ++ [ "-DBALL_LICENSE=GPL" "-DUSE_MPI=YES" ];
