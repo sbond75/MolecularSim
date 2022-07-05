@@ -17,6 +17,14 @@ substituteInPlace boost/math/quaternion.hpp --replace "private:
 '';})) (callPackage ./sip.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;}) libtirpc lapack pkg-config ];
 
   patchPhase = ''
+    # Fix ui files
+    # https://github.com/BALL-Project/ball/issues/516
+    pushd .
+    cd source/VIEW/DIALOGS
+    for i in ./*.ui; do
+        uic-qt4 "$i"
+    popd
+
     repl1=$(cat <<- "EOF"
 ## Create BALLExport.cmake
 STRING(COMPARE LESS ''${CMAKE_MINOR_VERSION} "8" CMAKE_DEPRECATED_VERSION)
@@ -31,7 +39,7 @@ EOF
     repl1="$(echo -e "$repl1")"
 
     substituteInPlace CMakeLists.txt --replace "$repl1" "" \
-      --replace "# CMake configuration for BALL (http://www.ball-project.org)" 'add_link_options("'"`pkg-config --libs libtirpc`"'")' # Add some more config to top of CMakeLists.txt
+      --replace "# CMake configuration for BALL (http://www.ball-project.org)" 'set(ENV{LDFLAGS} "$ENV{LDFLAGS} '"`pkg-config --libs libtirpc`"'")' # Add some more config to top of CMakeLists.txt
 
     # Prevent `error: friend declaration of` [...] `specifies default arguments and isn't a definition` (where `[...]` is something like `'std::istream& getline(std::istream&, BALL::String&, char)'`)
     substituteInPlace include/BALL/DATATYPE/string.h --replace "String& string,  char delimiter = '\n');" "String& string,  char delimiter);"
