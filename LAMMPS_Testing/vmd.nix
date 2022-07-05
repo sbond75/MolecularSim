@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd
                   tachyon
-                  (callPackage ./ball.nix {}) # https://nixos.wiki/wiki/Qt : "Qt applications can't be called with callPackage, since they expect more inputs. Namely qtbase and wrapQtAppsHook. Instead they should be called with libsForQt5.callPackage."
+                  (callPackage ./ball.nix {fetchPypi=fetchPypi;}) # https://nixos.wiki/wiki/Qt : "Qt applications can't be called with callPackage, since they expect more inputs. Namely qtbase and wrapQtAppsHook. Instead they should be called with libsForQt5.callPackage."
                   pkg-config # Used within this nix file only
                   pythonPackages.numpy
                 ] ++ (lib.optional useVRPN vrpn) ++ [
