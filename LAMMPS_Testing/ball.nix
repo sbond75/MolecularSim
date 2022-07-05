@@ -4,7 +4,7 @@ stdenv.mkDerivation rec {
   name = "ball";
   version = "1.4.2";
 
-  # TODO: `FIND_PACKAGE(LPSolve)` fails although it is non-essential
+  # TODO: `FIND_PACKAGE(LPSolve)` fails although it is non-essential. Probably need to package up lpsolve better and get more of the subprojects in its source folder.. such as bfp/bfp_LUSOL/ccc
   buildInputs = [ cmake flex bison fftw openbabel2 (callPackage ./lpsolve.nix {}) libsvm ]
                 ++ (lib.optional useCUDA cudatoolkit)
                 ++ [ tbb mpi
@@ -27,6 +27,8 @@ EOF
     repl1="$(echo -e "$repl1")"
 
     substituteInPlace CMakeLists.txt --replace "$repl1" ""
+
+    substituteInPlace include/BALL/DATATYPE/string.h --replace "char delimiter = '\n');" "char delimiter);"
   '';
 
   cmakeFlags = (if useCUDA then [ "-DUSE_CUDA=YES" ] else []) ++ [ "-DBALL_LICENSE=GPL" "-DUSE_MPI=YES" "-Wno-dev" ];
