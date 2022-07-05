@@ -4,12 +4,13 @@ stdenv.mkDerivation rec {
   name = "ball";
   version = "1.4.2";
 
+  # TODO: `FIND_PACKAGE(LPSolve)` fails although it is non-essential
   buildInputs = [ cmake flex bison fftw openbabel2 (callPackage ./lpsolve.nix {}) libsvm ]
                 ++ (lib.optional useCUDA cudatoolkit)
                 ++ [ tbb mpi
                      #libsForQt5.qt5.qtwebengine libsForQt5.qt5.qtbase libsForQt5.qt5.qtwebsockets libsForQt5.qt5.qt3d libsForQt5.qt5.qtnetworkauth libsForQt5.qt5.qtwebchannel libsForQt5.qt5.wrapQtAppsHook
                      qt4
-                     eigen glew python3 gsl blas boost ];
+                     eigen glew python3 gsl doxygen tetex blas boost ];
 
   patchPhase = ''
     substituteInPlace CMakeLists.txt --replace "''${Python3_LIBRARIES}" ""
