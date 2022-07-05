@@ -4,15 +4,13 @@ stdenv.mkDerivation rec {
   name = "ball";
   version = "1.4.2";
 
-  nativeBuildInputs = [ cmake flex bison pkg-config ];
-  
   # TODO: `FIND_PACKAGE(LPSolve)` fails although it is non-essential. Probably need to package up lpsolve better and get more of the subprojects in its source folder.. such as bfp/bfp_LUSOL/ccc
-  buildInputs = [ fftw openbabel2 (callPackage ./lpsolve.nix {}) libsvm ]
+  buildInputs = [ cmake flex bison fftw openbabel2 (callPackage ./lpsolve.nix {}) libsvm ]
                 ++ (lib.optional useCUDA cudatoolkit)
                 ++ [ tbb mpi
                      #libsForQt5.qt5.qtwebengine libsForQt5.qt5.qtbase libsForQt5.qt5.qtwebsockets libsForQt5.qt5.qt3d libsForQt5.qt5.qtnetworkauth libsForQt5.qt5.qtwebchannel libsForQt5.qt5.wrapQtAppsHook
                      qt4
-                     eigen glew python gsl doxygen tetex blas boost (callPackage ./sip.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;}) libtirpc lapack ];
+                     eigen glew python gsl doxygen tetex blas boost (callPackage ./sip.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;}) libtirpc lapack pkg-config ];
 
   patchPhase = ''
     repl1=$(cat <<- "EOF"
