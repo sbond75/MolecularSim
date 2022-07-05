@@ -14,13 +14,9 @@ stdenv.mkDerivation rec {
     dos2unix ./configure ./configure
 
     patchShebangs ./configure
-  '';
 
-  preConfigurePhase = ''
     export INSTALL=`which install`
-
     echo 'install "$@"' > install.sh
-
     ls -la
   '';
   
