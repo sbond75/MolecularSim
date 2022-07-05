@@ -85,7 +85,7 @@ EOF
 " + ''
     cat CMakeLists.txt
 
-    substituteInPlace CMakeLists.txt --replace "''${Python3_LIBRARIES}" "" \
+    #substituteInPlace CMakeLists.txt --replace "''${Python3_LIBRARIES}" "" \
       --replace "$repl1" ""
   '';
 
