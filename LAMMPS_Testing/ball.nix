@@ -17,26 +17,26 @@ stdenv.mkDerivation rec {
   '' +
 "# Generate CMake package configuration for BALL build tree
 CONFIGURE_FILE(
-	\"\${PROJECT_SOURCE_DIR}/cmake/BALLConfig.cmake.in\"
-	\"\${PROJECT_BINARY_DIR}/cmake/BALLConfig.cmake\"
-	@ONLY
+\\t\"\${PROJECT_SOURCE_DIR}/cmake/BALLConfig.cmake.in\"
+\\t\"\${PROJECT_BINARY_DIR}/cmake/BALLConfig.cmake\"
+\\t@ONLY
 )
 
 # Generate BALL package config version file
 write_basic_package_version_file(
-	\"\${PROJECT_BINARY_DIR}/cmake/BALLConfigVersion.cmake\"
-	VERSION \${PROJECT_VERSION}
-	COMPATIBILITY AnyNewerVersion
+\\t\"\${PROJECT_BINARY_DIR}/cmake/BALLConfigVersion.cmake\"
+\\tVERSION \${PROJECT_VERSION}
+\\tCOMPATIBILITY AnyNewerVersion
 )
 
 # Generate exports
 EXPORT(TARGETS BALL
-	FILE \${PROJECT_BINARY_DIR}/cmake/BALLExport.cmake)
+\\tFILE \${PROJECT_BINARY_DIR}/cmake/BALLExport.cmake)
 
 IF(BALL_HAS_VIEW)
-	EXPORT(TARGETS VIEW
-		APPEND
-		FILE \${PROJECT_BINARY_DIR}/cmake/BALLExport.cmake)
+\\tEXPORT(TARGETS VIEW
+\\t\\tAPPEND
+\\t\\tFILE \${PROJECT_BINARY_DIR}/cmake/BALLExport.cmake)
 ENDIF()
 
 
@@ -46,30 +46,30 @@ EXPORT(PACKAGE BALL)
 
 # Generate CMake package configuration for BALL installation
 IF(NOT APPLE)
-	# Installation path for BALL CMake package configuration files
-	SET(BALL_CMAKE_EXPORT_PATH \${CMAKE_INSTALL_LIBDIR}/cmake/BALL CACHE PATH \"Path to the cmake package configuration files\")
+\\t# Installation path for BALL CMake package configuration files
+\\tSET(BALL_CMAKE_EXPORT_PATH \${CMAKE_INSTALL_LIBDIR}/cmake/BALL CACHE PATH \"Path to the cmake package configuration files\")
 
-	LIST(REMOVE_ITEM BALL_INCLUDE_DIRS \"\${PROJECT_BINARY_DIR}/include\")
-	LIST(REMOVE_ITEM BALL_INCLUDE_DIRS \"\${PROJECT_SOURCE_DIR}/include\")
-	SET(BALL_INCLUDE_DIRS \${BALL_PATH}/include/ \${BALL_INCLUDE_DIRS})
+\\tLIST(REMOVE_ITEM BALL_INCLUDE_DIRS \"\${PROJECT_BINARY_DIR}/include\")
+\\tLIST(REMOVE_ITEM BALL_INCLUDE_DIRS \"\${PROJECT_SOURCE_DIR}/include\")
+\\tSET(BALL_INCLUDE_DIRS \${BALL_PATH}/include/ \${BALL_INCLUDE_DIRS})
 
-	CONFIGURE_FILE(
-		\"\${PROJECT_SOURCE_DIR}/cmake/BALLConfig.cmake.in\"
-		\"\${PROJECT_BINARY_DIR}/exports/BALLConfig.cmake\"
-		@ONLY
-	)
+\\tCONFIGURE_FILE(
+\\t\\t\"\${PROJECT_SOURCE_DIR}/cmake/BALLConfig.cmake.in\"
+\\t\\t\"\${PROJECT_BINARY_DIR}/exports/BALLConfig.cmake\"
+\\t\\t@ONLY
+\\t)
 
-	INSTALL(FILES
-		\"\${PROJECT_BINARY_DIR}/exports/BALLConfig.cmake\"
-		\"\${PROJECT_BINARY_DIR}/cmake/BALLConfigVersion.cmake\"
-		DESTINATION \"\${BALL_CMAKE_EXPORT_PATH}/\"
-		COMPONENT   \${COMPONENT_LIBBALL_DEV}
-	)
+\\tINSTALL(FILES
+\\t\\t\"\${PROJECT_BINARY_DIR}/exports/BALLConfig.cmake\"
+\\t\\t\"\${PROJECT_BINARY_DIR}/cmake/BALLConfigVersion.cmake\"
+\\t\\tDESTINATION \"\${BALL_CMAKE_EXPORT_PATH}/\"
+\\t\\tCOMPONENT   \${COMPONENT_LIBBALL_DEV}
+\\t)
 
-	INSTALL(EXPORT BALLExportGroup
-		DESTINATION \${BALL_CMAKE_EXPORT_PATH}
-		FILE BALLExport.cmake
-		COMPONENT \"\${COMPONENT_LIBBALL_DEV}\")
+\\tINSTALL(EXPORT BALLExportGroup
+\\t\\tDESTINATION \${BALL_CMAKE_EXPORT_PATH}
+\\t\\tFILE BALLExport.cmake
+\\t\\tCOMPONENT \"\${COMPONENT_LIBBALL_DEV}\")
 ENDIF()
 
 
@@ -80,8 +80,7 @@ INCLUDE(BALLCTags)
 EOF
 )
 " + ''
-
-    echo "$repl1"
+    echo -e "$repl1"
 
     substituteInPlace CMakeLists.txt --replace "''${Python3_LIBRARIES}" "" \
       --replace "$repl1" ""
