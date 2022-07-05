@@ -15,8 +15,9 @@ stdenv.mkDerivation rec {
 
     patchShebangs ./configure
 
-    export INSTALL=`which install`
-    echo 'install "$@"' > install.sh
+    #export INSTALL=`which install`
+    #echo 'install "$@"' > install.sh
+    autoconf
     ls -la
   '';
   
