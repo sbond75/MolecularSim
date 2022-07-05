@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, callPackage, cmake, flex, bison, fftw, openbabel2, libsvm, useCUDA ? true, cudatoolkit, tbb, mpi, qt48Full, eigen, glew, python, gsl, doxygen, tetex, blas, boost, fetchPypi, buildPythonPackage, libtirpc, lapack, pkg-config }:
+{ lib, stdenv, fetchFromGitHub, callPackage, cmake, flex, bison, fftw, openbabel2, libsvm, useCUDA ? true, cudatoolkit, tbb, mpi, qt4, eigen, glew, python, gsl, doxygen, tetex, blas, boost, fetchPypi, buildPythonPackage, libtirpc, lapack, pkg-config }:
 
 stdenv.mkDerivation rec {
   name = "ball";
@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
                 ++ (lib.optional useCUDA cudatoolkit)
                 ++ [ tbb mpi
                      #libsForQt5.qt5.qtwebengine libsForQt5.qt5.qtbase libsForQt5.qt5.qtwebsockets libsForQt5.qt5.qt3d libsForQt5.qt5.qtnetworkauth libsForQt5.qt5.qtwebchannel libsForQt5.qt5.wrapQtAppsHook
-                     qt48Full
+                     qt4
                      eigen glew python gsl doxygen tetex blas (boost.overrideAttrs (oldAttrs: rec { patchPhase = ''
 substituteInPlace boost/math/quaternion.hpp --replace "private:
            T a, b, c, d;" "public:
@@ -22,7 +22,8 @@ substituteInPlace boost/math/quaternion.hpp --replace "private:
     pushd .
     cd source/VIEW/DIALOGS
     for i in ./*.ui; do
-        uic-qt4 "$i"
+        uic "$i"
+        # (^aka uic-qt4)
     done
     popd
 
