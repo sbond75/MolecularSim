@@ -15,8 +15,9 @@ stdenv.mkDerivation rec {
 
     patchShebangs ./configure
 
-    #export INSTALL=`which install`
-    #echo 'install "$@"' > install.sh
+    export INSTALL=`which install`
+    echo 'install "$@"' > install.sh
+    echo $'all-am:\n\tcd lp_solve && sh ccc' > Makefile.am
     autoconf
     ls -la
   '';
