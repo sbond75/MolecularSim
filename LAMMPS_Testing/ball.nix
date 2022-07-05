@@ -17,6 +17,8 @@ stdenv.mkDerivation rec {
     expand -i CMakeLists.txt > CMakeLists2.txt
     mv CMakeLists2.txt CMakeLists.txt
 
+    cat CMakeLists.txt
+
     repl1=$(cat <<- "EOF"
   '' +
 "# Generate CMake package configuration for BALL build tree
