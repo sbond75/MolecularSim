@@ -36,7 +36,7 @@ EOF
     substituteInPlace include/BALL/CONCEPT/property.h --replace 'NamedProperty(const string& name, boost::shared_ptr<PersistentObject>& po)' 'NamedProperty(const string& name, const boost::shared_ptr<PersistentObject>& po)'
   '';
 
-  preConfigure = ''
+  preBuild = ''
     # To prevent `fatal error: rpc/types.h: No such file or directory`:
     export CPATH="$CPATH:`pkg-config --cflags-only-I libtirpc | sed 's/ *-I *//' | sed -r 's/ +-I */:/g'`" # The first sed removes only up to the first `-I` (for an include passed to the compiler via cflags from pkg-config). The second sed replaces all remaining `-I`'s with colons so that they are separated as the CPATH requires.
   '';
