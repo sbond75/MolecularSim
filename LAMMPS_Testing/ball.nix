@@ -22,7 +22,7 @@ substituteInPlace boost/math/quaternion.hpp --replace "private:
     pushd .
     cd source/VIEW/DIALOGS
     for i in ./*.ui; do
-        uic "$i"
+        uic "$i" -o "${i%.ui}.h" # https://unix.stackexchange.com/questions/489453/how-to-replace-file-extension
         # (^aka uic-qt4)
     done
     popd
