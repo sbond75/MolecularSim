@@ -1,13 +1,14 @@
 # https://github.com/NixOS/nixpkgs/blob/nixos-22.05/pkgs/development/python-modules/sip/4.x.nix#L38
 
-{ lib, fetchurl, buildPythonPackage, python, isPyPy, sip-module ? "sip" }:
+{ lib, fetchurl, buildPythonPackage, python, #isPyPy,
+  sip-module ? "sip" }:
 
 buildPythonPackage rec {
   pname = sip-module;
   version = "4.19.25";
   format = "other";
 
-  disabled = isPyPy;
+  # disabled = isPyPy;
 
   src = fetchurl {
     url = "https://www.riverbankcomputing.com/static/Downloads/sip/${version}/sip-${version}.tar.gz";
