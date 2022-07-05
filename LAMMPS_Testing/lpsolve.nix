@@ -15,6 +15,10 @@ stdenv.mkDerivation rec {
 
     patchShebangs ./configure
   '';
+
+  preConfigurePhase = ''
+    export INSTALL=`which install`
+  '';
   
   buildPhase = ''
     cd lp_solve
