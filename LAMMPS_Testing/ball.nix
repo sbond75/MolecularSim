@@ -30,11 +30,8 @@ EOF
 )
     repl1="$(echo -e "$repl1")"
 
-    substituteInPlace CMakeLists.txt --replace "$repl1" ""
-
-    # Add some more config to top of CMakeLists.txt
-    # https://superuser.com/questions/246837/how-do-i-add-text-to-the-beginning-of-a-file-in-bash
-    sed -i '1s/^/set(ENV{LDFLAGS} "$ENV{LDFLAGS} '"`pkg-config --libs libtirpc`"'")\n/' CMakeLists.txt
+    substituteInPlace CMakeLists.txt --replace "$repl1" "" \
+      --replace "# CMake configuration for BALL (http://www.ball-project.org)" 'set(ENV{LDFLAGS} "$ENV{LDFLAGS} '"`pkg-config --libs libtirpc`"'")' # Add some more config to top of CMakeLists.txt
 
     # Prevent `error: friend declaration of` [...] `specifies default arguments and isn't a definition` (where `[...]` is something like `'std::istream& getline(std::istream&, BALL::String&, char)'`)
     substituteInPlace include/BALL/DATATYPE/string.h --replace "String& string,  char delimiter = '\n');" "String& string,  char delimiter);"
