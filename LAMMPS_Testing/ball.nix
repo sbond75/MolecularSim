@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
 
   patchPhase = ''
     substituteInPlace CMakeLists.txt --replace "''${Python3_LIBRARIES}" "" \
-      --replace << EOF
+      --replace <<- "EOF"
 # Generate CMake package configuration for BALL build tree
 CONFIGURE_FILE(
 	"''${PROJECT_SOURCE_DIR}/cmake/BALLConfig.cmake.in"
