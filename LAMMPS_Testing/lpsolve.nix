@@ -19,6 +19,7 @@ stdenv.mkDerivation rec {
     echo 'install "$@"' > install.sh
     echo $'all-am:\n\tcd lp_solve && sh ccc' > Makefile.am
     autoconf
+    automake
     ls -la
   '';
   
