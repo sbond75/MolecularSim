@@ -1,10 +1,10 @@
-{ stdenv, fetchurl, gnumake }:
+{ stdenv, fetchurl, gnumake, dos2unix }:
 
 stdenv.mkDerivation rec {
   name = "lpsolve";
   version = "5.5.2.11";
 
-  buildInputs = [ gnumake ];
+  buildInputs = [ gnumake dos2unix ];
 
   patchPhase = ''
     #ls -la
