@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
     echo 'install "$@"' > install.sh
   '';
 
-  PROJECT_ROOT = builtins.getEnv "PWD";
+  PROJECT_ROOT = builtins.toString ./.;
   configureFlags = [ "--srcdir=${PROJECT_ROOT}" ];
   
   buildPhase = ''
