@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
                 ++ [ tbb mpi
                      #libsForQt5.qt5.qtwebengine libsForQt5.qt5.qtbase libsForQt5.qt5.qtwebsockets libsForQt5.qt5.qt3d libsForQt5.qt5.qtnetworkauth libsForQt5.qt5.qtwebchannel libsForQt5.qt5.wrapQtAppsHook
                      qt4
-                     eigen glew python gsl doxygen tetex blas (boost.overrideAttrs (oldAttrs: rec { patchPhase = (oldAttrs.patchPhase ? "") + ''
+                     eigen glew python gsl doxygen tetex blas (boost.overrideAttrs (oldAttrs: rec { patchPhase = ''
 substituteInPlace boost/math/quaternion.hpp --replace "private:
            T a, b, c, d;" "public:
            T a, b, c, d;"
