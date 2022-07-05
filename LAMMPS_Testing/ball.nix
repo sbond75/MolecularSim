@@ -21,67 +21,10 @@ CONFIGURE_FILE(
 \\t\"\${PROJECT_BINARY_DIR}/cmake/BALLConfig.cmake\"
 \\t@ONLY
 )
-
-# Generate BALL package config version file
-write_basic_package_version_file(
-\\t\"\${PROJECT_BINARY_DIR}/cmake/BALLConfigVersion.cmake\"
-\\tVERSION \${PROJECT_VERSION}
-\\tCOMPATIBILITY AnyNewerVersion
-)
-
-# Generate exports
-EXPORT(TARGETS BALL
-\\tFILE \${PROJECT_BINARY_DIR}/cmake/BALLExport.cmake)
-
-IF(BALL_HAS_VIEW)
-\\tEXPORT(TARGETS VIEW
-\\t\\tAPPEND
-\\t\\tFILE \${PROJECT_BINARY_DIR}/cmake/BALLExport.cmake)
-ENDIF()
-
-
-# Store BALL build directory in the CMake user package registry
-EXPORT(PACKAGE BALL)
-
-
-# Generate CMake package configuration for BALL installation
-IF(NOT APPLE)
-\\t# Installation path for BALL CMake package configuration files
-\\tSET(BALL_CMAKE_EXPORT_PATH \${CMAKE_INSTALL_LIBDIR}/cmake/BALL CACHE PATH \"Path to the cmake package configuration files\")
-
-\\tLIST(REMOVE_ITEM BALL_INCLUDE_DIRS \"\${PROJECT_BINARY_DIR}/include\")
-\\tLIST(REMOVE_ITEM BALL_INCLUDE_DIRS \"\${PROJECT_SOURCE_DIR}/include\")
-\\tSET(BALL_INCLUDE_DIRS \${BALL_PATH}/include/ \${BALL_INCLUDE_DIRS})
-
-\\tCONFIGURE_FILE(
-\\t\\t\"\${PROJECT_SOURCE_DIR}/cmake/BALLConfig.cmake.in\"
-\\t\\t\"\${PROJECT_BINARY_DIR}/exports/BALLConfig.cmake\"
-\\t\\t@ONLY
-\\t)
-
-\\tINSTALL(FILES
-\\t\\t\"\${PROJECT_BINARY_DIR}/exports/BALLConfig.cmake\"
-\\t\\t\"\${PROJECT_BINARY_DIR}/cmake/BALLConfigVersion.cmake\"
-\\t\\tDESTINATION \"\${BALL_CMAKE_EXPORT_PATH}/\"
-\\t\\tCOMPONENT   \${COMPONENT_LIBBALL_DEV}
-\\t)
-
-\\tINSTALL(EXPORT BALLExportGroup
-\\t\\tDESTINATION \${BALL_CMAKE_EXPORT_PATH}
-\\t\\tFILE BALLExport.cmake
-\\t\\tCOMPONENT \"\${COMPONENT_LIBBALL_DEV}\")
-ENDIF()
-
-
-######################################################
-# Generate CTags for BALL project
-######################################################
-INCLUDE(BALLCTags)
 EOF
 )
 " + ''
-    repl1=$"$repl1"
-    echo "$repl1"
+    repl1=$(echo -e "$repl1")
 
     substituteInPlace CMakeLists.txt --replace "''${Python3_LIBRARIES}" "" \
       --replace "$repl1" ""
