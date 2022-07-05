@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
 
     echo 'install "$@"' > install.sh
 
-    export configureFlags="--srcdir=$(realpath .)"
+    ls -la
   '';
   
   buildPhase = ''
