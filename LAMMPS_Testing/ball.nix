@@ -28,7 +28,8 @@ EOF
 
     substituteInPlace CMakeLists.txt --replace "$repl1" ""
 
-    substituteInPlace include/BALL/DATATYPE/string.h --replace "char delimiter = '\n');" "char delimiter);"
+    # Prevent `error: friend declaration of` [...] `specifies default arguments and isn't a definition` (where `[...]` is something like `'std::istream& getline(std::istream&, BALL::String&, char)'`)
+    substituteInPlace include/BALL/DATATYPE/string.h --replace "String& string,  char delimiter = '\n');" "String& string,  char delimiter);"
   '';
 
   cmakeFlags = (if useCUDA then [ "-DUSE_CUDA=YES" ] else []) ++ [ "-DBALL_LICENSE=GPL" "-DUSE_MPI=YES" "-Wno-dev" ];
