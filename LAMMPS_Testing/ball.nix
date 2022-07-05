@@ -78,7 +78,8 @@ ENDIF()
 ######################################################
 INCLUDE(BALLCTags)
 EOF
-)" + ''
+)
+" + ''
     echo "$repl1"
 
     substituteInPlace CMakeLists.txt --replace "''${Python3_LIBRARIES}" "" \
