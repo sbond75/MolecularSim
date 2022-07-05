@@ -1,12 +1,46 @@
-{ lib, stdenv, fetchPypi, buildPythonPackage }:
+# https://github.com/NixOS/nixpkgs/blob/nixos-22.05/pkgs/development/python-modules/sip/4.x.nix#L38
+
+{ lib, fetchurl, buildPythonPackage, python, isPyPy, sip-module ? "sip" }:
 
 buildPythonPackage rec {
-  pname = "sip";
-  version = "4.19.8";
+  pname = sip-module;
+  version = "4.19.25";
+  format = "other";
 
-  src = fetchPypi {
-    inherit pname version;
-    sha256 = "16rb5wk1nr5jja9d4n1ccnfjk5caqzassb8s1sj855171k9pi3am";
+  disabled = isPyPy;
+
+  src = fetchurl {
+    url = "https://www.riverbankcomputing.com/static/Downloads/sip/${version}/sip-${version}.tar.gz";
+    sha256 = "04a23cgsnx150xq86w1z44b6vr2zyazysy9mqax0fy346zlr77dk";
   };
 
+  configurePhase = ''
+    ${python.executable} ./configure.py \
+      --sip-module ${sip-module} \
+      -d $out/${python.sitePackages} \
+      -b $out/bin -e $out/include
+  '';
+
+  enableParallelBuilding = true;
+
+  installCheckPhase = let
+    modules = [
+      sip-module
+      "sipconfig"
+    ];
+    imports = lib.concatMapStrings (module: "import ${module};") modules;
+  in ''
+    echo "Checking whether modules can be imported..."
+    PYTHONPATH=$out/${python.sitePackages}:$PYTHONPATH ${python.interpreter} -c "${imports}"
+  '';
+
+  doCheck = true;
+
+  meta = with lib; {
+    description = "Creates C++ bindings for Python modules";
+    homepage    = "https://riverbankcomputing.com/";
+    license     = licenses.gpl2Plus;
+    maintainers = with maintainers; [ lovek323 sander ];
+    platforms   = platforms.all;
+  };
 }
