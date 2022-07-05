@@ -11,6 +11,10 @@ stdenv.mkDerivation rec {
                      qt4
                      eigen glew python3 gsl blas boost ];
 
+  patchPhase = ''
+    substituteInPlace CMakeLists.txt --replace "''${Python3_LIBRARIES}" ""
+  '';
+
   cmakeFlags = (if useCUDA then [ "-DUSE_CUDA=YES" ] else []) ++ [ "-DBALL_LICENSE=GPL" "-DUSE_MPI=YES" ];
   
   src = fetchFromGitHub {
