@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
 
   patchPhase = ''
     # Remove tabs from CMakeLists.txt since substituteInPlace doesn't appear to be able to handle them:
-    expand -i CMakeLists.txt
+    expand -i CMakeLists.txt > CMakeLists.txt
 
     repl1=$(cat <<- "EOF"
   '' +
