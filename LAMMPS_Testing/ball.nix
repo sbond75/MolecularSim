@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, callPackage, cmake, flex, bison, fftw, openbabel2, libsvm, useCUDA ? true, cudatoolkit, tbb, mpi, qt4, eigen, glew, python, gsl, doxygen, tetex, blas, boost, fetchPypi }:
+{ lib, stdenv, fetchFromGitHub, callPackage, cmake, flex, bison, fftw, openbabel2, libsvm, useCUDA ? true, cudatoolkit, tbb, mpi, qt4, eigen, glew, python, gsl, doxygen, tetex, blas, boost, fetchPypi, buildPythonPackage }:
 
 stdenv.mkDerivation rec {
   name = "ball";
@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
                 ++ [ tbb mpi
                      #libsForQt5.qt5.qtwebengine libsForQt5.qt5.qtbase libsForQt5.qt5.qtwebsockets libsForQt5.qt5.qt3d libsForQt5.qt5.qtnetworkauth libsForQt5.qt5.qtwebchannel libsForQt5.qt5.wrapQtAppsHook
                      qt4
-                     eigen glew python gsl doxygen tetex blas boost (callPackage ./sip.nix {fetchPypi=fetchPypi;}) ];
+                     eigen glew python gsl doxygen tetex blas boost (callPackage ./sip.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;}) ];
 
   patchPhase = ''
     repl1=$(cat <<- "EOF"
