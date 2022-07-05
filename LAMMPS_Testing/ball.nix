@@ -10,7 +10,11 @@ stdenv.mkDerivation rec {
                 ++ [ tbb mpi
                      #libsForQt5.qt5.qtwebengine libsForQt5.qt5.qtbase libsForQt5.qt5.qtwebsockets libsForQt5.qt5.qt3d libsForQt5.qt5.qtnetworkauth libsForQt5.qt5.qtwebchannel libsForQt5.qt5.wrapQtAppsHook
                      qt4
-                     eigen glew python gsl doxygen tetex blas boost (callPackage ./sip.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;}) libtirpc lapack pkg-config ];
+                     eigen glew python gsl doxygen tetex blas (boost.overrideAttrs (oldAttrs: rec { patchPhase = (oldAttrs.patchPhase ? "") + ''
+substituteInPlace boost/math/quaternion.hpp --replace "private:
+           T a, b, c, d;" "public:
+           T a, b, c, d;"
+'';})) (callPackage ./sip.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;}) libtirpc lapack pkg-config ];
 
   patchPhase = ''
     repl1=$(cat <<- "EOF"
@@ -35,7 +39,7 @@ EOF
     substituteInPlace include/BALL/CONCEPT/property.iC --replace 'NamedProperty::NamedProperty(const string& name, boost::shared_ptr<PersistentObject>& po)' 'NamedProperty::NamedProperty(const string& name, const boost::shared_ptr<PersistentObject>& po)'
     substituteInPlace include/BALL/CONCEPT/property.h --replace 'NamedProperty(const string& name, boost::shared_ptr<PersistentObject>& po)' 'NamedProperty(const string& name, const boost::shared_ptr<PersistentObject>& po)'
 
-    substituteInPlace include/BALL/MATHS/quaternion.h --replace "this->a" "this->R_component_1()" --replace "this->b" "this->R_component_2()" --replace "this->c" "this->R_component_3()" --replace "this->d" "this->R_component_4()"
+    #substituteInPlace include/BALL/MATHS/quaternion.h --replace "this->a" "this->R_component_1()" --replace "this->b" "this->R_component_2()" --replace "this->c" "this->R_component_3()" --replace "this->d" "this->R_component_4()"
   '';
 
   preBuild = ''
