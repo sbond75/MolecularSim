@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     aclocal
     autoconf
     automake --add-missing
-    ls -la
+    #ls -la
   '';
   
   buildPhase = ''
@@ -33,10 +33,10 @@ stdenv.mkDerivation rec {
   '';
 
   installPhase = ''
-    # mkdir -p $out/bin
-    # install -Dm755 bin/*/* $out/bin
+    mkdir -p $out/bin
+    install -Dm755 bin/*/* $out/bin
 
-    make install
+    #make install
   '';
   
   src = fetchurl {
