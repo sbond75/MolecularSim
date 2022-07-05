@@ -20,10 +20,9 @@ stdenv.mkDerivation rec {
     export INSTALL=`which install`
 
     echo 'install "$@"' > install.sh
-  '';
 
-  PROJECT_ROOT = builtins.toString ./.;
-  configureFlags = [ "--srcdir=${PROJECT_ROOT}" ];
+    export configureFlags="--srcdir=$(realpath .)"
+  '';
   
   buildPhase = ''
     cd lp_solve
