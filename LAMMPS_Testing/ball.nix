@@ -34,6 +34,8 @@ EOF
     # Fix `error: cannot bind non-const lvalue reference of type 'boost::shared_ptr<BALL::PersistentObject>&' to an rvalue of type 'boost::shared_ptr<BALL::PersistentObject>'`
     substituteInPlace include/BALL/CONCEPT/property.iC --replace 'NamedProperty::NamedProperty(const string& name, boost::shared_ptr<PersistentObject>& po)' 'NamedProperty::NamedProperty(const string& name, const boost::shared_ptr<PersistentObject>& po)'
     substituteInPlace include/BALL/CONCEPT/property.h --replace 'NamedProperty(const string& name, boost::shared_ptr<PersistentObject>& po)' 'NamedProperty(const string& name, const boost::shared_ptr<PersistentObject>& po)'
+
+    substituteInPlace include/BALL/MATHS/quaternion.h --replace "this->a" "this->R_component_1()" --replace "this->b" "this->R_component_2()" --replace "this->c" "this->R_component_3()" --replace "this->d" "this->R_component_4()"
   '';
 
   preBuild = ''
