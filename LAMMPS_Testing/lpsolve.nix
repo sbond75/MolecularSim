@@ -6,14 +6,26 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ gnumake ];
 
+  patchPhase = ''
+    #ls -la
+    chmod u+x ./configure
+
+    # Remove carriage returns
+    dos2unix ./configure ./configure
+
+    patchShebangs ./configure
+  '';
+  
   buildPhase = ''
     cd lp_solve
     sh ccc
   '';
 
   installPhase = ''
-    mkdir -p $out/bin
-    install -Dm755 bin/*/* $out/bin
+    # mkdir -p $out/bin
+    # install -Dm755 bin/*/* $out/bin
+
+    make install
   '';
   
   src = fetchurl {
