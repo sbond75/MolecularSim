@@ -17,7 +17,8 @@ stdenv.mkDerivation rec {
 
     export INSTALL=`which install`
     echo 'install "$@"' > install.sh
-    substituteInPlace configure.ac --replace "AC_CONFIG_FILES" $'AM_INIT_AUTOMAKE\nAC_CONFIG_FILES'
+    substituteInPlace configure.ac --replace "AC_OUTPUT" $'AC_OUTPUT\nAM_INIT_AUTOMAKE'
+    tail configure.ac
     echo $'all-am:\n\tcd lp_solve && sh ccc' > Makefile.am
     autoconf
     automake --add-missing
