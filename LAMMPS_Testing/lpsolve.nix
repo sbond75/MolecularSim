@@ -18,6 +18,8 @@ stdenv.mkDerivation rec {
 
   preConfigurePhase = ''
     export INSTALL=`which install`
+
+    echo 'install "$@"' > install.sh
   '';
   
   buildPhase = ''
