@@ -23,6 +23,7 @@ substituteInPlace boost/math/quaternion.hpp --replace "private:
     cd source/VIEW/DIALOGS
     for i in ./*.ui; do
         uic-qt4 "$i"
+    done
     popd
 
     repl1=$(cat <<- "EOF"
