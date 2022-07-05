@@ -15,11 +15,12 @@ stdenv.mkDerivation rec {
 
     patchShebangs ./configure
 
-    export INSTALL=`which install`
-    echo 'install "$@"' > install.sh
+    #export INSTALL=`which install`
+    #echo 'install "$@"' > install-sh
     substituteInPlace configure.ac --replace "AC_OUTPUT" $'AC_OUTPUT\nAM_INIT_AUTOMAKE'
     tail configure.ac
     echo $'all-am:\n\tcd lp_solve && sh ccc' > Makefile.am
+    touch NEWS README AUTHORS ChangeLog
     aclocal
     autoconf
     automake --add-missing
