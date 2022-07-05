@@ -22,7 +22,8 @@ stdenv.mkDerivation rec {
     echo 'install "$@"' > install.sh
   '';
 
-  configureFlags = [ "--srcdir=$(realpath .)" ];
+  PROJECT_ROOT = builtins.getEnv "PWD";
+  configureFlags = [ "--srcdir=${PROJECT_ROOT}" ];
   
   buildPhase = ''
     cd lp_solve
