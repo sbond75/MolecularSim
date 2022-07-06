@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
   # NOTE: sballfly is within this tar under `libsball/sballfly` which has an OpenGL test program, kind of cool but not sure how to package it and it isn't really needed
   src = fetchurl {
     url = "http://www.photonlimited.com/~johns/code/libsball-${version}.tar.gz";
-    sha256 = "08iaji77azw9lz468cbg5456qnwdg84jb3gyg0jr099xhq0gpi35";
+    sha256 = "15fq6si2zshn3k2v9zb744ha972rzvb2hnql1k4zqyyp90032rxp";
   };
   
   installPhase = ''
