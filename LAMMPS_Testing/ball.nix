@@ -20,6 +20,7 @@ substituteInPlace boost/math/quaternion.hpp --replace "private:
     makeUIFiles()
     {
       for i in ./*.ui; do
+        echo asd1
         uic "$i" -o "/build/source/include/BALL/VIEW/UIC/ui_''${i%.ui}.h" # https://unix.stackexchange.com/questions/489453/how-to-replace-file-extension
         # (^aka uic-qt4)
         echo asd
