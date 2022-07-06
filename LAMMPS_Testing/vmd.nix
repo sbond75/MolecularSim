@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   version = "1.9.3";
 
   buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd
-                  tachyon
+                  tachyon (callPackage ./plumed.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage; intelCompilers=intelCompilers;})
 
                 ] ++ (lib.optionals useSpacenav [
                   #[oops, not needed:] (callPackage ./ball.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;}) # https://nixos.wiki/wiki/Qt : "Qt applications can't be called with callPackage, since they expect more inputs. Namely qtbase and wrapQtAppsHook. Instead they should be called with libsForQt5.callPackage."
