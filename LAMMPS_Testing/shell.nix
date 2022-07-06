@@ -34,6 +34,6 @@ mkShell {
 
     #(callPackage ./lpsolve.nix {})
 
-    (callPackage ./doxygen.nix {})
+    (callPackage ./doxygen.nix {CoreServices=darwin.apple_sdk.frameworks.CoreServices;})
   ];
 }
