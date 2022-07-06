@@ -66,7 +66,7 @@ stdenv.mkDerivation rec {
                                             #+ "LIBOSPRAY " +  # <-- not supported for now -- https://github.com/ospray/ospray
                                             "LIBTACHYON VRPN NETCDF COLVARS TCL PYTHON PTHREADS NUMPY SILENT ${if (intelCompilers != {}) then "ICC" else "GCC"}${if useMPI then " MPI" else ""}")) ++ [
 
-                                              "NOSTATICPLUGINS" # Otherwise it tries to #include "libmolfile_plugin.h" which is from plumed.nix but plumed depends on vmd so this causes infinite recursion
+                                              #"NOSTATICPLUGINS" # Otherwise it tries to #include "libmolfile_plugin.h" which is from plumed.nix but plumed depends on vmd so this causes infinite recursion
                                               "LIBPNG"
                                               "CONTRIB"
 
@@ -256,8 +256,9 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
   '';
 
   computeCPATH = ''
-    export CPATH="$CPATH:$(python -c "import numpy; print(numpy.get_include())"):$out/plugins/include:`pkg-config --cflags-only-I python | sed 's/ *-I *//' | sed -r 's/ +-I */:/g'`" # The first sed removes only up to the first `-I` (for an include passed to the compiler via cflags from pkg-config). The second sed replaces all remaining `-I`'s with colons so that they are separated as the CPATH requires.
+    export CPATH="$CPATH:$out/plugins/include:$(python -c "import numpy; print(numpy.get_include())"):$out/plugins/include:`pkg-config --cflags-only-I python | sed 's/ *-I *//' | sed -r 's/ +-I */:/g'`" # The first sed removes only up to the first `-I` (for an include passed to the compiler via cflags from pkg-config). The second sed replaces all remaining `-I`'s with colons so that they are separated as the CPATH requires.
     # ^ python command is from https://github.com/FORTH-ModelBasedTracker/PyOpenPose/issues/26
+    # ^ `$out/plugins/include` gets us molfile_plugin.h etc. once the `# Build plugins` part of the `preConfigure` phase is done.
   '';
   
   preConfigure = ''
