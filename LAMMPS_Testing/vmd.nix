@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   version = "1.9.3";
 
   buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd
-                  tachyon (callPackage ./plumed.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage; intelCompilers=intelCompilers;})
+                  tachyon
 
                 ] ++ (lib.optionals useSpacenav [
                   #[oops, not needed:] (callPackage ./ball.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;}) # https://nixos.wiki/wiki/Qt : "Qt applications can't be called with callPackage, since they expect more inputs. Namely qtbase and wrapQtAppsHook. Instead they should be called with libsForQt5.callPackage."
@@ -56,6 +56,8 @@ stdenv.mkDerivation rec {
                                             #+ "LIBOPTIX " +   # <-- not supported for now -- it's NVIDIA Optix and there doesn't appear to be a Nix package for it yet.
                                             #+ "LIBOSPRAY " +  # <-- not supported for now -- https://github.com/ospray/ospray
                                             "LIBTACHYON VRPN NETCDF COLVARS TCL PYTHON PTHREADS NUMPY SILENT ${if (intelCompilers != {}) then "ICC" else "GCC"}")) ++ [
+
+                                              "NOSTATICPLUGINS" # Otherwise it tries to #include "libmolfile_plugin.h" which is from plumed.nix but plumed depends on vmd so this causes infinite recursion
 
 # Misc other options:
 # "ACTC"
