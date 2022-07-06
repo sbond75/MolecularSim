@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
                 ] ++ (lib.optionals useMPI [
                   netcdf-mpi
                   mpi
-                ]) ++ (lib.optionals !useMPI [
+                ]) ++ (lib.optionals (!useMPI) [
                   netcdf
                 ]) ++ [
                   
