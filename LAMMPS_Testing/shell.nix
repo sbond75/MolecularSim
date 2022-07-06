@@ -36,7 +36,7 @@ mkShell {
 
     #(callPackage ./doxygen.nix {CoreServices=darwin.apple_sdk.frameworks.CoreServices;})
 
-    #spacenavd
-    libspnav
+    spacenavd
+    #libspnav
   ];
 }
