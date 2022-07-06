@@ -27,6 +27,7 @@ substituteInPlace boost/math/quaternion.hpp --replace "private:
 
     # Fix ui files
     # https://github.com/BALL-Project/ball/issues/516
+    echo $(realpath include/BALL/VIEW/UIC)
     mkdir -p include/BALL/VIEW/UIC
     pushd .
     cd source/VIEW/DIALOGS
