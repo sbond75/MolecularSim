@@ -109,6 +109,8 @@ stdenv.mkDerivation rec {
   # #
 
   patchPhase = ''
+    substituteInPlace vmd-${version}/plugins/Makefile --replace 'csh -f build.csh' 'tcsh -f build.csh'
+  
   ${if withCuda then ''
     # Note: The replacement happens but it doesn't fix the issue here:
     #sed -i 's/\$arch_nvccflags *= *"\([^"]*\)"/$arch_nvccflags    = "-D_FORCE_INLINES \1"/g' vmd-${version}/configure # https://www.ks.uiuc.edu/Research/vmd/mailing_list/vmd-l/31614.html , https://github.com/pjreddie/darknet/pull/16
