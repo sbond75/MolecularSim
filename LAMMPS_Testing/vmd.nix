@@ -128,7 +128,8 @@ $install_library_dir="'"$out/lib"'";' \
       '"plugins' \
       "\"$out/plugins" \
       --replace '$python_libs        = "-lpython2.5' '$python_libs        = "-lpython2.7' \
-      --replace '$system_libs        = "-ll' '$system_libs        = "'
+      --replace '$system_libs        = "-ll' '$system_libs        = "' \
+      --replace 'LOADLIBES   = \$(LIBDIRS) \$(LIBS) $arch_lopts' 'LOADLIBES   = \$(LIBDIRS) \$(LIBS) $arch_lopts -Wl,--copy-dt-needed-entries' # https://stackoverflow.com/questions/19901934/libpthread-so-0-error-adding-symbols-dso-missing-from-command-line
 
     patchShebangs vmd-${version}/configure
 
@@ -259,11 +260,14 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
   preConfigure = ''
     ${computeCPATH}
 
+
+  ${if withCuda then ''
     # Based on https://nixos.wiki/wiki/CUDA
     export CUDA_PATH=${cudatoolkit}
     # export LD_LIBRARY_PATH=${linuxPackages.nvidia_x11}/lib
     export EXTRA_LDFLAGS="-L/lib -L${linuxPackages.nvidia_x11}/lib"
     #export EXTRA_CCFLAGS="-I/usr/include" # <-- ?
+'' else ""}
 
     # Build plugins
     cd plugins
