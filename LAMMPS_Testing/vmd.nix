@@ -101,7 +101,7 @@ stdenv.mkDerivation rec {
 
   patchPhase = ''
   ${if withCuda then ''
-    sed -i 's/\$arch_nvccflags *= *"\([^"]*\)" *;/$arch_nvccflags    = "-D_FORCE_INLINES \1";/g' vmd-${version}/configure # https://www.ks.uiuc.edu/Research/vmd/mailing_list/vmd-l/31614.html , https://github.com/pjreddie/darknet/pull/16
+    sed -i 's/\$arch_nvccflags *= *"\([^"]*\)"/$arch_nvccflags    = "-D_FORCE_INLINES \1"/g' vmd-${version}/configure # https://www.ks.uiuc.edu/Research/vmd/mailing_list/vmd-l/31614.html , https://github.com/pjreddie/darknet/pull/16
 '' else ""}
 cat vmd-${version}/configure
 
