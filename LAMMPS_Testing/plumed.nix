@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, gnumake, gnupatch, python, mpich, blas, lapack, callPackage, graphviz, zlib, fetchPypi, buildPythonPackage, darwin, xxd, pkg-config, gfortan
+{ stdenv, fetchFromGitHub, gnumake, gnupatch, python, mpich, blas, lapack, callPackage, graphviz, zlib, fetchPypi, buildPythonPackage, darwin, xxd, pkg-config, gfortan,
 
   intelCompilers ? {}
 }:
