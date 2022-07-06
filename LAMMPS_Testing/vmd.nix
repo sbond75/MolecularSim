@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, libpng
+{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, libpng,
   withCuda ? false # Seems broken due to https://www.ks.uiuc.edu/Research/vmd/mailing_list/vmd-l/31614.html
 , cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin, xxd, tachyon, pkg-config, pythonPackages,
   useVRPN ? true, vrpn, # a virtual reality thing? https://github.com/vrpn/vrpn , https://github.com/vrpn/vrpn/blob/master/vrpn_Tracker.h
