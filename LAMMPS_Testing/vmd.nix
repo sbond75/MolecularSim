@@ -1,4 +1,6 @@
-{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, withCuda ? true, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin, xxd, tachyon, pkg-config, pythonPackages,
+{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg,
+  withCuda ? true #false # Seems broken due to https://www.ks.uiuc.edu/Research/vmd/mailing_list/vmd-l/31614.html
+, cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin, xxd, tachyon, pkg-config, pythonPackages,
   useVRPN ? true, vrpn, # a virtual reality thing? https://github.com/vrpn/vrpn , https://github.com/vrpn/vrpn/blob/master/vrpn_Tracker.h
   useSpacenav ? true, #libspnav, #spacenavd, # http://spacenav.sourceforge.net/
   
@@ -98,6 +100,10 @@ stdenv.mkDerivation rec {
   # #
 
   patchPhase = ''
+  ${if withCuda then ''
+    sed -i vmd-${version}/configure 's/\$arch_opt_flag *= *"\([^"]*\)" *;/$arch_opt_flag    = "-D_FORCE_INLINES \1";/g' # https://www.ks.uiuc.edu/Research/vmd/mailing_list/vmd-l/31614.html
+'' else ""}
+
     substituteInPlace vmd-${version}/configure --replace \
       '# Directory where VMD startup script is installed, should be in users'"'"' paths.
 $install_bin_dir="/usr/local/bin";
