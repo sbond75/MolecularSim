@@ -142,8 +142,10 @@ $install_library_dir="'"$out/lib"'";' \
     substituteInPlace vmd-${version}/bin/vmd.csh --replace "/usr/local/lib/vmd" "$out/lib" --replace "/usr/bin/X11/xterm" `which xterm`
     patchShebangs vmd-${version}/bin/vmd.sh
     substituteInPlace vmd-${version}/bin/vmd.sh --replace "/usr/local/lib/vmd" "$out/lib" --replace "/usr/bin/X11/xterm" `which xterm`
+  ${if withCuda then ''
     substituteInPlace vmd-${version}/configure --replace '$arch_nvcc        = "/usr/local/cuda-8.0/bin/nvcc";' '$arch_nvcc'"        = \"`which nvcc`\";" --replace '$cuda_dir         = "/usr/local/cuda-8.0";' '$cuda_dir         = "${cudatoolkit}";' --replace '$arch_nvcc     = "/usr/local/cuda-4.0/bin/nvcc";' '$arch_nvcc'"        = \"`which nvcc`\";" --replace '$arch_nvcc     = "/usr/local/cuda-5.5/bin/nvcc";' '$arch_nvcc'"        = \"`which nvcc`\";" --replace '$arch_nvcc        = "/usr/local/cuda/bin/nvcc";' '$arch_nvcc'"        = \"`which nvcc`\";" #--replace '$arch_nvcc        = "/usr/local/cuda-8.0/bin/nvcc";' '$arch_nvcc'"        = \"`which nvcc`\";" --replace '[ ! -x "/bin/csh" ]' 'false'
     substituteInPlace vmd-${version}/configure --replace "/bin/csh" "`which tcsh`" --replace "/bin/sh" "`which sh`"
+'' else ""}
     patchShebangs vmd-${version}/lib/use
     substituteInPlace vmd-${version}/lib/scripts/tcl8.5/clock.tcl --replace 'foreach path {' 'foreach path { /etc/zoneinfo' # https://github.com/NixOS/nixpkgs/issues/65415
     substituteInPlace vmd-${version}/lib/scripts/tcl8.5/ldAix --replace '/usr/ccs/bin/nm' "`which nm`"
