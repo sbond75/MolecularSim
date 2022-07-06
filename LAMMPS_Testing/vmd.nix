@@ -160,7 +160,7 @@ $install_library_dir="'"$out/lib"'";' \
     patchShebangs plugins/autoionize/doc/sod2pot.tcl
     patchShebangs plugins/autoionize/autoionize.tcl
     substituteInPlace plugins/doc/Doxyfile --replace "/usr/bin/perl" "`which perl`"
-    substituteInPlace plugins/doc/Doxyfile --replace "BIN_ABSPATH            = /usr/local/bin/" "BIN_ABSPATH            = $(dirname "`which doxysearch`")"
+    substituteInPlace plugins/doc/Doxyfile --replace "BIN_ABSPATH            = /usr/local/bin/" "BIN_ABSPATH            = $(dirname "`which doxysearch.cgi`")"
     patchShebangs plugins/vmdtkcon/tkcon-2.3/docs/perl.txt
     substituteInPlace plugins/autoimd/doc/ug/index.html --replace "/usr/share/latex2html" "${latex2html}"
     substituteInPlace plugins/autoimd/doc/ug/ug.html --replace "/usr/share/latex2html" "${latex2html}"
