@@ -17,14 +17,24 @@ substituteInPlace boost/math/quaternion.hpp --replace "private:
 '';})) (callPackage ./sip.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;}) libtirpc lapack pkg-config ];
 
   patchPhase = ''
+    makeUIFiles()
+    {
+      for i in ./*.ui; do
+        uic "$i" -o "/build/source/include/BALL/VIEW/UIC/ui_''${i%.ui}.h" # https://unix.stackexchange.com/questions/489453/how-to-replace-file-extension
+        # (^aka uic-qt4)
+      done
+    }
+
     # Fix ui files
     # https://github.com/BALL-Project/ball/issues/516
+    mkdir -p include/BALL/VIEW/UIC
     pushd .
     cd source/VIEW/DIALOGS
-    for i in ./*.ui; do
-        uic "$i" -o "''${i%.ui}.h" # https://unix.stackexchange.com/questions/489453/how-to-replace-file-extension
-        # (^aka uic-qt4)
-    done
+    makeUIFiles
+    popd
+    pushd .
+    cd source/APPLICATIONS/BALLVIEW
+    makeUIFiles
     popd
 
     repl1=$(cat <<- "EOF"
