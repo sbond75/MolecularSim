@@ -127,7 +127,7 @@ $install_library_dir="'"$out/lib"'";' \
       --replace \
       '"plugins' \
       "\"$out/plugins" \
-      --replace '$netcdf_libs        = "-lnetcdf";' '$netcdf_libs        = "";'
+      --replace '$python_libs        = "-lpython2.5' '$python_libs        = "-lpython2.7'
 
     patchShebangs vmd-${version}/configure
 
