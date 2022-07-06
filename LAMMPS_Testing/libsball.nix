@@ -13,6 +13,7 @@ stdenv.mkDerivation rec {
   };
   
   installPhase = ''
+    mkdir $out
     install -Dm755 libsball.a testsball $out
   '';
   
