@@ -267,7 +267,7 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     setenv TCLINC -I${tcl-8_5.outPath}/include
     setenv TCLLIB -L${tcl-8_5.outPath}/lib
     echo "Using build settings for nix"
-    cd $unixdir; gmake LINUXAMD64 TCLINC=$TCLINC TCLLIB=$TCLLIB/lib_LINUXAMD64 >& log.LINUXAMD64.$DATE < /dev/null &'
+    cd $unixdir; gmake LINUXAMD64 TCLINC=$TCLINC TCLLIB=$TCLLIB/lib_LINUXAMD64'
   '';
 
   computeCPATH = ''
