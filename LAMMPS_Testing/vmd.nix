@@ -103,6 +103,7 @@ stdenv.mkDerivation rec {
   ${if withCuda then ''
     sed -i 's/\$arch_opt_flag *= *"\([^"]*\)" *;/$arch_opt_flag    = "-D_FORCE_INLINES \1";/g' vmd-${version}/configure # https://www.ks.uiuc.edu/Research/vmd/mailing_list/vmd-l/31614.html
 '' else ""}
+cat vmd-${version}/configure
 
     substituteInPlace vmd-${version}/configure --replace \
       '# Directory where VMD startup script is installed, should be in users'"'"' paths.
