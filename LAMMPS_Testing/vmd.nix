@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, libpng,
+{ lib, stdenv, fetchFromGitHub, fetchurl, gnumake, callPackage, perl, libGL, fltk, tk-8_5, tcl-8_5, xorg, libpng, libjpeg,
   withCuda ? false # Seems broken due to https://www.ks.uiuc.edu/Research/vmd/mailing_list/vmd-l/31614.html
 , cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin, xxd, tachyon, pkg-config, pythonPackages,
   useVRPN ? true, vrpn, # a virtual reality thing? https://github.com/vrpn/vrpn , https://github.com/vrpn/vrpn/blob/master/vrpn_Tracker.h
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   version = "1.9.3";
 
   buildInputs = [ gnumake perl libGL fltk tk-8_5 tcl-8_5 my-python-packages which xxd
-                  tachyon libpng
+                  tachyon libpng libjpeg
 
                 ] ++ (lib.optionals useSpacenav [
                   #[oops, not needed:] (callPackage ./ball.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;}) # https://nixos.wiki/wiki/Qt : "Qt applications can't be called with callPackage, since they expect more inputs. Namely qtbase and wrapQtAppsHook. Instead they should be called with libsForQt5.callPackage."
@@ -68,6 +68,7 @@ stdenv.mkDerivation rec {
 
                                               "NOSTATICPLUGINS" # Otherwise it tries to #include "libmolfile_plugin.h" which is from plumed.nix but plumed depends on vmd so this causes infinite recursion
                                               "LIBPNG"
+                                              "CONTRIB"
 
 # Misc other options:
 # "ACTC"
