@@ -38,7 +38,7 @@ mkShell {
 
     #spacenavd
     #libspnav
-    #pkg-config
+    pkg-config
     (callPackage ./libsball.nix {})
 
     python
