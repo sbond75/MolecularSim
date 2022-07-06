@@ -131,7 +131,8 @@ $install_library_dir="'"$out/lib"'";' \
       "\"$out/plugins" \
       --replace '$python_libs        = "-lpython2.5' '$python_libs        = "-lpython2.7' \
       --replace '$system_libs        = "-ll' '$system_libs        = "' \
-      --replace 'LOADLIBES   = \$(LIBDIRS) \$(LIBS) $arch_lopts' 'LOADLIBES   = \$(LIBDIRS) \$(LIBS) $arch_lopts -Wl,--copy-dt-needed-entries' # https://stackoverflow.com/questions/19901934/libpthread-so-0-error-adding-symbols-dso-missing-from-command-line
+      --replace 'LOADLIBES   = \$(LIBDIRS) \$(LIBS) $arch_lopts' 'LOADLIBES   = \$(LIBDIRS) \$(LIBS) $arch_lopts -ljpeg'
+# -Wl,--copy-dt-needed-entries' # https://stackoverflow.com/questions/19901934/libpthread-so-0-error-adding-symbols-dso-missing-from-command-line
 
     patchShebangs vmd-${version}/configure
 
