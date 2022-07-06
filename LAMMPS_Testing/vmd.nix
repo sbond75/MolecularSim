@@ -3,7 +3,7 @@
 , cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin, xxd, tachyon, pkg-config, pythonPackages,
   useVRPN ? true, vrpn, # a virtual reality thing? https://github.com/vrpn/vrpn , https://github.com/vrpn/vrpn/blob/master/vrpn_Tracker.h
   useSpacenav ? true, #libspnav, #spacenavd, # http://spacenav.sourceforge.net/
-  useMPI ? true, netcdf-mpi, mpi, netcdf,
+  useMPI ? true, netcdf-mpi, mpich, netcdf,
   
   intelCompilers ? {} # optional, will try gcc if not provided
 }:
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
                 ]) ++ [
                 ] ++ (lib.optionals useMPI [
                   netcdf-mpi
-                  mpi
+                  mpich # (note: mpich is different from mpi -- they are different implementations. See `vmd-${version}/configure` line 980 and the following commented-out lines for an mpi version which may or may not be working if uncommented.)
                 ]) ++ (lib.optionals (!useMPI) [
                   netcdf
                 ]) ++ [
@@ -127,7 +127,8 @@ $install_library_dir="'"$out/lib"'";' \
       --replace \
       '"plugins' \
       "\"$out/plugins" \
-      --replace '$python_libs        = "-lpython2.5' '$python_libs        = "-lpython2.7'
+      --replace '$python_libs        = "-lpython2.5' '$python_libs        = "-lpython2.7' \
+      --replace '$system_libs        = "-ll' '$system_libs        = "'
 
     patchShebangs vmd-${version}/configure
 
