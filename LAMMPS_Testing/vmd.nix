@@ -6,6 +6,10 @@
   useMPI ? true, netcdf-mpi, mpich, netcdf,
   
   intelCompilers ? {} # optional, will try gcc if not provided
+
+  # For plugins #
+#, hdf5, sqlite # (Under "Libraries required by plugins" on https://www.ks.uiuc.edu/Research/vmd/plugins/doxygen/compiling.html )
+  # #
 }:
 
 let
@@ -292,6 +296,14 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     cd plugins
     export PLUGINDIR="$out/plugins"
     make -j $NIX_BUILD_CORES world
+
+    # Pesky molfile plugin
+    pushd .
+    cd plugins/molfile_plugin
+    make -j $NIX_BUILD_CORES libmolfile_plugin.h libmolfile_plugin.a
+    popd
+
+    # Install plugins
     make -j $NIX_BUILD_CORES distrib
 
     # Prepare for actual build
