@@ -22,12 +22,13 @@ substituteInPlace boost/math/quaternion.hpp --replace "private:
       for i in ./*.ui; do
         uic "$i" -o "/build/source/include/BALL/VIEW/UIC/ui_''${i%.ui}.h" # https://unix.stackexchange.com/questions/489453/how-to-replace-file-extension
         # (^aka uic-qt4)
+        echo asd
       done
     }
 
     # Fix ui files
     # https://github.com/BALL-Project/ball/issues/516
-    echo $(realpath include/BALL/VIEW/UIC)
+    #echo $(realpath include/BALL/VIEW/UIC)  # prints `/build/source/include/BALL/VIEW/UIC`
     mkdir -p include/BALL/VIEW/UIC
     pushd .
     cd source/VIEW/DIALOGS
