@@ -16,6 +16,11 @@ substituteInPlace boost/math/quaternion.hpp --replace "private:
            T a, b, c, d;"
 '';})) (callPackage ./sip.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage;}) libtirpc lapack pkg-config ];
 
+  computeCPATH = ''
+    # To prevent `fatal error: rpc/types.h: No such file or directory`:
+    export CPATH="$CPATH:`pkg-config --cflags-only-I libtirpc | sed 's/ *-I *//' | sed -r 's/ +-I */:/g'`" # The first sed removes only up to the first `-I` (for an include passed to the compiler via cflags from pkg-config). The second sed replaces all remaining `-I`'s with colons so that they are separated as the CPATH requires.
+  '';
+  
   patchPhase = ''
     makeUIFiles()
     {
@@ -65,13 +70,12 @@ EOF
 
     #substituteInPlace include/BALL/MATHS/quaternion.h --replace "this->a" "this->R_component_1()" --replace "this->b" "this->R_component_2()" --replace "this->c" "this->R_component_3()" --replace "this->d" "this->R_component_4()"
 
-    substituteInPlace cmake/FindXDR.cmake --replace "CHECK_INCLUDE_FILE_CXX(rpc/types.h XDR_HAS_RPC_TYPES_H)" "set(XDR_HAS_RPC_TYPES_H TRUE)"
+    #substituteInPlace cmake/FindXDR.cmake --replace "CHECK_INCLUDE_FILE_CXX(rpc/types.h XDR_HAS_RPC_TYPES_H)" "set(XDR_HAS_RPC_TYPES_H TRUE)"
   '';
 
-  preBuild = ''
-    # To prevent `fatal error: rpc/types.h: No such file or directory`:
-    export CPATH="$CPATH:`pkg-config --cflags-only-I libtirpc | sed 's/ *-I *//' | sed -r 's/ +-I */:/g'`" # The first sed removes only up to the first `-I` (for an include passed to the compiler via cflags from pkg-config). The second sed replaces all remaining `-I`'s with colons so that they are separated as the CPATH requires.
-  '';
+  preConfigure = computeCPATH;
+
+  preBuild = computeCPATH;
 
   cmakeFlags = (if useCUDA then [ "-DUSE_CUDA=YES" ] else []) ++ [ "-DBALL_LICENSE=GPL" "-DUSE_MPI=YES" "-Wno-dev" ];
   
