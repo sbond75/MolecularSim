@@ -15,6 +15,9 @@ stdenv.mkDerivation rec {
   installPhase = ''
     mkdir $out
     install -Dm755 libsball.a testsball $out
+    
+    mkdir $out/include
+    cp *.h $out/include/
   '';
   
   meta = with lib; {
