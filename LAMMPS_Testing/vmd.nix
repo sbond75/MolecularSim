@@ -109,7 +109,7 @@ stdenv.mkDerivation rec {
   # #
 
   patchPhase = ''
-    substituteInPlace vmd-${version}/plugins/Makefile --replace 'csh -f build.csh' 'tcsh -f build.csh'
+    substituteInPlace plugins/Makefile --replace 'csh -f build.csh' 'tcsh -f build.csh'
   
   ${if withCuda then ''
     # Note: The replacement happens but it doesn't fix the issue here:
