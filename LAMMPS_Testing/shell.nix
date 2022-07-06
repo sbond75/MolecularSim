@@ -42,5 +42,6 @@ mkShell {
     (callPackage ./libsball.nix {})
 
     python
+    netcdf-mpi
   ];
 }
