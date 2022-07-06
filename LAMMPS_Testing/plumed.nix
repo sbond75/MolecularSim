@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, gnumake, gnupatch, python, mpi, blas, lapack, callPackage, graphviz, zlib, fetchPypi, buildPythonPackage, darwin,
+{ stdenv, fetchFromGitHub, gnumake, gnupatch, python, mpi, blas, lapack, callPackage, graphviz, zlib, fetchPypi, buildPythonPackage, darwin, xxd,
 
   intelCompilers ? {}
 }:
@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
   name = "plumed2";
   version = "2.7.4";
 
-  buildInputs = [ gnumake python mpi blas lapack (callPackage ./vmd.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage; intelCompilers=intelCompilers;}) (callPackage ./doxygen.nix {CoreServices=darwin.apple_sdk.frameworks.CoreServices;}) graphviz zlib ];
+  buildInputs = [ gnumake python mpi blas lapack (callPackage ./vmd.nix {fetchPypi=fetchPypi; buildPythonPackage=buildPythonPackage; intelCompilers=intelCompilers;}) (callPackage ./doxygen.nix {CoreServices=darwin.apple_sdk.frameworks.CoreServices;}) graphviz zlib xxd ];
 
   src = fetchFromGitHub {
     owner = "plumed";
