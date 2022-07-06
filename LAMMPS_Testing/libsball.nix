@@ -14,8 +14,8 @@ stdenv.mkDerivation rec {
   
   installPhase = ''
     mkdir $out
-    install -Dm755 testsball $out/bin
-    install -Dm755 libsball.a $out/lib
+    install -Dm755 -d testsball $out/bin
+    install -Dm755 -d libsball.a $out/lib
     
     mkdir $out/include
     cp *.h $out/include/
