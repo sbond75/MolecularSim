@@ -101,7 +101,8 @@ stdenv.mkDerivation rec {
 
   patchPhase = ''
   ${if withCuda then ''
-    sed -i vmd-${version}/configure 's/\$arch_opt_flag *= *"\([^"]*\)" *;/$arch_opt_flag    = "-D_FORCE_INLINES \1";/g' # https://www.ks.uiuc.edu/Research/vmd/mailing_list/vmd-l/31614.html
+    echo sed -i vmd-${version}/configure 's/\$arch_opt_flag *= *"\([^"]*\)" *;/$arch_opt_flag    = "-D_FORCE_INLINES \1";/g' # https://www.ks.uiuc.edu/Research/vmd/mailing_list/vmd-l/31614.html
+exit 1
 '' else ""}
 
     substituteInPlace vmd-${version}/configure --replace \
