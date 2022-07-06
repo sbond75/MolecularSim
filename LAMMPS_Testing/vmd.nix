@@ -255,6 +255,17 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     substituteInPlace plugins/autoimd/namdrun.tcl --replace '/bin/sh' "`which sh`"
     patchShebangs plugins/mafft.new/mafft-data/core/makemergetable.rb
     patchShebangs plugins/build.csh
+
+    substituteInPlace plugins/build.csh --replace 'switch ( `hostname` )
+ ## Amazon EC2
+ case ip-*-*-*-*:
+    echo "Using build settings for Amazon EC2"
+    setenv TCLINC -I/home/ec2-user/vmd/lib/tcl/include
+    setenv TCLLIB -L/home/ec2-user/vmd/lib/tcl
+    cd $unixdir; gmake LINUXAMD64 TCLINC=$TCLINC TCLLIB=$TCLLIB/lib_LINUXAMD64 >& log.LINUXAMD64.$DATE < /dev/null &' 'switch ( "nix" )
+ case nix:
+    echo "Using build settings for nix"
+    cd $unixdir; gmake LINUXAMD64 TCLINC=$TCLINC TCLLIB=$TCLLIB/lib_LINUXAMD64 >& log.LINUXAMD64.$DATE < /dev/null &'
   '';
 
   computeCPATH = ''
