@@ -19,4 +19,5 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     homepage = "http://www.photonlimited.com/~johns/projects/libsball/";
     description = "LibSBall is a library for communicating with Spaceball 2003, 3000, 3003, or 4000 FLX Six-Degree-Of-Freedom virtual reality controllers made by 3Dconnexion.";
+  };
 }
