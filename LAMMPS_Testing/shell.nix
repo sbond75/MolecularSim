@@ -38,5 +38,6 @@ mkShell {
 
     spacenavd
     #libspnav
+    pkg-config
   ];
 }
