@@ -28,14 +28,15 @@ with pkgs;
 # in
 mkShell {
   buildInputs = [
-    (callPackage ./lammps.nix {withMPI = true; fetchPypi=pythonPackages.fetchPypi; buildPythonPackage=pythonPackages.buildPythonPackage;
-                               # Not working: #intelCompilers=(nur.repos.dguibert.overlays.intel-compilers pkgs pkgs).intelPackages_2020_4_304.compilers; # More info: https://github.com/dguibert/nur-packages/blob/master/overlays/intel-compilers-overlay/default.nix
-                              }) #lammps
+    # (callPackage ./lammps.nix {withMPI = true; fetchPypi=pythonPackages.fetchPypi; buildPythonPackage=pythonPackages.buildPythonPackage;
+    #                            # Not working: #intelCompilers=(nur.repos.dguibert.overlays.intel-compilers pkgs pkgs).intelPackages_2020_4_304.compilers; # More info: https://github.com/dguibert/nur-packages/blob/master/overlays/intel-compilers-overlay/default.nix
+    #                           }) #lammps
 
     #(callPackage ./lpsolve.nix {})
 
     #(callPackage ./doxygen.nix {CoreServices=darwin.apple_sdk.frameworks.CoreServices;})
 
     #spacenavd
+    libspnav
   ];
 }
