@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, gnumake }:
+{ lib, stdenv, fetchFromGitHub, gnumake }:
 
 stdenv.mkDerivation rec {
   name = "libsball";
