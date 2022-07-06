@@ -3,6 +3,7 @@
 , cudatoolkit, linuxPackages, tcsh, bison, xterm, imagemagick, binutils, gnuplot, latex2html, last, python, python27, fetchPypi, buildPythonPackage, which, graphviz, darwin, xxd, tachyon, pkg-config, pythonPackages,
   useVRPN ? true, vrpn, # a virtual reality thing? https://github.com/vrpn/vrpn , https://github.com/vrpn/vrpn/blob/master/vrpn_Tracker.h
   useSpacenav ? true, #libspnav, #spacenavd, # http://spacenav.sourceforge.net/
+  useMPI ? true, netcdf-mpi, mpi, netcdf
   
   intelCompilers ? {} # optional, will try gcc if not provided
 }:
@@ -28,6 +29,12 @@ stdenv.mkDerivation rec {
                   # ^this is the actual one needed:
                   (callPackage ./libsball.nix {})
                   #libspnav #spacenavd
+                ]) ++ [
+                ] ++ (lib.optionals useMPI [
+                  netcdf-mpi
+                  mpi
+                ]) ++ (lib.optionals !useMPI [
+                  netcdf
                 ]) ++ [
                   
                   pkg-config # Used within this nix file only
@@ -57,7 +64,7 @@ stdenv.mkDerivation rec {
                                             "IMD LIBSBALL XINERAMA XINPUT " +
                                             #+ "LIBOPTIX " +   # <-- not supported for now -- it's NVIDIA Optix and there doesn't appear to be a Nix package for it yet.
                                             #+ "LIBOSPRAY " +  # <-- not supported for now -- https://github.com/ospray/ospray
-                                            "LIBTACHYON VRPN NETCDF COLVARS TCL PYTHON PTHREADS NUMPY SILENT ${if (intelCompilers != {}) then "ICC" else "GCC"}")) ++ [
+                                            "LIBTACHYON VRPN NETCDF COLVARS TCL PYTHON PTHREADS NUMPY SILENT ${if (intelCompilers != {}) then "ICC" else "GCC"}${if useMPI then " MPI" else ""}")) ++ [
 
                                               "NOSTATICPLUGINS" # Otherwise it tries to #include "libmolfile_plugin.h" which is from plumed.nix but plumed depends on vmd so this causes infinite recursion
 
@@ -119,7 +126,8 @@ $install_bin_dir="'"$out/bin"'";
 $install_library_dir="'"$out/lib"'";' \
       --replace \
       '"plugins' \
-      "\"$out/plugins"
+      "\"$out/plugins" \
+      --replace '$netcdf_libs        = "-lnetcdf";' '$netcdf_libs        = "";'
 
     patchShebangs vmd-${version}/configure
 
