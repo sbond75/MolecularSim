@@ -299,7 +299,7 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
 
     # Pesky molfile plugin
     pushd .
-    cd plugins/molfile_plugin
+    cd molfile_plugin
     make -j $NIX_BUILD_CORES libmolfile_plugin.h libmolfile_plugin.a
     popd
 
