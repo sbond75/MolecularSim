@@ -64,6 +64,8 @@ EOF
     substituteInPlace include/BALL/CONCEPT/property.h --replace 'NamedProperty(const string& name, boost::shared_ptr<PersistentObject>& po)' 'NamedProperty(const string& name, const boost::shared_ptr<PersistentObject>& po)'
 
     #substituteInPlace include/BALL/MATHS/quaternion.h --replace "this->a" "this->R_component_1()" --replace "this->b" "this->R_component_2()" --replace "this->c" "this->R_component_3()" --replace "this->d" "this->R_component_4()"
+
+    substituteInPlace cmake/FindXDR.cmake --replace "CHECK_INCLUDE_FILE_CXX(rpc/types.h XDR_HAS_RPC_TYPES_H)" "set(XDR_HAS_RPC_TYPES_H TRUE)"
   '';
 
   preBuild = ''
