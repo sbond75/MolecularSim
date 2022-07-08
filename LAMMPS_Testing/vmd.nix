@@ -320,8 +320,8 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     make -j $NIX_BUILD_CORES distrib
 
     ls -la "$PLUGINDIR"
-    ls -la "$PLUGINDIR/*"
-    ls -la "$PLUGINDIR/*/*"
+    ls -la "$PLUGINDIR"/*
+    ls -la "$PLUGINDIR"/*/*
 
     # Prepare for actual build
     cd ../vmd-${version}
