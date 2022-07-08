@@ -115,7 +115,12 @@ stdenv.mkDerivation rec {
   patchPhase = ''
     #substituteInPlace plugins/catdcd/Makefile --replace 'INCDIR=-I. -I../include -I''${COMPILEDIR}/lib_''${ARCH}/molfile' 'INCDIR=-I. -I../include -I''${COMPILEDIR}/lib_''${ARCH}/molfile -I''${PLUGINDIR}/include'
     mkdir -p "$out/plugins/compile"
+    # NOTE: In order for substituteInPlace to work within the `find` command, these exported functions must correspond to those used by substituteInPlace in nixpkgs at `pkgs/stdenv/generic/setup.sh` #
     export -f substituteInPlace # https://stackoverflow.com/questions/4321456/find-exec-a-shell-function-in-linux
+    export -f substitute
+    export -f consumeEntire
+    export -f substituteStream
+    # #
     find plugins -type f -exec bash -c 'substituteInPlace "$@"' --replace "../compile" "$out/plugins/compile" \;
 
 
