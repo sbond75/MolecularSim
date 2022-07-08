@@ -2,7 +2,7 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "plumed2";
+  name = "xdrfile";
   version = "0d12c950bcc37bda591f7c5ce8256a281b74bd6d";
 
   buildInputs = [ cmake ];
