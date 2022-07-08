@@ -324,6 +324,7 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     ls -la "$PLUGINDIR"/*/*
 
     # Prepare for actual build
+    export CPATH="$CPATH:$out/plugins/LINUXAMD64/molfile" # So that `libmolfile_plugin.h` can be found
     cd ../vmd-${version}
   '';
 
