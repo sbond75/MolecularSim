@@ -113,7 +113,7 @@ stdenv.mkDerivation rec {
   # #
 
   patchPhase = ''
-    substituteInPlace plugins/catdcd/Makefile --replace 'INCDIR=-I. -I../include -I''${COMPILEDIR}/lib_''${ARCH}/molfile' 'INCDIR=-I. -I../include -I''${COMPILEDIR}/lib_''${ARCH}/molfile -I''${PLUGINDIR}/include'
+    #substituteInPlace plugins/catdcd/Makefile --replace 'INCDIR=-I. -I../include -I''${COMPILEDIR}/lib_''${ARCH}/molfile' 'INCDIR=-I. -I../include -I''${COMPILEDIR}/lib_''${ARCH}/molfile -I''${PLUGINDIR}/include'
 
     substituteInPlace plugins/Makefile --replace 'csh -f build.csh' 'tcsh -f build.csh'
   
@@ -302,7 +302,7 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     # Pesky molfile plugin
     pushd .
     cd molfile_plugin
-    make -j $NIX_BUILD_CORES libmolfile_plugin.h
+    make -j $NIX_BUILD_CORES staticlibs
     popd
 
     # Install plugins
