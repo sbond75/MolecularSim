@@ -308,10 +308,11 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     # Build plugins
     cd plugins
     export PLUGINDIR="$out/plugins"
-    make molfilelibs
     make world
 
     ls -la
+    ls -la ./*
+    ls -la ./*/*
 
     # # Pesky molfile plugin
     # pushd .
