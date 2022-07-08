@@ -319,9 +319,9 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     # Install plugins
     make -j $NIX_BUILD_CORES distrib
 
-    ls -la "$PLUGINDIR"
-    ls -la "$PLUGINDIR"/*
-    ls -la "$PLUGINDIR"/*/*
+    # ls -la "$PLUGINDIR"
+    # ls -la "$PLUGINDIR"/*
+    # ls -la "$PLUGINDIR"/*/*
 
     # Prepare for actual build
     export CPATH="$CPATH:$out/plugins/LINUXAMD64/molfile" # So that `libmolfile_plugin.h` can be found
