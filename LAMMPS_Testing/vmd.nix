@@ -123,7 +123,7 @@ stdenv.mkDerivation rec {
     # #
     #find plugins -type f -exec bash -c 'echo substituteInPlace "$0" "$@"' '{}' --replace "../compile" "$out/plugins/compile" \;
     grepStr='../compile'
-    grep -r --files-with-matches "$grepStr" plugins | xargs -I {} bash -c 'echo substituteInPlace "$0" "$@"' '{}' --replace "$grepStr" "$out/plugins/compile"
+    grep -r --files-with-matches "$grepStr" plugins | xargs -I {} bash -c 'substituteInPlace "$0" "$@"' '{}' --replace "$grepStr" "$out/plugins/compile"
 
 
     substituteInPlace plugins/Makefile --replace 'csh -f build.csh' 'tcsh -f build.csh'
