@@ -113,6 +113,8 @@ stdenv.mkDerivation rec {
   # #
 
   patchPhase = ''
+    substituteInPlace plugins/catdcd/Makefile --replace 'INCDIR=-I. -I../include -I''${COMPILEDIR}/lib_''${ARCH}/molfile' 'INCDIR=-I. -I../include -I''${COMPILEDIR}/lib_''${ARCH}/molfile -I''${PLUGINDIR}/include'
+
     substituteInPlace plugins/Makefile --replace 'csh -f build.csh' 'tcsh -f build.csh'
   
   ${if withCuda then ''
