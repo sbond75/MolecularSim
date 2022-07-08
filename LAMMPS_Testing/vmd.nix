@@ -305,15 +305,16 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     #export EXTRA_CCFLAGS="-I/usr/include" # <-- ?
 '' else ""}
 
-    # Pesky molfile plugin
-    # pushd .
-    # cd plugins/molfile_plugin
-    # make -j $NIX_BUILD_CORES staticlibs
-    # popd
-
     # Build plugins
-    cd plugins
     export PLUGINDIR="$out/plugins"
+
+    # Pesky molfile plugin
+    pushd .
+    cd plugins/molfile_plugin
+    make -j $NIX_BUILD_CORES staticlibs
+    popd
+
+    cd plugins
     make -j $NIX_BUILD_CORES world
 
     # Install plugins
