@@ -314,6 +314,10 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     ls -la ./*
     ls -la ./*/*
 
+    ls -la "$PLUGINDIR"
+    ls -la "$PLUGINDIR/*"
+    ls -la "$PLUGINDIR/*/*"
+
     # # Pesky molfile plugin
     # pushd .
     # cd molfile_plugin
