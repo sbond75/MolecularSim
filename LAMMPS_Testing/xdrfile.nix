@@ -9,6 +9,7 @@ stdenv.mkDerivation rec {
 
   patchPhase = ''
     substituteInPlace CMakeLists.txt --replace "file(COPY test_data DESTINATION ''${CMAKE_CURRENT_BINARY_DIR})" "file(COPY test_data DESTINATION ${out})"
+  '';
 
   src = fetchFromGitHub {
     owner = "chemfiles";
