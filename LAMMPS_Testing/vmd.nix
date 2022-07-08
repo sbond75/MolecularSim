@@ -310,10 +310,6 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     export PLUGINDIR="$out/plugins"
     make world
 
-    ls -la "$PLUGINDIR"
-    ls -la "$PLUGINDIR/*"
-    ls -la "$PLUGINDIR/*/*"
-
     # # Pesky molfile plugin
     # pushd .
     # cd molfile_plugin
@@ -322,6 +318,10 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
 
     # Install plugins
     make -j $NIX_BUILD_CORES distrib
+
+    ls -la "$PLUGINDIR"
+    ls -la "$PLUGINDIR/*"
+    ls -la "$PLUGINDIR/*/*"
 
     # Prepare for actual build
     cd ../vmd-${version}
