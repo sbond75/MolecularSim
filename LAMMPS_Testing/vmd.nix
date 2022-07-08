@@ -115,15 +115,15 @@ stdenv.mkDerivation rec {
   patchPhase = ''
     #substituteInPlace plugins/catdcd/Makefile --replace 'INCDIR=-I. -I../include -I''${COMPILEDIR}/lib_''${ARCH}/molfile' 'INCDIR=-I. -I../include -I''${COMPILEDIR}/lib_''${ARCH}/molfile -I''${PLUGINDIR}/include'
     mkdir -p "$out/plugins/compile"
-    # NOTE: In order for substituteInPlace to work within the `find` command, these exported functions must correspond to those used by substituteInPlace in nixpkgs at `pkgs/stdenv/generic/setup.sh` #
-    export -f substituteInPlace # https://stackoverflow.com/questions/4321456/find-exec-a-shell-function-in-linux
-    export -f substitute
-    export -f consumeEntire
-    export -f substituteStream
-    # #
-    #find plugins -type f -exec bash -c 'echo substituteInPlace "$0" "$@"' '{}' --replace "../compile" "$out/plugins/compile" \;
-    grepStr='../compile'
-    grep -r --files-with-matches "$grepStr" plugins | xargs -I {} bash -c 'substituteInPlace "$0" "$@"' '{}' --replace "$grepStr" "$out/plugins/compile"
+    # # NOTE: In order for substituteInPlace to work within the `find` command, these exported functions must correspond to those used by substituteInPlace in nixpkgs at `pkgs/stdenv/generic/setup.sh` #
+    # export -f substituteInPlace # https://stackoverflow.com/questions/4321456/find-exec-a-shell-function-in-linux
+    # export -f substitute
+    # export -f consumeEntire
+    # export -f substituteStream
+    # # #
+    # #find plugins -type f -exec bash -c 'echo substituteInPlace "$0" "$@"' '{}' --replace "../compile" "$out/plugins/compile" \;
+    # grepStr='../compile'
+    # grep -r --files-with-matches --fixed-strings "$grepStr" plugins | xargs -I {} bash -c 'substituteInPlace "$0" "$@"' '{}' --replace "$grepStr" "$out/plugins/compile"
 
 
     substituteInPlace plugins/Makefile --replace 'csh -f build.csh' 'tcsh -f build.csh'
@@ -305,16 +305,16 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     #export EXTRA_CCFLAGS="-I/usr/include" # <-- ?
 '' else ""}
 
+    # Pesky molfile plugin
+    pushd .
+    cd plugins/molfile_plugin
+    make -j $NIX_BUILD_CORES staticlibs
+    popd
+
     # Build plugins
     cd plugins
     export PLUGINDIR="$out/plugins"
     make -j $NIX_BUILD_CORES world
-
-    # Pesky molfile plugin
-    pushd .
-    cd molfile_plugin
-    make -j $NIX_BUILD_CORES staticlibs
-    popd
 
     # Install plugins
     make -j $NIX_BUILD_CORES distrib
