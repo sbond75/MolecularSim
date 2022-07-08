@@ -284,7 +284,7 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     setenv TCLINC -I${tcl-8_5.outPath}/include
     setenv TCLLIB -L${tcl-8_5.outPath}/lib
     echo "Using build settings for nix"
-    cd $unixdir; make -j $NIX_BUILD_CORES LINUXAMD64 TCLINC=$TCLINC TCLLIB=$TCLLIB/lib_LINUXAMD64'
+    cd $unixdir; make -j 1 LINUXAMD64 TCLINC=$TCLINC TCLLIB=$TCLLIB/lib_LINUXAMD64'
   '';
 
   computeCPATH = ''
@@ -308,7 +308,7 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     # Build plugins
     cd plugins
     export PLUGINDIR="$out/plugins"
-    make -j 1 world
+    make world
 
     # # Pesky molfile plugin
     # pushd .
