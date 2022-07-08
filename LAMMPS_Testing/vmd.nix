@@ -308,7 +308,7 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     # Build plugins
     cd plugins
     export PLUGINDIR="$out/plugins"
-    make -j $NIX_BUILD_CORES world
+    make world
 
     # # Pesky molfile plugin
     # pushd .
