@@ -310,10 +310,6 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
     export PLUGINDIR="$out/plugins"
     make world
 
-    ls -la
-    ls -la ./*
-    ls -la ./*/*
-
     ls -la "$PLUGINDIR"
     ls -la "$PLUGINDIR/*"
     ls -la "$PLUGINDIR/*/*"
