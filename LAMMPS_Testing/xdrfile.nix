@@ -11,6 +11,6 @@ stdenv.mkDerivation rec {
     owner = "chemfiles";
     repo = name;
     rev = "0d12c950bcc37bda591f7c5ce8256a281b74bd6d";
-    sha256 = "07paji77azw9lz468cbg5456qnwdg84jb3gyg0jr099xhq0gpp34";
+    sha256 = "0nyacck6r2li9qi8r7c6wagpd29sbdg21b7bdd84yq6mraja7fs4";
   };
 }
