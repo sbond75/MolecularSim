@@ -121,7 +121,7 @@ stdenv.mkDerivation rec {
     export -f consumeEntire
     export -f substituteStream
     # #
-    find plugins -type f -exec bash -c 'substituteInPlace "$@"' --replace "../compile" "$out/plugins/compile" \;
+    find plugins -type f -exec bash -c 'echo substituteInPlace "$@"' --replace "../compile" "$out/plugins/compile" \;
 
 
     substituteInPlace plugins/Makefile --replace 'csh -f build.csh' 'tcsh -f build.csh'
