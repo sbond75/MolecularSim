@@ -8,9 +8,9 @@ stdenv.mkDerivation rec {
   buildInputs = [ cmake ];
 
   patchPhase = ''
-    substituteInPlace CMakeLists.txt --replace 'file(COPY test_data DESTINATION ''${CMAKE_CURRENT_BINARY_DIR})' 'execute_process(COMMAND ls -la CMakeFiles)
-message(STATUS file(COPY ''${CMAKE_SOURCE_DIR}/test_data DESTINATION '"$out))"'
-file(COPY ''${CMAKE_SOURCE_DIR}/test_data DESTINATION '"$out)"
+    substituteInPlace CMakeLists.txt --replace 'file(COPY test_data DESTINATION ''${CMAKE_CURRENT_BINARY_DIR})' "execute_process(COMMAND ls -la $src)
+message(STATUS file(COPY $src/test_data DESTINATION $out))
+file(COPY $src/test_data DESTINATION $out)"
   '';
 
   src = fetchFromGitHub {
