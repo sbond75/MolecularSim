@@ -27,6 +27,10 @@ stdenv.mkDerivation rec {
     for i in scripts/*.sh; do
       patchShebangs "$i"
     done
+
+    for i in patches/*.sh; do
+      patchShebangs "$i"
+    done
   '';
 
   src = fetchFromGitHub {
