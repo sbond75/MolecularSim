@@ -306,10 +306,10 @@ cp $prog ../binaries' #'cp $prog.intel64 ../binaries/$(basename "$prog")' # TODO
 '' else ""}
 
     # Pesky molfile plugin
-    pushd .
-    cd plugins/molfile_plugin
-    make -j $NIX_BUILD_CORES staticlibs
-    popd
+    # pushd .
+    # cd plugins/molfile_plugin
+    # make -j $NIX_BUILD_CORES staticlibs
+    # popd
 
     # Build plugins
     cd plugins
