@@ -116,7 +116,7 @@ stdenv.mkDerivation rec {
     #substituteInPlace plugins/catdcd/Makefile --replace 'INCDIR=-I. -I../include -I''${COMPILEDIR}/lib_''${ARCH}/molfile' 'INCDIR=-I. -I../include -I''${COMPILEDIR}/lib_''${ARCH}/molfile -I''${PLUGINDIR}/include'
     mkdir -p "$out/plugins/compile"
     export -f substituteInPlace # https://stackoverflow.com/questions/4321456/find-exec-a-shell-function-in-linux
-    find plugins -type f -exec substituteInPlace "{}" --replace "../compile" "$out/plugins/compile" \;
+    find plugins -type f -exec bash -c 'substituteInPlace "$@"' --replace "../compile" "$out/plugins/compile" \;
 
 
     substituteInPlace plugins/Makefile --replace 'csh -f build.csh' 'tcsh -f build.csh'
