@@ -21,18 +21,9 @@ stdenv.mkDerivation rec {
     if(NOT EXISTS "''${CMAKE_CURRENT_BINARY_DIR}/test_data")
         file(COPY test_data DESTINATION ''${CMAKE_CURRENT_BINARY_DIR})
     endif()
-endif()' ""
-  '';
-
-  installPhase = ''
-    ls -la $out
-    ls -la $out/*
-    
-    mkdir $out
-    mkdir $out/lib
-
-    install -Dm755 xdrfile $out/lib
-    cp -r include $out/
+endif()' "install(TARGETS xdrfile DESTINATION ''${CMAKE_INSTALL_PREFIX})
+install(DIRECTORY include ''${CMAKE_INSTALL_PREFIX})
+" # https://stackoverflow.com/questions/50047946/how-do-you-fix-cmake-make-install-no-rule-to-make-target-install , https://cmake.org/cmake/help/latest/command/install.html
   '';
 
   src = fetchFromGitHub {
