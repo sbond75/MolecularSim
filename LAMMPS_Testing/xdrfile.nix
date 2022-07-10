@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
         file(COPY test_data DESTINATION ''${CMAKE_CURRENT_BINARY_DIR})
     endif()
 endif()' "install(TARGETS xdrfile DESTINATION ''${CMAKE_INSTALL_PREFIX})
-install(DIRECTORY include ''${CMAKE_INSTALL_PREFIX})
+install(DIRECTORY include DESTINATION ''${CMAKE_INSTALL_PREFIX})
 " # https://stackoverflow.com/questions/50047946/how-do-you-fix-cmake-make-install-no-rule-to-make-target-install , https://cmake.org/cmake/help/latest/command/install.html
   '';
 
