@@ -25,6 +25,9 @@ endif()' ""
   '';
 
   installPhase = ''
+    ls -la
+    ls -la ./*
+    
     mkdir $out
     mkdir $out/lib
 
