@@ -24,6 +24,14 @@ stdenv.mkDerivation rec {
 endif()' ""
   '';
 
+  installPhase = ''
+    mkdir $out
+    mkdir $out/lib
+
+    install -Dm755 xdrfile $out/lib
+    cp -r include $out/
+  '';
+
   src = fetchFromGitHub {
     owner = "chemfiles";
     repo = name;
